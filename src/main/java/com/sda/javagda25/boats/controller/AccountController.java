@@ -1,6 +1,7 @@
 package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.Account;
+import com.sda.javagda25.boats.service.AccountRoleService;
 import com.sda.javagda25.boats.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,10 +21,12 @@ import javax.validation.Valid;
 public class AccountController {
 
     private AccountService accountService;
+    private AccountRoleService accountRoleService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(AccountService accountService, AccountRoleService accountRoleService) {
         this.accountService = accountService;
+        this.accountRoleService = accountRoleService;
     }
 
 
@@ -60,6 +63,7 @@ public class AccountController {
     @PreAuthorize(value = "hasRole('ADMIN')")
     public String getAll (Model model) {
         model.addAttribute("accounts", accountService.findAll());
+        model.addAttribute("allRoles", accountRoleService.findAll());
         return "account-list";
     }
 

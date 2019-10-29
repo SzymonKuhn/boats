@@ -39,5 +39,11 @@ public class Account {
     private String lastName;
     private String email;
 
-    private String comment;
+    private String comment; //field only for admin, to comment account
+
+    @Lob
+    @Column (columnDefinition = "LONGBLOB")
+    private byte[] photo;
+
+
 }
