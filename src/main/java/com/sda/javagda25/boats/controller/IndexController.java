@@ -17,10 +17,7 @@ public class IndexController {
         return "index";
     }
 
-    @GetMapping ("/indexLogged")
-    public String getIndexLogged () {
-        return "indexLogged";
-    }
+
 
     @GetMapping ("/login")
     public String login () {

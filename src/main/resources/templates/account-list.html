@@ -8,15 +8,20 @@
     <title>Login from</title>
 </head>
 <body>
-<div class="container">
-    <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
-    <div class="row justify-content-center col-md-12">
-        <h1>Account list</h1>
+<div class="container-fluid">
+
+<div class="row flex-xl-nowrap">
+
+    <div class="col-md-2">
+        <!--<p>sidebar left</p>-->
     </div>
 
+    <div class="col-md-8">
 
-    <div class="row justify-content-center col-md-12">
+        <h1>Account list</h1>
+
         <table class="table table-striped">
             <thead>
             <tr>
@@ -34,12 +39,22 @@
                 <td th:text="${account.username}"></td>
                 <td th:text="${account.firstName}"></td>
                 <td th:text="${account.lastName}"></td>
-                <!--<td th:if="${account.accountRoles.contains()}" th:value="accountRole.name"></td>-->
-                <td><a th:href="@{/account/roles/${account.id}}"><button class="btn btn-outline-primary">Roles</button></a></td>
+                <td th:each="accountRole : ${allRoles}"
+                    th:text="${account.getAccountRoles().contains(accountRole) ? accountRole.name : ''} "></td>
+                <td><a th:href="@{/account/roles/${account.id}}">
+                    <button class="btn btn-outline-primary">Roles</button>
+                </a></td>
             </tr>
             </tbody>
         </table>
+
+
     </div>
+
+    <div class="col-md-2">
+        <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+    </div>
+</div>
 
 
 </div>

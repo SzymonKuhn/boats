@@ -8,38 +8,55 @@
     <title>Login from</title>
 </head>
 <body>
-<div class="container">
-    <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
-    <h1>Login form</h1>
+<div class="container-fluid">
 
-    <form class="form-group" th:action="@{/login}" method="post">
-        <div class="row">
-            <div class="col-md-4">
-                <label for="username">Username</label>
-                <input class="form-control" id="username" type="text" th:name="username" placeholder="Username">
-            </div>
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
         </div>
 
-        <div class="row">
-            <div class="col-md-4">
-                <label for="password">Password</label>
-                <input class="form-control" id="password" type="password" th:name="password" placeholder="Password">
-            </div>
+        <div class="col-md-8">
+
+            <h1>Login form</h1>
+
+            <form class="form-group" th:action="@{/login}" method="post">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="username">Username</label>
+                        <input class="form-control" id="username" type="text" th:name="username" placeholder="Username">
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="password">Password</label>
+                        <input class="form-control" id="password" type="password" th:name="password"
+                               placeholder="Password">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <button type="reset" class="btn btn-outline-primary">Reset</button>
+                    </div>
+
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
         </div>
-        <div class="row">
-            <div class="col-md-2">
-                <button type="reset" class="btn btn-outline-secondary">Reset</button>
-            </div>
 
-
-            <div class="col-md-2">
-                <input type="submit" class="btn btn-outline-primary">
-            </div>
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
-
-
-    </form>
+    </div>
 
 
 </div>
@@ -49,3 +66,6 @@
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>
 </html>
+
+
+
