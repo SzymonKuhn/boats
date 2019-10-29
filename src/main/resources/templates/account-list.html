@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Login from</title>
+</head>
+<body>
+<div class="container">
+    <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+    <div class="row justify-content-center col-md-12">
+        <h1>Account list</h1>
+    </div>
+
+
+    <div class="row justify-content-center col-md-12">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Username</th>
+                <th scope="col">First name</th>
+                <th scope="col">Last name</th>
+                <th scope="col">Roles</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="account : ${accounts}">
+                <td th:text="${account.id}"></td>
+                <td th:text="${account.username}"></td>
+                <td th:text="${account.firstName}"></td>
+                <td th:text="${account.lastName}"></td>
+                <td th:text="${account.accountRoles}"></td>
+                <td><a th:href="@{/account/roles/${account.id}}"><button class="btn btn-outline-primary">Roles</button></a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+</div>
+
+
+</body>
+</html>

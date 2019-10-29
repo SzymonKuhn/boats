@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:fragment="head-fragment">
+        <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"/>
+        <link rel="stylesheet" th:href="@{/css/styles.css}"/>
+    </th:block>
+
+
+    <meta charset="UTF-8">
+    <title>Fragments</title>
+
+</head>
+<body>
+
+
+<th:block th:fragment="navigator">
+    <div class="site-header sticky-top py-1">
+
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/index}">Main</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/indexLogged}">Main Logged</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/account/register}">Register</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/account/list}">Accounts</a>
+            </li>
+        </ul>
+
+    </div>
+</th:block>
+
+
+
+
+</body>
+</html>
