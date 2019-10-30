@@ -93,6 +93,11 @@
             <artifactId>bootstrap</artifactId>
             <version>4.3.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.8.6</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.webjars.bower/popper.js -->
         <!--<dependency>-->
             <!--<groupId>org.webjars.bower</groupId>-->
