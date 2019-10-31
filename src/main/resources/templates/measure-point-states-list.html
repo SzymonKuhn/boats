@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+    <meta charset="UTF-8">
+    <title>Measure points</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+            <h1>Measure points</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Point</th>
+                    <th scope="col">River</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="point : ${measurePoints}">
+                    <td th:text="${point.id}"></td>
+                    <td th:text="${point.pointName}"></td>
+                    <td th:text="${point.riverName}"></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <h1>Measure points states</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Id point</th>
+                    <th scope="col">Date time</th>
+                    <th scope="col">state</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="pointState : ${measurePointsStates}">
+                    <td th:text="${pointState.idStation}"></td>
+                    <td th:text="${pointState.measureDateTime}"></td>
+                    <td th:text="${pointState.waterState}"></td>
+                    <!--<td th:text="${pointState.measureDateTime}"></td>-->
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+
+</body>
+</html>
