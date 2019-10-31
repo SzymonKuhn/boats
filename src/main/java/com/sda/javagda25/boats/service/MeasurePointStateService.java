@@ -17,54 +17,45 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class MeasurePointService {
+public class MeasurePointStateService {
     private String UrlAddress = "https://danepubliczne.imgw.pl/api/data/hydro";
 
     @Autowired
     private MeasurePointRepository measurePointRepository;
+
     @Autowired
     private MeasurePointStateRepository measurePointStateRepository;
     @Autowired
     private RestTemplate restTemplate;
 
-    public void transformJsonFromApiToMeasurePointsAndStates() {
+    public void updateMeasurePointsStates() {
         ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(UrlAddress,
-                HttpMethod.GET, null, new ParameterizedTypeReference<List<MeasurePointDto>>() {
-                });
+                HttpMethod.GET, null, new ParameterizedTypeReference<List<MeasurePointDto>>() { });
 
         List<MeasurePointDto> measurePointDtos = measurePointResponseEntity.getBody();
         for (MeasurePointDto measurePointDto : measurePointDtos) {
-            if (!measurePointRepository.existsById(measurePointDto.getId_stacji())) {
-                measurePointRepository.save(new MeasurePoint(measurePointDto));
-            }
             MeasurePointState measurePointState = new MeasurePointState(measurePointDto);
             if (measurePointDto.getStan_wody_data_pomiaru() != null) {
-                if (!measurePointStateRepository.existsByIdStationAndAndMeasureDateTime(measurePointState.getIdStation(), measurePointState.getMeasureDateTime())) {
+                if (!measurePointStateRepository.existsByIdStationAndMeasureDateTime(measurePointState.getIdStation(), measurePointState.getMeasureDateTime())) {
 
-                    measurePointState.setMeasurePoint(getById(measurePointState.getIdStation()));
-
-                    measurePointStateRepository.save(measurePointState);
+                    Optional<MeasurePoint> optionalMeasurePoint = measurePointRepository.findById(measurePointState.getIdStation());
+                    if (optionalMeasurePoint.isPresent()) {
+                        measurePointState.setMeasurePoint(optionalMeasurePoint.get());
+                        measurePointStateRepository.save(measurePointState);
+                    } else {
+                        throw new EntityNotFoundException();
+                    }
                 }
             }
-
         }
     }
 
-    public List<MeasurePoint> findAllMeasurePoints() {
-        return measurePointRepository.findAll();
-    }
+
 
     public List<MeasurePointState> findAllMeasurePointsStates() {
         return measurePointStateRepository.findAll();
     }
 
 
-    public MeasurePoint getById(Long id) {
-        Optional<MeasurePoint> optional = measurePointRepository.findById(id);
-        if (optional.isPresent()) {
-            return optional.get();
-        } else {
-            throw new EntityNotFoundException();
-        }
-    }
+
 }

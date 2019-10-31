@@ -10,6 +10,6 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface MeasurePointStateRepository extends JpaRepository <MeasurePointState, Long> {
-    boolean existsByIdStationAndAndMeasureDateTime (Long idStation, LocalDateTime localDateTime);
+    boolean existsByIdStationAndMeasureDateTime (Long idStation, LocalDateTime localDateTime);
 
 }

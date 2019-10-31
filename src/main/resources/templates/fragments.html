@@ -29,6 +29,15 @@
                 <a class="nav-link" th:href="@{/measurePoint/list}"><button type="button" class="btn btn-outline-primary">Measure points</button></a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" th:href="@{/measurePoint/states/list}"><button type="button" class="btn btn-outline-primary">Measure points states</button></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/measurePoint/updateMeasurePoints}"><button type="button" class="btn btn-outline-primary">Update measure points</button></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" th:href="@{/measurePoint/updateMeasurePointStates}"><button type="button" class="btn btn-outline-primary">Update measure points states</button></a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}"><button type="button" class="btn btn-outline-primary">Login</button></a>
             </li>
             <li class="nav-item">
@@ -46,10 +55,10 @@
 <th:block th:fragment="right-sidebar">
 
     <nav class="nav flex-column">
-        <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a>
-        <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/account/register}">Register</a>
-        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">Logout</a>
-        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/account/list}">Accounts</a>
+        <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}"><button type="button" class="btn btn-outline-primary">Login</button></a>
+        <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/account/register}"><button type="button" class="btn btn-outline-primary">Register</button></a>
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}"><button type="button" class="btn btn-outline-primary">Logout</button></a>
+        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/account/list}"><button type="button" class="btn btn-outline-primary">Accounts</button></a>
     </nav>
 
 

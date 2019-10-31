@@ -37,25 +37,7 @@
                 </tbody>
             </table>
 
-            <h1>Measure points states</h1>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Id point</th>
-                    <th scope="col">Date time</th>
-                    <th scope="col">state</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="pointState : ${measurePointsStates}">
-                    <td th:text="${pointState.idStation}"></td>
-                    <td th:text="${pointState.measureDateTime}"></td>
-                    <td th:text="${pointState.waterState}"></td>
-                    <!--<td th:text="${pointState.measureDateTime}"></td>-->
-                </tr>
-                </tbody>
-            </table>
 
         </div>
         <div class="col-md-2">

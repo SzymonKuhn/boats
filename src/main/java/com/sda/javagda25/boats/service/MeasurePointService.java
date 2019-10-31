@@ -27,7 +27,7 @@ public class MeasurePointService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void transformJsonFromApiToMeasurePointsAndStates() {
+    public void updateMeasurePoints() {
         ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(UrlAddress,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<MeasurePointDto>>() {
                 });
@@ -37,16 +37,6 @@ public class MeasurePointService {
             if (!measurePointRepository.existsById(measurePointDto.getId_stacji())) {
                 measurePointRepository.save(new MeasurePoint(measurePointDto));
             }
-            MeasurePointState measurePointState = new MeasurePointState(measurePointDto);
-            if (measurePointDto.getStan_wody_data_pomiaru() != null) {
-                if (!measurePointStateRepository.existsByIdStationAndAndMeasureDateTime(measurePointState.getIdStation(), measurePointState.getMeasureDateTime())) {
-
-                    measurePointState.setMeasurePoint(getById(measurePointState.getIdStation()));
-
-                    measurePointStateRepository.save(measurePointState);
-                }
-            }
-
         }
     }
 
@@ -54,9 +44,6 @@ public class MeasurePointService {
         return measurePointRepository.findAll();
     }
 
-    public List<MeasurePointState> findAllMeasurePointsStates() {
-        return measurePointStateRepository.findAll();
-    }
 
 
     public MeasurePoint getById(Long id) {
