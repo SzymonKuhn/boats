@@ -1,8 +1,7 @@
 package com.sda.javagda25.boats.service;
 
 import com.sda.javagda25.boats.model.MeasurePoint;
-import com.sda.javagda25.boats.model.MeasurePointDto;
-import com.sda.javagda25.boats.model.MeasurePointState;
+import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
 import com.sda.javagda25.boats.repository.MeasurePointStateRepository;
 import org.springframework.beans.factory.annotation.Autowired;

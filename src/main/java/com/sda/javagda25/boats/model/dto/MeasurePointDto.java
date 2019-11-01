@@ -1,4 +1,4 @@
-package com.sda.javagda25.boats.model;
+package com.sda.javagda25.boats.model.dto;
 
 
 import lombok.AllArgsConstructor;

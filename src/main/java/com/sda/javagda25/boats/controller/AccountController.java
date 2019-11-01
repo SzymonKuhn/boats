@@ -3,9 +3,9 @@ package com.sda.javagda25.boats.controller;
 import com.sda.javagda25.boats.model.Account;
 import com.sda.javagda25.boats.service.AccountRoleService;
 import com.sda.javagda25.boats.service.AccountService;
+import com.sda.javagda25.boats.service.BoatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -25,11 +25,13 @@ public class AccountController {
 
     private AccountService accountService;
     private AccountRoleService accountRoleService;
+    private BoatService boatService;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRoleService accountRoleService) {
+    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService) {
         this.accountService = accountService;
         this.accountRoleService = accountRoleService;
+        this.boatService = boatService;
     }
 
 
@@ -83,10 +85,9 @@ public class AccountController {
     @GetMapping ("/details")
     public String details (Model model, Principal principal) {
         Account account = accountService.getByUsername(principal.getName());
-        if (account.getPhoto() != null) {
-            model.addAttribute("photo", Base64.getEncoder().encodeToString(account.getPhoto()));
-        }
         model.addAttribute("account", account);
+        model.addAttribute("boats", boatService.findAllByUsername(principal.getName()));
+        model.addAttribute("Base64", Base64.getEncoder());
 
         return "account-details";
     }

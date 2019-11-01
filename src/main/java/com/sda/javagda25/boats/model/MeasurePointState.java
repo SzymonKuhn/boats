@@ -1,11 +1,10 @@
 package com.sda.javagda25.boats.model;
 
+import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
