@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Login from</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-md-3">
+                    <h3><span th:text="${account.username}"></span></h3><br>
+                    <img th:src="@{'data:image/png;base64,' + ${photo}}" class="img-fluid" alt="Responsive image"><br>
+                    <h5><span th:text="${account.firstName} + ' ' + ${account.lastName}"></span></h5><br>
+                    <h5><span th:text="${account.phoneNumber}"></span></h5><br>
+                    <h5><span th:text="${account.email}"></span></h5><br>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a th:href="@{/account/details/edit}">
+                                <button class="btn btn-outline-primary">Edit</button>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a th:href="@{/account/addPhoto}">
+                                <button class="btn btn-outline-primary">Photo</button>
+                            </a>
+                        </div>
+
+                    </div>
+
+
+                    <!--user details-->
+                </div>
+
+                <div class="col-md-9">
+                    <!--user boats and others-->
+
+                    <h4>Your boats</h4>
+
+
+                    <div class="card" style="width: 18rem;">
+                        <img src="..." class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Płock - Warszawa</h5>
+                            <p class="card-text">Trasa z Płocka do Warszawy Wisłą.</p>
+                            <a href="#" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+    </div>
+
+</div>
+
+
+</div>
+
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>

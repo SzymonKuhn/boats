@@ -5,16 +5,19 @@ import com.sda.javagda25.boats.service.AccountRoleService;
 import com.sda.javagda25.boats.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
+import java.security.Principal;
+import java.util.Base64;
+import java.util.HashSet;
 
 @Controller
 @RequestMapping ("/account/")
@@ -38,6 +41,7 @@ public class AccountController {
 
     @PostMapping ("/register")
     public String registerAccount (@Valid Account account, BindingResult result, String passwordConfirm, ModelMap modelMap, Model model) {
+        account.setAccountRoles(new HashSet<>(accountRoleService.getBasicUserRoles()));
         if (result.hasErrors()) {
             return registrationError (account, model, result.getFieldError().getDefaultMessage());
         }
@@ -74,5 +78,51 @@ public class AccountController {
         Account account = accountService.getById(id);
         model.addAttribute("account", account);
         return "account-roles";
+    }
+
+    @GetMapping ("/details")
+    public String details (Model model, Principal principal) {
+        Account account = accountService.getByUsername(principal.getName());
+        if (account.getPhoto() != null) {
+            model.addAttribute("photo", Base64.getEncoder().encodeToString(account.getPhoto()));
+        }
+        model.addAttribute("account", account);
+
+        return "account-details";
+    }
+
+    @GetMapping ("/details/edit")
+    public String detailsEdit (Model model, Principal principal) {
+        model.addAttribute("account", accountService.getByUsername(principal.getName()));
+        return "account-details-form";
+    }
+
+    @PostMapping ("/details/edit")
+    public String detailsEdit (Account account, Principal principal) {
+        if (!account.getUsername().equals(principal.getName())) {
+            return "redirect:/index";
+        }
+        accountService.save(account);
+        return "redirect:/account/details";
+    }
+
+
+    @GetMapping ("/addPhoto")
+    public String addPhoto () {
+        return "account-photo-form";
+    }
+
+    @PostMapping ("/addPhoto")
+    public String addPhoto (Model model, Principal principal, @RequestParam ("photo") MultipartFile photo) {
+        Account account = accountService.getByUsername(principal.getName());
+        if (photo != null) {
+            try {
+                account.setPhoto(photo.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            accountService.save(account);
+        }
+        return "redirect:/account/details";
     }
 }

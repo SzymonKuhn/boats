@@ -48,4 +48,17 @@ public class AccountService {
             throw new EntityNotFoundException("account, id: " + id);
         }
     }
+
+    public Account getByUsername(String name) {
+        Optional<Account> optionalAccount = accountRepository.findByUsername(name);
+        if (optionalAccount.isPresent()) {
+            return optionalAccount.get();
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
+
+    public void save (Account account) {
+        accountRepository.save(account);
+    }
 }

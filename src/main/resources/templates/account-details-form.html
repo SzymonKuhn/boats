@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Account details form</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+
+            <h1>Account</h1>
+
+            <div class="col-md-6">
+
+                <form class="form-group" th:object="${account}" th:method="post">
+                    <input type="hidden" th:field="${account.id}" th:value="${account.id}">
+                    <input type="hidden" th:field="${account.username}" th:value="${account.username}">
+                    <input type="hidden" th:field="${account.password}" th:value="${account.password}">
+                    <input type="hidden" th:field="${account.photo}" th:value="${account.photo}">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="firstName">First name:</label>
+                            <input id="firstName" th:value="${account.firstName}" th:field="${account.firstName}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="lastName">Last name:</label>
+                            <input id="lastName" th:value="${account.lastName}" th:field="${account.lastName}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="email">Email:</label>
+                            <input id="email" th:value="${account.email}" th:field="${account.email}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <label for="phone">Phone number:</label>
+                            <input id="phone" th:value="${account.phoneNumber}" th:field="${account.phoneNumber}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <!--<div class="row">-->
+                        <!--<div class="custom-file">-->
+                            <!--<label class="custom-file-label" for="photo-file">Choose file</label>-->
+                            <!--<input type="file" id="photo-file" class="custom-file-input" th:name="photo"-->
+                                    <!--enctype="multipart/form-data">-->
+                        <!--</div>-->
+                    <!--</div>-->
+
+                    <div class="row col-md-12 justify-content-center">
+                        <div class="col-md-6">
+                            <button type="reset" class="btn btn-outline-primary">Reset</button>
+                        </div>
+                        <div class="col-md-6 justify-content-center">
+                            <button type="submit" class="btn btn-outline-primary">Submit</button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+
+        </div>
+
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+    </div>
+
+
+</div>
+
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>
