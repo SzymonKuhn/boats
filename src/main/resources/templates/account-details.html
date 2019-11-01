@@ -19,10 +19,14 @@
         </div>
 
         <div class="col-md-8">
+            <div class="row justify-content-center">
+                <h1><span th:text="${account.username}"></span></h1><br>
+            </div>
             <div class="row">
                 <div class="col-md-3">
-                    <h3><span th:text="${account.username}"></span></h3><br>
-                    <img th:if="${account.photo != null}" th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(account.photo)}}" class="img-fluid" alt="Responsive image"><br>
+                    <img th:if="${account.photo != null}"
+                         th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(account.photo)}}"
+                         class="img-fluid" alt="Responsive image"><br>
                     <h5><span th:text="${account.firstName} + ' ' + ${account.lastName}"></span></h5><br>
                     <h5><span th:text="${account.phoneNumber}"></span></h5><br>
                     <h5><span th:text="${account.email}"></span></h5><br>
@@ -48,26 +52,27 @@
                 <div class="col-md-9">
                     <!--user boats and others-->
 
-                    <h4>Your boats</h4>
-
-
                     <div class="col-md-4" th:each="boat : ${boats}">
 
                         <div class="card" style="width: 18rem;">
-                            <img th:if="${boat.photo != null}" th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}" class="card-img-top" alt="boat photo">
+                            <img th:if="${boat.photo != null}"
+                                 th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"
+                                 class="card-img-top" alt="boat photo">
                             <div class="card-body">
                                 <h5 class="card-title"><span th:text="${boat.model}"></span></h5>
                                 <p class="card-text"><span th:text="${boat.comment}"></span></p>
-                                <a href="#"><button class="btn btn-primary">Details</button></a>
-                                <a th:href="@{'/boat/addPhoto/' + ${boat.id}}"><button class="btn btn-primary">Add photo</button></a>
+                                <a th:href="@{'/boat/details/' + ${boat.id}}">
+                                    <button class="btn btn-primary">Details</button>
+                                </a>
                             </div>
                         </div>
 
                     </div>
+                    <div class="row justify-content-end">
                         <a th:href="@{/boat/add}">
                             <button class="btn btn-outline-primary">Add boat</button>
                         </a>
-
+                    </div>
 
                 </div>
 

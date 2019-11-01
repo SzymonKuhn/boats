@@ -24,17 +24,20 @@
                 <h1>Boat form</h1>
 
                 <form class="form-group" th:action="@{/boat/add}" th:object="${boat}" th:method="post">
-
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>
+
+                    <input th:type="hidden" th:value="${boat.id}" th:field="${boat.id}">
+                    <input th:type="hidden" th:value="${boat.photo}" th:field="${boat.photo}">
+                    <input th:type="hidden" th:value="${boat.account}" th:field="${boat.account}">
 
 
                     <div class="row">
                         <div class="col-md-4">
                             <label for="model">Model</label>
                             <input class="form-control" id="model" type="text" th:field="${boat.model}"
-                                   placeholder="Model">
+                                   th:value="${boat.model}" placeholder="Model">
                         </div>
                     </div>
 
@@ -42,7 +45,7 @@
                         <div class="col-md-4">
                             <label for="immersion">Immersion</label>
                             <input class="form-control" id="immersion" type="number" th:field="${boat.immersion}"
-                                   placeholder="Immersion">
+                                   th:value="${boat.immersion}" placeholder="Immersion">
                         </div>
                     </div>
 
@@ -50,7 +53,7 @@
                         <div class="col-md-4">
                             <label for="comment">Comment</label>
                             <textarea class="form-control" rows="8" id="comment" th:field="${boat.comment}"
-                                      placeholder="comment"></textarea>
+                                      th:value="${boat.comment}" placeholder="comment"></textarea>
                         </div>
                     </div>
 

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Base64;
 
 @Controller
 @RequestMapping ("/boat/")
@@ -37,7 +38,9 @@ public class BoatController {
         if (boat == null) {
             return "redirect:/account/details";
         }
-        boat.setAccount(accountService.getByUsername(principal.getName()));
+        if (boat.getAccount() ==null ){
+            boat.setAccount(accountService.getByUsername(principal.getName()));
+        }
         boatService.save(boat);
         return "redirect:/account/details";
     }
@@ -64,6 +67,30 @@ public class BoatController {
                 e.printStackTrace();
             }
             boatService.save(boat);
+        }
+        return "redirect:/account/details";
+    }
+
+    @GetMapping ("/details/{id}")
+    public String details (Model model, @PathVariable (name = "id") Long boatId) {
+        Boat boat = boatService.getById(boatId);
+        model.addAttribute("boat", boat);
+        model.addAttribute("Base64", Base64.getEncoder());
+        return "boat-details";
+    }
+
+    @GetMapping ("/edit/{id}")
+    public String edit (Model model, @PathVariable (name = "id") Long boatId) {
+        Boat boat = boatService.getById(boatId);
+        model.addAttribute("boat", boat);
+        return "boat-add";
+    }
+
+    @GetMapping ("/delete/{id}")
+    public String delete (@PathVariable (name = "id") Long boatId, Principal principal) {
+        Boat boat = boatService.getById(boatId);
+        if (boat.getAccount().getUsername().equals(principal.getName())) {
+            boatService.delete(boatId);
         }
         return "redirect:/account/details";
     }

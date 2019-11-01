@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Boat add form</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+<div class="container-fluid">
+
+    <div class="container-fluid">
+
+        <div class="row flex-xl-nowrap">
+
+            <div class="col-md-2">
+                <!--<p>sidebar left</p>-->
+            </div>
+
+            <div class="col-md-8">
+
+                <div class="row justify-content-center">
+                    <h1><span th:text="${boat.model}"></span></h1>
+                </div>
+                <div class="row">
+                    <div class="col col-md-4">
+                        <div class="row">
+                            <img th:if="${boat.photo != null}"
+                                 th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"
+                                 class="img-fluid" alt="Responsive image"><br>
+                        </div>
+                        <div class="row justify-content-end">
+                            <a th:href="@{'/boat/addPhoto/' + ${boat.id}}">
+                                <button class="btn btn-outline-primary btn-sm">Edit photo</button>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <textarea rows="15" class="container-fluid" th:text="${boat.comment}"></textarea>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a th:href="@{'/boat/edit/' + ${boat.id}}">
+                                    <button class="btn btn-outline-primary btn-sm">Edit boat</button>
+                                </a>
+                            </div>
+                            <div class="col-md-6 justify-content-end">
+                                <a th:href="@{'/boat/delete/' + ${boat.id}}">
+                                    <button class="btn btn-outline-primary btn-sm">Delete boat</button>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+            <div class="col-md-2">
+                <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>

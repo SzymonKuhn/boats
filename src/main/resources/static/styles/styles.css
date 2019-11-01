@@ -4,3 +4,16 @@
     justify-self: center;
     justify-content: center;
 }
+
+.image-border {
+    border: black 1px;
+    border-radius: 5px;
+    padding: 3px;
+}
+
+.bottom-line {
+    border-bottom: grey;
+    margin-top: 200px;
+    margin-bottom: 200px;
+    padding-bottom: 200px;
+}
