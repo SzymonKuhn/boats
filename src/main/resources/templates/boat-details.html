@@ -26,6 +26,9 @@
                     <h1><span th:text="${boat.model}"></span></h1>
                 </div>
                 <div class="row">
+                    <h4>Immersion: <span th:text="${boat.immersion}"></span></h4>
+                </div>
+                <div class="row">
                     <div class="col col-md-4">
                         <div class="row">
                             <img th:if="${boat.photo != null}"
@@ -41,21 +44,53 @@
                     <div class="col-md-8">
                         <textarea rows="15" class="container-fluid" th:text="${boat.comment}"></textarea>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <a th:href="@{'/minimumValue/add/' + ${boat.id}}">
+                                    <button class="btn btn-outline-primary btn-sm">Add min value</button>
+                                </a>
+                            </div>
+                            <div class="col-md-4 justify-content-center">
                                 <a th:href="@{'/boat/edit/' + ${boat.id}}">
                                     <button class="btn btn-outline-primary btn-sm">Edit boat</button>
                                 </a>
                             </div>
-                            <div class="col-md-6 justify-content-end">
+                            <div class="col-md-4 justify-content-end">
                                 <a th:href="@{'/boat/delete/' + ${boat.id}}">
                                     <button class="btn btn-outline-primary btn-sm">Delete boat</button>
                                 </a>
                             </div>
                         </div>
                     </div>
+
+                    <div class="row col-md-12">
+                        <h1>Minimum values on measure points for boat</h1>
+
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col">Id point</th>
+                                <th scope="col">Point name</th>
+                                <th scope="col">River name</th>
+                                <th scope="col">Minimum state</th>
+                                <th scope="col">Warning state</th>
+                                <th scope="col">Edit</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each="minValue : ${minValues}">
+                                <td th:text="${minValue.measurePoint.id}"></td>
+                                <td th:text="${minValue.measurePoint.pointName}"></td>
+                                <td th:text="${minValue.measurePoint.riverName}"></td>
+                                <td th:text="${minValue.minimumValue}"></td>
+                                <td th:text="${minValue.warningValue}"></td>
+                                <td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}"><button class="btn btn-outline-primary">Edit</button></a></td>
+
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-
-
 
 
             </div>

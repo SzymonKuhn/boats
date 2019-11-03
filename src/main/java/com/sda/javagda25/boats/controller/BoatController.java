@@ -2,29 +2,35 @@ package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.Account;
 import com.sda.javagda25.boats.model.Boat;
+import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
 import com.sda.javagda25.boats.model.dto.BoatPhotoAddDto;
 import com.sda.javagda25.boats.service.AccountService;
 import com.sda.javagda25.boats.service.BoatService;
+import com.sda.javagda25.boats.service.MeasurePointMinimumValueService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
 import java.util.Base64;
+import java.util.List;
 
 @Controller
 @RequestMapping ("/boat/")
 public class BoatController {
     private BoatService boatService;
     private AccountService accountService;
+    private MeasurePointMinimumValueService measurePointMinimumValueService;
 
     @Autowired
-    public BoatController(BoatService boatService, AccountService accountService) {
+    public BoatController(BoatService boatService, AccountService accountService, MeasurePointMinimumValueService measurePointMinimumValueService) {
         this.boatService = boatService;
         this.accountService = accountService;
+        this.measurePointMinimumValueService = measurePointMinimumValueService;
     }
 
     @GetMapping("/add")
@@ -38,11 +44,11 @@ public class BoatController {
         if (boat == null) {
             return "redirect:/account/details";
         }
-        if (boat.getAccount() ==null ){
+        if (boat.getAccount() == null ){
             boat.setAccount(accountService.getByUsername(principal.getName()));
         }
-        boatService.save(boat);
-        return "redirect:/account/details";
+        Long id = boatService.save(boat);
+        return "redirect:/boat/details/" + id;
     }
 
 
@@ -74,8 +80,10 @@ public class BoatController {
     @GetMapping ("/details/{id}")
     public String details (Model model, @PathVariable (name = "id") Long boatId) {
         Boat boat = boatService.getById(boatId);
+        List<MeasurePointMinimumValue> minValues = measurePointMinimumValueService.getByBoat(boatId);
         model.addAttribute("boat", boat);
         model.addAttribute("Base64", Base64.getEncoder());
+        model.addAttribute("minValues", minValues);
         return "boat-details";
     }
 

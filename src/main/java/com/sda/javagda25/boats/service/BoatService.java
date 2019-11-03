@@ -33,8 +33,9 @@ public class BoatService {
         }
     }
 
-    public void save(Boat boat) {
-        boatRepository.save(boat);
+    public Long save(Boat boat) {
+        Boat boatSaved = boatRepository.save(boat);
+        return boatSaved.getId();
     }
 
     public void delete (Long boatId) {
