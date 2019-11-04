@@ -49,6 +49,8 @@ public class Account {
     @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     private Boat defaultBoat;
 
+    @OneToMany (mappedBy = "account", fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private Set<CharacteristicPoint> characteristicPoints;
 
     public String getBase64StringPhoto () {
         return Base64.getEncoder().encodeToString(photo);
