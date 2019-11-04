@@ -16,5 +16,4 @@ public interface MeasurePointRepository extends JpaRepository <MeasurePoint, Lon
     List<MeasurePoint> findAllByIdIsLike (Long id);
     List<MeasurePoint> findAllByPointNameIsLikeOrRiverNameIsLike (String name, String river);
 
-
 }

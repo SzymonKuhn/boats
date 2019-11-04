@@ -39,7 +39,6 @@
                             </form>
                         </nav>
                     </div>
-
                 </div>
 
 
@@ -54,7 +53,7 @@
                                 <label for="measurePoint">Choose measure point</label>
                                 <select id="measurePoint" class="custom-select mr-sm-2" th:field="${minValue.measurePoint}">
                                     <option th:each="measurePoint : ${measurePoints}"
-                                            th:text="${measurePoint.pointName + ' / ' + measurePoint.riverName}"
+                                            th:text="${measurePoint.id + ' - ' + measurePoint.pointName + ' / ' + measurePoint.riverName}"
                                             th:value="${measurePoint.id}"></option>
                                 </select>
                             </div>

@@ -21,7 +21,9 @@
             </div>
 
             <div class="col-md-8">
-                <h1>Boat form</h1>
+                <div class="row padding justify-content-center">
+                    <h1>Boat form</h1>
+                </div>
 
                 <form class="form-group" th:action="@{/boat/add}" th:object="${boat}" method="post">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
@@ -34,37 +36,39 @@
 
 
                     <div class="row">
-                        <div class="col-md-4">
-                            <label for="model">Model</label>
-                            <input class="form-control" id="model" type="text" th:field="${boat.model}"
-                                   th:value="${boat.model}" placeholder="Model">
+                        <div class="col-md-6">
+                            <div class="row padding">
+                                <label for="model">Model</label>
+                                <input class="form-control" id="model" type="text" th:field="${boat.model}"
+                                       th:value="${boat.model}" placeholder="Model">
+                            </div>
+
+
+                            <div class="row padding">
+                                <label for="immersion">Immersion</label>
+                                <input class="form-control" id="immersion" type="number" th:field="${boat.immersion}"
+                                       th:value="${boat.immersion}" placeholder="Immersion">
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-6">
+                            <div class="row padding">
+                                <label for="comment">Comment</label>
+                                <textarea class="form-control" rows="6" id="comment" th:field="${boat.comment}"
+                                          th:value="${boat.comment}" placeholder="comment"></textarea>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="immersion">Immersion</label>
-                            <input class="form-control" id="immersion" type="number" th:field="${boat.immersion}"
-                                   th:value="${boat.immersion}" placeholder="Immersion">
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-4">
-                            <label for="comment">Comment</label>
-                            <textarea class="form-control" rows="8" id="comment" th:field="${boat.comment}"
-                                      th:value="${boat.comment}" placeholder="comment"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-2">
-                            <button type="reset" class="btn btn-outline-primary">Reset</button>
+                    <div class="row padding">
+                        <div class="col-md-6 justify-content-center">
+                            <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
                         </div>
 
 
-                        <div class="col-md-2">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                        <div class="col-md-6 justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </div>
                     </div>
 
@@ -77,15 +81,6 @@
         </div>
 
     </div>
-
-
-
-
-
-
-
-
-
 
 
 </div>

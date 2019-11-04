@@ -20,35 +20,31 @@
             <!--<p>sidebar left</p>-->
         </div>
 
-        <div class="col-md-8 justify-content-center">
+        <div class="col-md-8">
 
 
             <form class="form-group" th:action="@{/login}" method="post">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="col-md-4">
+                    <div class="row padding">
                         <label for="username">Username</label>
                         <input class="form-control" id="username" type="text" th:name="username" placeholder="Username">
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-4">
+
                         <label for="password">Password</label>
                         <input class="form-control" id="password" type="password" th:name="password"
                                placeholder="Password">
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <button type="reset" class="btn btn-outline-primary">Reset</button>
+
+                    <div class="row padding">
+                        <div class="col-md-6 justify-content-center">
+                            <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
+                        </div>
+
+                        <div class="col-md-6 justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </div>
                     </div>
-
-
-                    <div class="col-md-2">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
                 </div>
-
             </form>
 
         </div>

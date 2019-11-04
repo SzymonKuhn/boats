@@ -12,9 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class MeasurePointService {
@@ -45,7 +43,6 @@ public class MeasurePointService {
     }
 
 
-
     public MeasurePoint getById(Long id) {
         Optional<MeasurePoint> optional = measurePointRepository.findById(id);
         if (optional.isPresent()) {
@@ -57,13 +54,19 @@ public class MeasurePointService {
 
     public List<MeasurePoint> search(String input) {
         List<MeasurePoint> measurePoints = new ArrayList<>();
-//        try {
-//            Long id = Long.parseLong(input);
-//            measurePoints.addAll(measurePointRepository.findAllByIdIsLike(id));
-//        } catch (NumberFormatException nfe) {
-//            nfe.printStackTrace();
-//        }
+        measurePoints.addAll(tryFindMeasurePointByStringId(input));
+        input = "%" + input + "%";
         measurePoints.addAll(measurePointRepository.findAllByPointNameIsLikeOrRiverNameIsLike(input, input));
         return measurePoints;
+    }
+
+    private List<MeasurePoint> tryFindMeasurePointByStringId(String input) { //todo how to find object by part of id?
+        try {
+            Long id = Long.parseLong(input);
+            return measurePointRepository.findAllByIdIsLike(id);
+        } catch (NumberFormatException nfe) {
+            nfe.printStackTrace();
+        }
+        return Collections.emptyList();
     }
 }

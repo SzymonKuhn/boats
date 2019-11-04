@@ -33,16 +33,16 @@ public class MeasurePointMinimumValueController {
         this.boatService = boatService;
     }
 
-    @GetMapping ("/add/{id}")
-    public String add (Model model, @PathVariable (name = "id") Long boatId, MeasurePointMinimumValue minValue) {
+    @GetMapping("/add/{id}")
+    public String add(Model model, @PathVariable(name = "id") Long boatId, MeasurePointMinimumValue minValue) {
         minValue.setBoat(boatService.getById(boatId));
         model.addAttribute("minValue", minValue);
         model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
         return "minimumValue-add";
     }
 
-    @PostMapping ("/add")
-    public String add (MeasurePointMinimumValue measurePointMinimumValue, Model model) {
+    @PostMapping("/add")
+    public String add(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
         if (measurePointMinimumValue.getMinimumValue() > measurePointMinimumValue.getWarningValue()) {
             model.addAttribute("errorMessage", "Warning value shouldn't be less then minimum value");
             model.addAttribute("minValue", measurePointMinimumValue);
@@ -52,14 +52,14 @@ public class MeasurePointMinimumValueController {
         return "redirect:/boat/details/" + measurePointMinimumValue.getBoat().getId();
     }
 
-    @GetMapping ("/edit/{id}")
-    public String edit (@PathVariable (name = "id") Long id, Model model) {
+    @GetMapping("/edit/{id}")
+    public String edit(@PathVariable(name = "id") Long id, Model model) {
         model.addAttribute("minValue", measurePointMinimumValueService.getById(id));
         return "minimumValue-edit";
     }
 
-    @GetMapping ("/actualStates/{boatId}")
-    public String actualStatesForMinValues (Model model, @PathVariable(name = "boatId") Long boatId) {
+    @GetMapping("/actualStates/{boatId}")
+    public String actualStatesForMinValues(Model model, @PathVariable(name = "boatId") Long boatId) {
         Boat boat = boatService.getById(boatId);
         List<MeasurePointMinimumValue> minValuesOfMeasurePointsForBoat = measurePointMinimumValueService.getByBoat(boatId);
         List<ActualAndMinimumStatesForBoatDto> actualAndMinimumStates = new ArrayList<>();
@@ -82,13 +82,16 @@ public class MeasurePointMinimumValueController {
 
 
     @PostMapping("/searchMeasurePoints")
-    public String search (String input, Long boatId, Model model) {
-        input = "%" + input + "%";
+    public String search(String input, Long boatId, Model model) {
         MeasurePointMinimumValue minValue = new MeasurePointMinimumValue();
         minValue.setBoat(boatService.getById(boatId));
-        List<MeasurePoint> measurePoints = measurePointService.search(input);
-        int records = measurePoints.size();
+        List<MeasurePoint> measurePoints = new ArrayList<>();
+        String[] inputs = input.split(" ");
+        for (String s : inputs) {
+            measurePoints.addAll(measurePointService.search(s));
+        }
 
+        int records = measurePoints.size();
         if (records == 0) {
             model.addAttribute("errorMessage", "No records found.");
             model.addAttribute("input", input.substring(1, input.length() - 1));
