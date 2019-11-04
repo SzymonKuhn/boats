@@ -3,10 +3,12 @@ package com.sda.javagda25.boats.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.util.Base64;
 
 @Entity
 @Data
@@ -28,5 +30,11 @@ public class Boat {
 
     @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
+    @ToString.Exclude
     private Account account;
+
+
+    public String getBase64StringPhoto () {
+        return Base64.getEncoder().encodeToString(photo);
+    }
 }

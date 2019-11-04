@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Boat add form</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+
+            <div class="row bottom-line justify-content-center">
+                <h1>Your boats</h1>
+            </div>
+
+            <div class="row border-secondary" th:each="boat : ${boats}">
+
+                <div class="col col-md-3">
+                    <div class="row">
+                        <img th:if="${boat.photo != null}"
+                             th:src="@{'data:image/png;base64,' + ${(boat.getBase64StringPhoto())}}"
+                             class="img-fluid rounded-pill padding" alt="Responsive image"><br>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="row">
+                        <h4 class="padding">Model: <span th:text="${boat.model}"></span></h4>
+                    </div>
+                    <!--<div class="row">-->
+                        <!--<p class="font-weight-bold">Immersion: <span th:text="${boat.immersion}"></span></p>-->
+                    <!--</div>-->
+                    <div class="row">
+                        <p><span th:text="${boat.comment}"> </span></p>
+                    </div>
+                </div>
+
+
+                <div class="col-md-2">
+                    <a th:href="@{'/boat/details/' + ${boat.id}}">
+                        <button class="btn btn-outline-secondary btn-sm btn-block">Details</button>
+                    </a>
+                    <th:block th:if="${boat.id != defaultBoatId}">
+                        <a th:href="@{'/boat/setDefault/' + ${boat.id}}">
+                            <button class="btn btn-outline-secondary btn-sm btn-block">Set as default</button>
+                        </a>
+                    </th:block>
+                    <!--</div>-->
+
+                    <!--<div class="row">-->
+                    <a th:href="@{'/minimumValue/actualStates/' + ${boat.id}}">
+                        <button class="btn btn-outline-secondary btn-sm btn-block">Actual states</button>
+                    </a>
+                    <!--</div>-->
+                </div>
+
+            </div>
+
+            <div class="row justify-content-end">
+                <a th:href="@{/boat/add}">
+                    <button class="btn btn-outline-primary">Add boat</button>
+                </a>
+            </div>
+
+            <!--<div class="row col-md-12">-->
+            <!--<h1>Minimum values on measure points for boat</h1>-->
+
+            <!--<table class="table table-striped">-->
+            <!--<thead>-->
+            <!--<tr>-->
+            <!--<th scope="col">Id point</th>-->
+            <!--<th scope="col">Point name</th>-->
+            <!--<th scope="col">River name</th>-->
+            <!--<th scope="col">Minimum state</th>-->
+            <!--<th scope="col">Warning state</th>-->
+            <!--<th scope="col">Edit</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--<tr th:each="minValue : ${minValues}">-->
+            <!--<td th:text="${minValue.measurePoint.id}"></td>-->
+            <!--<td th:text="${minValue.measurePoint.pointName}"></td>-->
+            <!--<td th:text="${minValue.measurePoint.riverName}"></td>-->
+            <!--<td th:text="${minValue.minimumValue}"></td>-->
+            <!--<td th:text="${minValue.warningValue}"></td>-->
+            <!--<td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}">-->
+            <!--<button class="btn btn-outline-primary">Edit</button>-->
+            <!--</a></td>-->
+
+            <!--</tr>-->
+            <!--</tbody>-->
+            <!--</table>-->
+            <!--</div>-->
+
+
+        </div>
+
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+
+    </div>
+
+
+</div>
+
+</div>
+
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>

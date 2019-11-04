@@ -8,6 +8,7 @@ import org.hibernate.annotations.Cascade;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
+import java.util.Base64;
 import java.util.Set;
 
 
@@ -45,5 +46,12 @@ public class Account {
     @Column (columnDefinition = "LONGBLOB")
     private byte[] photo;
 
+    @OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
+    private Boat defaultBoat;
+
+
+    public String getBase64StringPhoto () {
+        return Base64.getEncoder().encodeToString(photo);
+    }
 
 }

@@ -19,14 +19,11 @@
         </div>
 
         <div class="col-md-8">
-            <div class="row justify-content-center">
-                <h1><span th:text="${account.username}"></span></h1><br>
-            </div>
             <div class="row">
                 <div class="col-md-3">
                     <img th:if="${account.photo != null}"
-                         th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(account.photo)}}"
-                         class="img-fluid" alt="Responsive image"><br>
+                         th:src="@{'data:image/png;base64,' + ${(account.getBase64StringPhoto())}}"
+                         class="img-fluid rounded-circle" alt="Responsive image"><br>
                     <h5><span th:text="${account.firstName} + ' ' + ${account.lastName}"></span></h5><br>
                     <h5><span th:text="${account.phoneNumber}"></span></h5><br>
                     <h5><span th:text="${account.email}"></span></h5><br>
@@ -42,7 +39,6 @@
                                 <button class="btn btn-outline-primary">Photo</button>
                             </a>
                         </div>
-
                     </div>
 
 
@@ -52,27 +48,69 @@
                 <div class="col-md-9">
                     <!--user boats and others-->
 
-                    <div class="col-md-4" th:each="boat : ${boats}">
+                    <th:block th:if="${account.defaultBoat != null}">
 
-                        <div class="card" style="width: 18rem;">
-                            <img th:if="${boat.photo != null}"
-                                 th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"
-                                 class="card-img-top" alt="boat photo">
-                            <div class="card-body">
-                                <h5 class="card-title"><span th:text="${boat.model}"></span></h5>
-                                <p class="card-text"><span th:text="${boat.comment}"></span></p>
-                                <a th:href="@{'/boat/details/' + ${boat.id}}">
-                                    <button class="btn btn-primary">Details</button>
-                                </a>
+                        <div class="row justify-content-center">
+                            <h3> Your default boat:</h3>
+                        </div>
+                        <div class="row">
+                            <div class="col col-md-3">
+                                <div class="row">
+                                    <img th:if="${account.defaultBoat.photo != null}"
+                                         th:src="@{'data:image/png;base64,' + ${(account.defaultBoat.getBase64StringPhoto())}}"
+                                         class="img-fluid rounded-pill padding" alt="Responsive image"><br>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="row">
+                                    <h4 class="padding">Model: <span th:text="${account.defaultBoat.model}"></span></h4>
+                                </div>
+                                <!--<div class="row">-->
+                                    <!--<p class="font-weight-bold">Immersion: <span-->
+                                            <!--th:text="${account.defaultBoat.immersion}"></span></p>-->
+                                <!--</div>-->
+                                <div class="row">
+                                    <p><span th:text="${account.defaultBoat.comment}"> </span></p>
+                                </div>
                             </div>
                         </div>
 
-                    </div>
-                    <div class="row justify-content-end">
-                        <a th:href="@{/boat/add}">
-                            <button class="btn btn-outline-primary">Add boat</button>
-                        </a>
-                    </div>
+                        <div class="row bottom-line">
+
+                            <h4>Measure points states for default boat</span> </h4>
+
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Id point</th>
+                                    <th scope="col">Point name</th>
+                                    <th scope="col">River name</th>
+                                    <th scope="col">Water state</th>
+                                    <th scope="col">Measure date</th>
+                                    <th scope="col">Your warning level</th>
+                                    <th scope="col">Your minimum level</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="pointState : ${actualAndMinValues}" th:class="${pointState.danger} ? 'table-danger' : (${pointState.warning} ? 'table-warning' : 'table-success')">
+                                    <td th:text="${pointState.measurePoint.id}"></td>
+                                    <td th:text="${pointState.measurePoint.pointName}"></td>
+                                    <td th:text="${pointState.measurePoint.riverName}"></td>
+                                    <td th:text="${pointState.waterState}"></td>
+                                    <td th:text="${pointState.measureDateTime}"></td>
+                                    <td th:text="${pointState.warningValue}"></td>
+                                    <td th:text="${pointState.minimumValue}"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+
+                        </div>
+
+
+                    </th:block>
+
 
                 </div>
 
@@ -86,9 +124,6 @@
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
-</div>
-
 
 </div>
 

@@ -41,14 +41,21 @@ public class BoatController {
 
     @PostMapping ("/add")
     public String add (Boat boat, Principal principal) {
+        Account account = accountService.getByUsername(principal.getName());
         if (boat == null) {
             return "redirect:/account/details";
         }
         if (boat.getAccount() == null ){
-            boat.setAccount(accountService.getByUsername(principal.getName()));
+            boat.setAccount(account);
         }
-        Long id = boatService.save(boat);
-        return "redirect:/boat/details/" + id;
+
+        Long boatId = boatService.save(boat);
+
+        if (account.getDefaultBoat() == null) {
+            account.setDefaultBoat(boatService.getById(boatId));
+            accountService.save(account);
+        }
+        return "redirect:/boat/list";
     }
 
 
@@ -101,5 +108,26 @@ public class BoatController {
             boatService.delete(boatId);
         }
         return "redirect:/account/details";
+    }
+
+    @GetMapping ("/list")
+    public String listAccountBoats(Model model, Principal principal) {
+        List<Boat> boats = boatService.findAllByUsername(principal.getName());
+        Account user = accountService.getByUsername(principal.getName());
+        if (user.getDefaultBoat() != null) {
+            model.addAttribute("defaultBoatId", user.getDefaultBoat().getId());
+        } else {
+            model.addAttribute("defaultBoatId", null);
+        }
+        model.addAttribute("boats", boats);
+        return "boat-list";
+    }
+
+    @GetMapping ("/setDefault/{id}")
+    public String setDefault (Principal principal, @PathVariable (name = "id") Long boatId) {
+        Account account = accountService.getByUsername(principal.getName());
+        account.setDefaultBoat(boatService.getById(boatId));
+        accountService.save(account);
+        return "redirect:/boat/list";
     }
 }

@@ -1,9 +1,11 @@
 package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.Account;
-import com.sda.javagda25.boats.service.AccountRoleService;
-import com.sda.javagda25.boats.service.AccountService;
-import com.sda.javagda25.boats.service.BoatService;
+import com.sda.javagda25.boats.model.Boat;
+import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
+import com.sda.javagda25.boats.model.MeasurePointState;
+import com.sda.javagda25.boats.model.dto.ActualAndMinimumStatesForBoatDto;
+import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -16,8 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Base64;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 @Controller
 @RequestMapping ("/account/")
@@ -26,12 +29,16 @@ public class AccountController {
     private AccountService accountService;
     private AccountRoleService accountRoleService;
     private BoatService boatService;
+    private MeasurePointMinimumValueService measurePointMinimumValueService;
+    private MeasurePointStateService measurePointStateService;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService) {
+    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService, MeasurePointMinimumValueService measurePointMinimumValueService, MeasurePointStateService measurePointStateService) {
         this.accountService = accountService;
         this.accountRoleService = accountRoleService;
         this.boatService = boatService;
+        this.measurePointMinimumValueService = measurePointMinimumValueService;
+        this.measurePointStateService = measurePointStateService;
     }
 
 
@@ -85,9 +92,27 @@ public class AccountController {
     @GetMapping ("/details")
     public String details (Model model, Principal principal) {
         Account account = accountService.getByUsername(principal.getName());
+        List<ActualAndMinimumStatesForBoatDto> actualAndMinimumStates = null;
+
+        if (account.getDefaultBoat() != null) {
+            Boat defaultBoat = account.getDefaultBoat();
+            List<MeasurePointMinimumValue> minValuesOfMeasurePointsForBoat = measurePointMinimumValueService.getByBoat(defaultBoat.getId());
+            actualAndMinimumStates = new ArrayList<>();
+            for (MeasurePointMinimumValue measurePointMinimumValue : minValuesOfMeasurePointsForBoat) {
+                MeasurePointState actualMeasurePointState = measurePointStateService.getActualMeasurePointStateByPointId(measurePointMinimumValue.getMeasurePoint().getId());
+                ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto.Builder()
+                        .withBoat(measurePointMinimumValue.getBoat())
+                        .withMeasurePoint(measurePointMinimumValue.getMeasurePoint())
+                        .withMinimumValue(measurePointMinimumValue.getMinimumValue())
+                        .withWarningValue(measurePointMinimumValue.getWarningValue())
+                        .withMeasureDateTime(actualMeasurePointState.getMeasureDateTime())
+                        .withWaterState(actualMeasurePointState.getWaterState())
+                        .build();
+                actualAndMinimumStates.add(actualAndMinimumStatesForBoatDto);
+            }
+        }
+        model.addAttribute("actualAndMinValues", actualAndMinimumStates);
         model.addAttribute("account", account);
-        model.addAttribute("boats", boatService.findAllByUsername(principal.getName()));
-        model.addAttribute("Base64", Base64.getEncoder());
 
         return "account-details";
     }

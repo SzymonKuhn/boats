@@ -35,7 +35,7 @@
                         <div class="col-md-12">
                             <label for="measurePoint">Choose measure point</label>
                             <select id="measurePoint" th:field="${minValue.measurePoint}">
-                                <option th:each="measurePoint : ${measurePonts}"  th:text="${measurePoint.pointName + ' / ' + measurePoint.riverName}"
+                                <option th:each="measurePoint : ${measurePoints}"  th:text="${measurePoint.pointName + ' / ' + measurePoint.riverName}"
                                         th:value="${measurePoint.id}"></option>
                             </select>
                         </div>

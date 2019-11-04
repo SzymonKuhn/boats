@@ -20,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/index",
                         "/login",
                         "/account/register",
-                        "/styles/**",
+                        "/static/css/**",
                         "/js/**",
                         "/webjars/**").permitAll()
                 .anyRequest().authenticated()

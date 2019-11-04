@@ -10,106 +10,105 @@
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
+
 <div class="container-fluid">
 
-    <div class="container-fluid">
+    <div class="row flex-xl-nowrap">
 
-        <div class="row flex-xl-nowrap">
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
 
-            <div class="col-md-2">
-                <!--<p>sidebar left</p>-->
+        <div class="col-md-8">
+
+            <div class="row bottom-line justify-content-center">
+                <h1><span th:text="${boat.model}"></span></h1>
             </div>
 
-            <div class="col-md-8">
+            <div class="row">
+                <div class="col col-md-3">
 
-                <div class="row justify-content-center">
-                    <h1><span th:text="${boat.model}"></span></h1>
-                </div>
-                <div class="row">
-                    <h4>Immersion: <span th:text="${boat.immersion}"></span></h4>
-                </div>
-                <div class="row">
-                    <div class="col col-md-4">
-                        <div class="row">
-                            <img th:if="${boat.photo != null}"
-                                 th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"
-                                 class="img-fluid" alt="Responsive image"><br>
-                        </div>
-                        <div class="row justify-content-end">
-                            <a th:href="@{'/boat/addPhoto/' + ${boat.id}}">
-                                <button class="btn btn-outline-primary btn-sm">Edit photo</button>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-md-8">
-                        <textarea rows="15" class="container-fluid" th:text="${boat.comment}"></textarea>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <a th:href="@{'/minimumValue/add/' + ${boat.id}}">
-                                    <button class="btn btn-outline-primary btn-sm">Add min value</button>
-                                </a>
-                            </div>
-                            <div class="col-md-4 justify-content-center">
-                                <a th:href="@{'/boat/edit/' + ${boat.id}}">
-                                    <button class="btn btn-outline-primary btn-sm">Edit boat</button>
-                                </a>
-                            </div>
-                            <div class="col-md-4 justify-content-end">
-                                <a th:href="@{'/boat/delete/' + ${boat.id}}">
-                                    <button class="btn btn-outline-primary btn-sm">Delete boat</button>
-                                </a>
-                            </div>
-
-                            <div class="col-md-4 justify-content-end">
-                                <a th:href="@{'/minimumValue/actualStates/' + ${boat.id}}">
-                                    <button class="btn btn-outline-primary btn-sm">Actual states</button>
-                                </a>
-                            </div>
-
-
-
-                        </div>
-                    </div>
-
-                    <div class="row col-md-12">
-                        <h1>Minimum values on measure points for boat</h1>
-
-                        <table class="table table-striped">
-                            <thead>
-                            <tr>
-                                <th scope="col">Id point</th>
-                                <th scope="col">Point name</th>
-                                <th scope="col">River name</th>
-                                <th scope="col">Minimum state</th>
-                                <th scope="col">Warning state</th>
-                                <th scope="col">Edit</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr th:each="minValue : ${minValues}">
-                                <td th:text="${minValue.measurePoint.id}"></td>
-                                <td th:text="${minValue.measurePoint.pointName}"></td>
-                                <td th:text="${minValue.measurePoint.riverName}"></td>
-                                <td th:text="${minValue.minimumValue}"></td>
-                                <td th:text="${minValue.warningValue}"></td>
-                                <td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}"><button class="btn btn-outline-primary">Edit</button></a></td>
-
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    <img th:if="${boat.photo != null}"
+                         th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"
+                         class="img-fluid rounded-pill padding" alt="Responsive image"><br>
 
                 </div>
 
+                <div class="col-md-7">
+                    <div class="row">
+                        <h4 class="padding">Immersion: <span th:text="${boat.immersion}"></span></h4>
+                    </div>
+                    <div class="row">
+                        <p class="padding"><span th:text="${boat.comment}"> </span></p>
+                    </div>
+                </div>
 
+                <div class="row col-md-2">
+                    <a th:href="@{'/boat/addPhoto/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Edit photo</button>
+                    </a>
+
+                    <a th:href="@{'/minimumValue/add/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Add min value</button>
+                    </a>
+
+                    <a th:href="@{'/boat/edit/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Edit boat</button>
+                    </a>
+
+                    <a th:href="@{'/boat/delete/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Delete boat</button>
+                    </a>
+
+                    <a th:href="@{'/minimumValue/actualStates/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-sm btn-block">Actual states</button>
+                    </a>
+
+                </div>
             </div>
-            <div class="col-md-2">
-                <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+
+
+            <div class="row col-md-12">
+                <h3 class="bottom-line">Minimum values defined for boat</h3>
+
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id point</th>
+                        <th scope="col">Point name</th>
+                        <th scope="col">River name</th>
+                        <th scope="col">Minimum state</th>
+                        <th scope="col">Warning state</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="minValue : ${minValues}">
+                        <td th:text="${minValue.measurePoint.id}"></td>
+                        <td th:text="${minValue.measurePoint.pointName}"></td>
+                        <td th:text="${minValue.measurePoint.riverName}"></td>
+                        <td th:text="${minValue.minimumValue}"></td>
+                        <td th:text="${minValue.warningValue}"></td>
+                        <td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}">
+                            <button class="btn btn-outline-primary">Edit</button>
+                        </a></td>
+
+                    </tr>
+                    </tbody>
+                </table>
             </div>
+
+
+        </div>
+
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
 
     </div>
 
+
+</div>
 
 </div>
 

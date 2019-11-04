@@ -39,7 +39,7 @@ public class MeasurePointMinimumValueController {
     public String add (Model model, @PathVariable (name = "id") Long boatId, MeasurePointMinimumValue measurePointMinimumValue) {
         measurePointMinimumValue.setBoat(boatService.getById(boatId));
         model.addAttribute("minValue", measurePointMinimumValue);
-        model.addAttribute("measurePonts", measurePointService.findAllMeasurePoints());
+        model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
         return "minimumValue-add";
     }
 
@@ -61,14 +61,15 @@ public class MeasurePointMinimumValueController {
         List<MeasurePointMinimumValue> minValuesOfMeasurePointsForBoat = measurePointMinimumValueService.getByBoat(boatId);
         List<ActualAndMinimumStatesForBoatDto> actualAndMinimumStates = new ArrayList<>();
         for (MeasurePointMinimumValue measurePointMinimumValue : minValuesOfMeasurePointsForBoat) {
-            ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto();
-            actualAndMinimumStatesForBoatDto.setBoat(boat);
-            actualAndMinimumStatesForBoatDto.setMeasurePoint(measurePointMinimumValue.getMeasurePoint());
-            actualAndMinimumStatesForBoatDto.setMinimumValue(measurePointMinimumValue.getMinimumValue());
-            actualAndMinimumStatesForBoatDto.setWarningValue(measurePointMinimumValue.getWarningValue());
             MeasurePointState actualMeasurePointState = measurePointStateService.getActualMeasurePointStateByPointId(measurePointMinimumValue.getMeasurePoint().getId());
-            actualAndMinimumStatesForBoatDto.setMeasureDateTime(actualMeasurePointState.getMeasureDateTime());
-            actualAndMinimumStatesForBoatDto.setWaterState(actualMeasurePointState.getWaterState());
+            ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto.Builder()
+                    .withBoat(measurePointMinimumValue.getBoat())
+                    .withMeasurePoint(measurePointMinimumValue.getMeasurePoint())
+                    .withMinimumValue(measurePointMinimumValue.getMinimumValue())
+                    .withWarningValue(measurePointMinimumValue.getWarningValue())
+                    .withMeasureDateTime(actualMeasurePointState.getMeasureDateTime())
+                    .withWaterState(actualMeasurePointState.getWaterState())
+                    .build();
             actualAndMinimumStates.add(actualAndMinimumStatesForBoatDto);
         }
         model.addAttribute("actualAndMinValues", actualAndMinimumStates);
