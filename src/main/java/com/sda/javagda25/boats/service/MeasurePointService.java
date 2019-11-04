@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -52,5 +53,17 @@ public class MeasurePointService {
         } else {
             throw new EntityNotFoundException();
         }
+    }
+
+    public List<MeasurePoint> search(String input) {
+        List<MeasurePoint> measurePoints = new ArrayList<>();
+//        try {
+//            Long id = Long.parseLong(input);
+//            measurePoints.addAll(measurePointRepository.findAllByIdIsLike(id));
+//        } catch (NumberFormatException nfe) {
+//            nfe.printStackTrace();
+//        }
+        measurePoints.addAll(measurePointRepository.findAllByPointNameIsLikeOrRiverNameIsLike(input, input));
+        return measurePoints;
     }
 }

@@ -19,7 +19,9 @@
 
         <div class="col-md-8">
 
-            <h1>Measure points states for <span th:text="${boat.model}"></span> </h1>
+            <div class="bottom-line justify-content-center">
+                <h1>Measure points states for <span th:text="${boat.model}"></span></h1>
+            </div>
 
             <table class="table">
                 <thead>
@@ -34,7 +36,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pointState : ${actualAndMinValues}" th:class="${pointState.danger} ? 'table-danger' : (${pointState.warning} ? 'table-warning' : 'table-success')">
+                <tr th:each="pointState : ${actualAndMinValues}"
+                    th:class="${pointState.danger} ? 'table-danger' : (${pointState.warning} ? 'table-warning' : 'table-success')">
                     <td th:text="${pointState.measurePoint.id}"></td>
                     <td th:text="${pointState.measurePoint.pointName}"></td>
                     <td th:text="${pointState.measurePoint.riverName}"></td>
