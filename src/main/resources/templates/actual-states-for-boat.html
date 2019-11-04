@@ -3,7 +3,7 @@
 <head>
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
     <meta charset="UTF-8">
-    <title>Measure points states</title>
+    <title>Measure points states with minimum values</title>
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
@@ -19,24 +19,29 @@
 
         <div class="col-md-8">
 
-            <h1>Measure points states</h1>
+            <h1>Measure points states for <span th:text="${boat.model}"></span> </h1>
 
             <table class="table table-striped">
                 <thead>
                 <tr>
                     <th scope="col">Id point</th>
                     <th scope="col">Point name</th>
-                    <th scope="col">Date time</th>
-                    <th scope="col">state</th>
+                    <th scope="col">River name</th>
+                    <th scope="col">Water state</th>
+                    <th scope="col">Measure date</th>
+                    <th scope="col">Your warning level</th>
+                    <th scope="col">Your minimum level</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="pointState : ${measurePointStates}">
-                    <td th:text="${pointState.idStation}"></td>
-                    <td th:text="${pointState.getMeasurePoint().pointName}"></td>
-                    <td th:text="${pointState.measureDateTime}"></td>
+                <tr th:each="pointState : ${actualAndMinValues}">
+                    <td th:text="${pointState.measurePoint.id}"></td>
+                    <td th:text="${pointState.measurePoint.pointName}"></td>
+                    <td th:text="${pointState.measurePoint.riverName}"></td>
                     <td th:text="${pointState.waterState}"></td>
-                    <!--<td th:text="${pointState.measureDateTime}"></td>-->
+                    <td th:text="${pointState.measureDateTime}"></td>
+                    <td th:text="${pointState.warningValue}"></td>
+                    <td th:text="${pointState.minimumValue}"></td>
                 </tr>
                 </tbody>
             </table>

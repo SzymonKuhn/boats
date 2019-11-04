@@ -15,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class MeasurePointStateService {
@@ -56,6 +57,18 @@ public class MeasurePointStateService {
         return measurePointStateRepository.findAll();
     }
 
+    public List<MeasurePointState> findActualMeasurePointsStates() {
+        return measurePointStateRepository.findLatestStates();
+    }
 
+
+    public MeasurePointState getActualMeasurePointStateByPointId (Long measurePointId) {
+        Optional<MeasurePointState> optionalMeasurePointState = measurePointStateRepository.findLatestStateOfMeasurePoint(measurePointId);
+        if (optionalMeasurePointState.isPresent()) {
+            return optionalMeasurePointState.get();
+        } else {
+            throw new EntityNotFoundException();
+        }
+    }
 
 }

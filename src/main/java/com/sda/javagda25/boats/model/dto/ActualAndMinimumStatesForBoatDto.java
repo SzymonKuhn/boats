@@ -1,31 +1,26 @@
-package com.sda.javagda25.boats.model;
+package com.sda.javagda25.boats.model.dto;
 
-import com.sun.xml.bind.v2.model.core.ID;
+import com.sda.javagda25.boats.model.Boat;
+import com.sda.javagda25.boats.model.MeasurePoint;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.Fetch;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
-@Entity
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeasurePointMinimumValue {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class ActualAndMinimumStatesForBoatDto {
 
+    private Boat boat;
+    private MeasurePoint measurePoint;
     private Integer minimumValue;
     private Integer warningValue;
+    private LocalDateTime measureDateTime;
+    private Integer waterState;
 
-    @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
-    private MeasurePoint measurePoint;
-
-    @ManyToOne (fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
-    @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
-    private Boat boat;
 }

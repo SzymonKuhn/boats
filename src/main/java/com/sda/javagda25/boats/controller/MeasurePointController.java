@@ -44,4 +44,11 @@ public class MeasurePointController {
         return "redirect:/measurePoint/states/list";
     }
 
+    @GetMapping ("/states/latest")
+    public String listLatestStates (Model model) {
+        model.addAttribute("measurePointStates", measurePointStateService.findActualMeasurePointsStates());
+        return "measure-point-states-list";
+    }
+
+
 }

@@ -1,6 +1,9 @@
 package com.sda.javagda25.boats.controller;
 
+import com.sda.javagda25.boats.model.Boat;
 import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
+import com.sda.javagda25.boats.model.MeasurePointState;
+import com.sda.javagda25.boats.model.dto.ActualAndMinimumStatesForBoatDto;
 import com.sda.javagda25.boats.service.BoatService;
 import com.sda.javagda25.boats.service.MeasurePointMinimumValueService;
 import com.sda.javagda25.boats.service.MeasurePointService;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping("/minimumValue/")
@@ -46,10 +52,28 @@ public class MeasurePointMinimumValueController {
     @GetMapping ("/edit/{id}")
     public String edit (@PathVariable (name = "id") Long id, Model model) {
         model.addAttribute("minValue", measurePointMinimumValueService.getById(id));
-        model.addAttribute("measurePonts", measurePointService.findAllMeasurePoints());
-        //todo add measure points
         return "minimumValue-edit";
     }
 
+    @GetMapping ("/actualStates/{boatId}")
+    public String actualStatesForMinValues (Model model, @PathVariable(name = "boatId") Long boatId) {
+        Boat boat = boatService.getById(boatId);
+        List<MeasurePointMinimumValue> minValuesOfMeasurePointsForBoat = measurePointMinimumValueService.getByBoat(boatId);
+        List<ActualAndMinimumStatesForBoatDto> actualAndMinimumStates = new ArrayList<>();
+        for (MeasurePointMinimumValue measurePointMinimumValue : minValuesOfMeasurePointsForBoat) {
+            ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto();
+            actualAndMinimumStatesForBoatDto.setBoat(boat);
+            actualAndMinimumStatesForBoatDto.setMeasurePoint(measurePointMinimumValue.getMeasurePoint());
+            actualAndMinimumStatesForBoatDto.setMinimumValue(measurePointMinimumValue.getMinimumValue());
+            actualAndMinimumStatesForBoatDto.setWarningValue(measurePointMinimumValue.getWarningValue());
+            MeasurePointState actualMeasurePointState = measurePointStateService.getActualMeasurePointStateByPointId(measurePointMinimumValue.getMeasurePoint().getId());
+            actualAndMinimumStatesForBoatDto.setMeasureDateTime(actualMeasurePointState.getMeasureDateTime());
+            actualAndMinimumStatesForBoatDto.setWaterState(actualMeasurePointState.getWaterState());
+            actualAndMinimumStates.add(actualAndMinimumStatesForBoatDto);
+        }
+        model.addAttribute("actualAndMinValues", actualAndMinimumStates);
+        model.addAttribute("boat", boat);
+        return "actual-states-for-boat";
+    }
 
 }
