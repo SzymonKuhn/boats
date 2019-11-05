@@ -12,11 +12,15 @@ import javax.persistence.*;
 public class CharacteristicPoint {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private String comment;
     private boolean isPublic;
+
+    @Enumerated(EnumType.ORDINAL)
+    private PointCategory pointCategory;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
