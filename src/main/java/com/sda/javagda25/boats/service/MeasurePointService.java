@@ -1,5 +1,7 @@
 package com.sda.javagda25.boats.service;
 
+import com.sda.javagda25.boats.model.AddressToLngLat;
+import com.sda.javagda25.boats.model.Location;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
@@ -16,7 +18,9 @@ import java.util.*;
 
 @Service
 public class MeasurePointService {
-    private String UrlAddress = "https://danepubliczne.imgw.pl/api/data/hydro";
+    private String urlMeasurePoints = "https://danepubliczne.imgw.pl/api/data/hydro";
+    private String urlGeolocation = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+    private String apiKey = "&key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A";
 
     @Autowired
     private MeasurePointRepository measurePointRepository;
@@ -26,17 +30,26 @@ public class MeasurePointService {
     private RestTemplate restTemplate;
 
     public void updateMeasurePoints() {
-        ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(UrlAddress,
+        ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(urlMeasurePoints,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<MeasurePointDto>>() {
                 });
 
         List<MeasurePointDto> measurePointDtos = measurePointResponseEntity.getBody();
         for (MeasurePointDto measurePointDto : measurePointDtos) {
             if (!measurePointRepository.existsById(measurePointDto.getId_stacji())) {
-                measurePointRepository.save(new MeasurePoint(measurePointDto));
+                MeasurePoint measurePoint = new MeasurePoint(measurePointDto);
+                measurePoint = addGeolocation(measurePoint);
+                measurePointRepository.save(measurePoint);
+            } else if (measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null ||
+                    measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null) {
+                MeasurePoint measurePoint = measurePointRepository.findById(measurePointDto.getId_stacji()).get();
+                measurePoint = addGeolocation(measurePoint);
+                measurePointRepository.save(measurePoint);
             }
         }
     }
+
+
 
     public List<MeasurePoint> findAllMeasurePoints() {
         return measurePointRepository.findAll();
@@ -69,4 +82,17 @@ public class MeasurePointService {
         }
         return Collections.emptyList();
     }
+
+    private MeasurePoint addGeolocation(MeasurePoint measurePoint) {
+        String url = urlGeolocation + measurePoint.getPointName() + apiKey;
+        ResponseEntity<AddressToLngLat> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, AddressToLngLat.class);
+        AddressToLngLat body = responseEntity.getBody();
+        if (!body.getStatus().equals("ZERO_RESULTS")) {
+            Location location = body.getResults()[0].getGeometry().getLocation();
+            measurePoint.setLat(location.getLat());
+            measurePoint.setLng(location.getLng());
+        }
+        return measurePoint;
+    }
+
 }

@@ -20,6 +20,9 @@ public class MeasurePoint {
 
     private String riverName;
 
+    private String lng;
+    private String lat;
+
     public MeasurePoint (MeasurePointDto measurePointDto) {
         this.id = measurePointDto.getId_stacji();
         this.riverName = measurePointDto.getRzeka();

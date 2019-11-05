@@ -15,11 +15,10 @@ import org.springframework.web.client.RestTemplate;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class MeasurePointStateService {
-    private String UrlAddress = "https://danepubliczne.imgw.pl/api/data/hydro";
+    private String urlMeasurePoints = "https://danepubliczne.imgw.pl/api/data/hydro";
 
     @Autowired
     private MeasurePointRepository measurePointRepository;
@@ -30,7 +29,7 @@ public class MeasurePointStateService {
     private RestTemplate restTemplate;
 
     public void updateMeasurePointsStates() {
-        ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(UrlAddress,
+        ResponseEntity<List<MeasurePointDto>> measurePointResponseEntity = restTemplate.exchange(urlMeasurePoints,
                 HttpMethod.GET, null, new ParameterizedTypeReference<List<MeasurePointDto>>() { });
 
         List<MeasurePointDto> measurePointDtos = measurePointResponseEntity.getBody();
