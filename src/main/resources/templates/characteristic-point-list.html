@@ -26,6 +26,8 @@
                     <th scope="col">Id</th>
                     <th scope="col">Name</th>
                     <th scope="col">Comment</th>
+                    <th scope="col">Longitude</th>
+                    <th scope="col">Latitude</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -33,6 +35,8 @@
                     <td th:text="${point.getId()}"></td>
                     <td th:text="${point.getName()}"></td>
                     <td th:text="${point.getComment()}"></td>
+                    <td th:text="${point.getLng()}"></td>
+                    <td th:text="${point.getLat()}"></td>
                 </tr>
                 </tbody>
             </table>

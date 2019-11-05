@@ -49,8 +49,6 @@ public class MeasurePointService {
         }
     }
 
-
-
     public List<MeasurePoint> findAllMeasurePoints() {
         return measurePointRepository.findAll();
     }

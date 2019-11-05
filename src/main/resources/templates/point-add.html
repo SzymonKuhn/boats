@@ -5,7 +5,7 @@
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
 
     <meta charset="UTF-8">
-    <title>Boat add form</title>
+    <title>Point add form</title>
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
@@ -22,41 +22,66 @@
 
             <div class="col-md-8">
                 <div class="row padding justify-content-center">
-                    <h1>Boat form</h1>
+                    <h1>Point add form</h1>
                 </div>
 
-                <form class="form-group" th:action="@{/boat/add}" th:object="${boat}" method="post">
+                <form class="form-group" th:action="@{/point/add}" th:object="${characteristicPoint}" method="post">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>
 
-                    <input th:type="hidden" th:value="${boat.id}" th:field="${boat.id}">
-                    <input th:type="hidden" th:value="${boat.photo}" th:field="${boat.photo}">
-                    <input th:type="hidden" th:value="${boat.account}" th:field="${boat.account}">
+                    <input th:type="hidden" th:value="${characteristicPoint.id}" th:field="${characteristicPoint.id}">
+                    <input th:type="hidden" th:value="${characteristicPoint.photo}"
+                           th:field="${characteristicPoint.photo}">
+                    <input th:type="hidden" th:value="${characteristicPoint.account}"
+                           th:field="${characteristicPoint.account}">
 
 
                     <div class="row">
                         <div class="col-md-6">
+
                             <div class="row padding">
-                                <label for="model">Model</label>
-                                <input class="form-control" id="model" type="text" th:field="${boat.model}"
-                                       th:value="${boat.model}" placeholder="Model">
+                                <label for="name">Name</label>
+                                <input class="form-control" id="name" type="text" th:field="${characteristicPoint.name}"
+                                       th:value="${characteristicPoint.name}" placeholder="Name">
                             </div>
 
+                            <label for="category">Category</label>
+                            <select class="form-control" id="category" th:field="${characteristicPoint.pointCategory}">
+                                <option th:each="pC : ${pointCategories}" th:text="${pC}" th:value="${pC}"></option>
+                            </select>
+
 
                             <div class="row padding">
-                                <label for="immersion">Immersion</label>
-                                <input class="form-control" id="immersion" type="number" th:field="${boat.immersion}"
-                                       th:value="${boat.immersion}" placeholder="Immersion">
+                                <label for="lng">Longitude</label>
+                                <input class="form-control" id="lng" type="text" th:field="${characteristicPoint.lng}"
+                                       th:value="${characteristicPoint.lng}" placeholder="Longitude">
+                            </div>
+
+                            <div class="row padding">
+                                <label for="lat">Latitude</label>
+                                <input class="form-control" id="lat" type="text" th:field="${characteristicPoint.lat}"
+                                       th:value="${characteristicPoint.lat}" placeholder="Latitude">
+                            </div>
+
+                            <div class="row padding">
+                                <div class="col-12 ml-2">
+                                    <input class="form-check-input" type="checkbox" id="isPublic"
+                                           th:field="${characteristicPoint.public}"
+                                           th:value="${characteristicPoint.public}">
+                                    <label class="form-check-label" for="isPublic">
+                                        is public
+                                    </label>
+                                </div>
                             </div>
                         </div>
-
 
                         <div class="col-md-6">
                             <div class="row padding">
                                 <label for="comment">Comment</label>
-                                <textarea class="form-control" rows="6" id="comment" th:field="${boat.comment}"
-                                          th:value="${boat.comment}" placeholder="comment"></textarea>
+                                <textarea class="form-control" rows="15" id="comment"
+                                          th:field="${characteristicPoint.comment}"
+                                          th:value="${characteristicPoint.comment}" placeholder="Comment"></textarea>
                             </div>
                         </div>
                     </div>
@@ -68,7 +93,7 @@
 
 
                         <div class="col-md-6 justify-content-center">
-                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                            <button type="submit" class="btn btn-primary btn-block">Add point</button>
                         </div>
                     </div>
 

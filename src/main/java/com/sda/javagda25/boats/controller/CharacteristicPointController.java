@@ -3,6 +3,7 @@ package com.sda.javagda25.boats.controller;
 import com.sda.javagda25.boats.model.Account;
 import com.sda.javagda25.boats.model.Boat;
 import com.sda.javagda25.boats.model.CharacteristicPoint;
+import com.sda.javagda25.boats.model.PointCategory;
 import com.sda.javagda25.boats.service.AccountService;
 import com.sda.javagda25.boats.service.CharacteristicPointService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,9 @@ public class CharacteristicPointController {
     }
 
     @GetMapping("/add")
-    public String add (Model model, Boat boat) {
-        model.addAttribute("boat", boat);
+    public String add (Model model) {
+        model.addAttribute("characteristicPoint", new CharacteristicPoint());
+        model.addAttribute("pointCategories", PointCategory.values());
         return "point-add";
     }
 

@@ -19,8 +19,15 @@ public class CharacteristicPoint {
     private String comment;
     private boolean isPublic;
 
+    private String lng;
+    private String lat;
+
     @Enumerated(EnumType.ORDINAL)
     private PointCategory pointCategory;
+
+    @Lob
+    @Column (columnDefinition = "LONGBLOB")
+    private byte[] photo;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
