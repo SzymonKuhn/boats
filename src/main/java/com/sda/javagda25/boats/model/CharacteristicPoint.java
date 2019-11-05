@@ -28,5 +28,4 @@ public class CharacteristicPoint {
     @EqualsAndHashCode.Exclude
     private Account account;
 
-
 }

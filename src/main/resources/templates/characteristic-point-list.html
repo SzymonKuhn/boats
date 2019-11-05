@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+    <meta charset="UTF-8">
+    <title>Characteristic points</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+            <h1>Characteristic points</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Comment</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="point : ${characteristicPoints}">
+                    <td th:text="${point.getId()}"></td>
+                    <td th:text="${point.getName()}"></td>
+                    <td th:text="${point.getComment()}"></td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="row justify-content-end">
+                <a th:href="@{/point/add}">
+                    <button class="btn btn-outline-primary">Add point</button>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+
+</body>
+</html>
