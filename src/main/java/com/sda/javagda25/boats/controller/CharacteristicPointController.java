@@ -12,7 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 
 @Controller
@@ -29,13 +32,22 @@ public class CharacteristicPointController {
     }
 
     @PostMapping("/add")
-    public String add (CharacteristicPoint characteristicPoint, Principal principal) {
+    public String add (CharacteristicPoint characteristicPoint, Principal principal, @RequestParam(value = "file", required = false) MultipartFile file) {
+
         Account account = accountService.getByUsername(principal.getName());
         if (characteristicPoint == null) {
             return "redirect:/account/details";
         }
         if (characteristicPoint.getAccount() == null ){
             characteristicPoint.setAccount(account);
+        }
+
+        if (!file.isEmpty()){
+            try {
+                characteristicPoint.setPhoto(file.getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         characteristicPointService.save(characteristicPoint);
@@ -49,7 +61,6 @@ public class CharacteristicPointController {
         model.addAttribute("pointCategories", PointCategory.values());
         return "point-add";
     }
-
 
     @GetMapping("/list")
     public String listAll (Model model, Principal principal) {

@@ -25,7 +25,7 @@
                     <h1>Point add form</h1>
                 </div>
 
-                <form class="form-group" th:action="@{/point/add}" th:object="${characteristicPoint}" method="post">
+                <form class="form-group" th:action="@{/point/add}" th:object="${characteristicPoint}" method="post" enctype="multipart/form-data">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>
@@ -46,11 +46,13 @@
                                        th:value="${characteristicPoint.name}" placeholder="Name">
                             </div>
 
-                            <label for="category">Category</label>
-                            <select class="form-control" id="category" th:field="${characteristicPoint.pointCategory}">
-                                <option th:each="pC : ${pointCategories}" th:text="${pC}" th:value="${pC}"></option>
-                            </select>
-
+                            <div class="row padding">
+                                <label for="category">Category</label>
+                                <select class="form-control" id="category"
+                                        th:field="${characteristicPoint.pointCategory}">
+                                    <option th:each="pC : ${pointCategories}" th:text="${pC}" th:value="${pC}"></option>
+                                </select>
+                            </div>
 
                             <div class="row padding">
                                 <label for="lng">Longitude</label>
@@ -72,6 +74,18 @@
                                     <label class="form-check-label" for="isPublic">
                                         is public
                                     </label>
+                                </div>
+                            </div>
+
+                            <div class="row padding">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Add photo</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile" >
+                                        <label class="custom-file-label" for="inputGroupFile">Choose file</label>
+                                    </div>
                                 </div>
                             </div>
                         </div>

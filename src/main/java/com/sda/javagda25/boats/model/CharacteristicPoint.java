@@ -4,6 +4,7 @@ import lombok.*;
 import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
+import java.util.Base64;
 
 @Entity
 @Data
@@ -35,4 +36,7 @@ public class CharacteristicPoint {
     @EqualsAndHashCode.Exclude
     private Account account;
 
+    public String getBase64StringPhoto () {
+        return Base64.getEncoder().encodeToString(photo);
+    }
 }
