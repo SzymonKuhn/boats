@@ -1,5 +1,6 @@
 package com.sda.javagda25.boats.controller;
 
+import com.google.gson.Gson;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.service.MeasurePointService;
 import com.sda.javagda25.boats.service.MeasurePointStateService;
@@ -7,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -54,6 +56,14 @@ public class MeasurePointController {
         return "measure-point-states-list";
     }
 
+
+    @GetMapping ("/details/{id}")
+    public String getDetails (Model model, @PathVariable (name = "id") Long id) {
+        MeasurePoint measurePoint = measurePointService.getById(id);
+        model.addAttribute("point", measurePoint);
+        model.addAttribute("pointJson", new Gson().toJson(measurePoint));
+        return "measure-point-details";
+    }
 
 
 

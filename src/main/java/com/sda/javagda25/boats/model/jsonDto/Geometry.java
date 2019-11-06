@@ -1,4 +1,4 @@
-package com.sda.javagda25.boats.model;
+package com.sda.javagda25.boats.model.jsonDto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Geometry {
     private Location location;
+    private String type;
+    private Double[] coordinates;
 }

@@ -3,10 +3,41 @@
 <head>
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
     <meta charset="UTF-8">
-    <title>Measure points</title>
+    <title>Measure point details</title>
+
+
+
+    <script type="text/javascript">
+
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                center: {lat: 51.54071769999999, lng: 14.7974343},
+                zoom: 15,
+                mapTypeId: 'terrain'
+            });
+
+
+
+            var json = map.data.loadGeoJson('http://localhost:8080/feature/151140030');
+            console.log()
+        }
+    </script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A&callback=initMap">
+    </script>
+
 </head>
-<body>
+<body onload="initMap()">
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+<script th:inline="javascript">
+    /*<![CDATA[*/
+    var point =/*[[${point}]]*/ null;
+    console.log(point);
+    /*]]>*/
+
+</script>
 
 
 <div class="container-fluid">
@@ -18,7 +49,7 @@
         </div>
 
         <div class="col-md-8">
-            <h1>Measure points</h1>
+            <h1>Measure point details</h1>
 
             <table class="table table-striped">
                 <thead>
@@ -28,22 +59,27 @@
                     <th scope="col">River</th>
                     <th scope="col">Longitude</th>
                     <th scope="col">Latitude</th>
-                    <th scope="col">Details</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="point : ${measurePoints}">
+                <tr>
                     <td th:text="${point.id}"></td>
                     <td th:text="${point.pointName}"></td>
                     <td th:text="${point.riverName}"></td>
                     <td th:text="${point.lng}"></td>
                     <td th:text="${point.lat}"></td>
-                    <td><a th:href="@{'/measurePoint/details/' + ${point.id}}">
-                        <button class="btn btn-outline-primary">Details</button>
-                    </a></td>
                 </tr>
                 </tbody>
             </table>
+
+            <div class="row" style="height: 500px">
+                <div id="map_canvas" style="height: 100%; width: 100%"></div>
+            </div>
+
+
+
+
+
 
 
 

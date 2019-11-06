@@ -1,7 +1,7 @@
 package com.sda.javagda25.boats.service;
 
-import com.sda.javagda25.boats.model.AddressToLngLat;
-import com.sda.javagda25.boats.model.Location;
+import com.sda.javagda25.boats.model.jsonDto.AddressToLngLat;
+import com.sda.javagda25.boats.model.jsonDto.Location;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
