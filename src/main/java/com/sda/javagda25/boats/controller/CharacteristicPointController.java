@@ -51,10 +51,10 @@ public class CharacteristicPointController {
     }
 
 
-
     @GetMapping("/list")
-    public String listAll (Model model) {
-        model.addAttribute("characteristicPoints", characteristicPointService.findAllCharacteristicPoints());
+    public String listAll (Model model, Principal principal) {
+        Account account = accountService.getByUsername(principal.getName());
+        model.addAttribute("characteristicPoints", characteristicPointService.findAllByAccountIsLike(account));
         return "characteristic-point-list";
     }
 
