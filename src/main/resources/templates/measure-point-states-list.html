@@ -34,9 +34,8 @@
                 <tr th:each="pointState : ${measurePointStates}">
                     <td th:text="${pointState.idStation}"></td>
                     <td th:text="${pointState.getMeasurePoint().pointName}"></td>
-                    <td th:text="${pointState.measureDateTime}"></td>
+                    <td th:text="${#temporals.format(pointState.measureDateTime, 'yyyy-MM-dd HH:mm')}"></td>
                     <td th:text="${pointState.waterState}"></td>
-                    <!--<td th:text="${pointState.measureDateTime}"></td>-->
                 </tr>
                 </tbody>
             </table>

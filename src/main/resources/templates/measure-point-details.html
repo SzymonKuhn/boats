@@ -6,17 +6,13 @@
     <title>Measure point details</title>
 
 
-
     <script type="text/javascript" th:inline="javascript">
-
-
         function initMap() {
 
             /*<![CDATA[*/
             var point =/*[[${point}]]*/ null;
             var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
             /*]]>*/
-
 
 
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -43,9 +39,6 @@
             // });
 
 
-
-
-
         }
     </script>
     <script type="text/javascript"
@@ -57,7 +50,7 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
 <!--<script th:inline="javascript">-->
-    <!---->
+<!---->
 
 <!--</script>-->
 
@@ -109,24 +102,21 @@
                         </thead>
                         <tbody>
                         <tr th:each="pointState : ${states}">
-                            <td th:text="${pointState.measureDateTime}"></td>
+                            <td th:text="${#temporals.format(pointState.measureDateTime, 'yyyy-MM-dd HH:mm')}"></td>
                             <td th:text="${pointState.waterState}"></td>
                         </tr>
                         </tbody>
                     </table>
 
-
                 </div>
             </div>
 
 
-
-
-
-
-
+            <!--<img src="../static/images/arrowGreen.png" height="70" width="70" th:src="@{/images/arrowGreen.png}"/>-->
 
         </div>
+
+
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>

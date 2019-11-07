@@ -42,7 +42,7 @@
                     <td th:text="${pointState.measurePoint.pointName}"></td>
                     <td th:text="${pointState.measurePoint.riverName}"></td>
                     <td th:text="${pointState.waterState}"></td>
-                    <td th:text="${pointState.measureDateTime}"></td>
+                    <td th:text="${#temporals.format(pointState.measureDateTime, 'yyyy-MM-dd HH:mm')}"></td>
                     <td th:text="${pointState.warningValue}"></td>
                     <td th:text="${pointState.minimumValue}"></td>
                 </tr>
