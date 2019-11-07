@@ -6,81 +6,35 @@
 
     <meta charset="UTF-8">
     <title>Main</title>
-    <!--<style>-->
-        <!--/* Always set the map height explicitly to define the size of the div-->
-         <!--* element that contains the map. */-->
-        <!--#map {-->
-            <!--height: 100%;-->
-        <!--}-->
 
-        <!--/* Optional: Makes the sample page fill the window. */-->
-        <!--html, body {-->
-            <!--height: 100%;-->
-            <!--margin: 0;-->
-            <!--padding: 0;-->
-        <!--}-->
-    <!--</style>-->
-
-    <script type="text/javascript">
-
-
-
-
+    <script type="text/javascript" th:inline="javascript">
         function initMap() {
+            /*<![CDATA[*/
+            var points =/*[[${points}]]*/ null;
+            console.log(points);
+            /*]]>*/
+
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
-                center: {lat: 51.54071769999999, lng: 14.7974343},
-                zoom: 3,
+                center: {lat: 52.4344672, lng: 19.9635712},
+                zoom: 6,
                 mapTypeId: 'terrain'
             });
 
-
-            // Create a <script> tag and set the USGS URL as the source.
-            var script = document.createElement('script');
-            // This example uses a local copy of the GeoJSON stored at
-            // http://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/2.5_week.geojsonp
-            script.src = 'http://localhost:8080/feature/all';
-            document.getElementsByTagName('head')[0].appendChild(script);
-        }
-
-        // Loop through the results array and place a marker for each
-        // set of coordinates.
-        window.eqfeed_callback = function(results) {
-            for (var i = 0; i < results.features.length; i++) {
-                var coords = results.features[i].geometry.coordinates;
-                var latLng = new google.maps.LatLng(coords[1],coords[0]);
-                var marker = new google.maps.Marker({
-                    position: latLng,
-                    map: map
+            for (i = 0; i < points.length; i++) {
+                var point = points[i];
+                console.log(point);
+                var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
+                var circle = new google.maps.Circle({
+                    strokeColor: '#ff0000',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 2,
+                    fillColor: '#ff0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: coordinates,
+                    radius: 500
                 });
             }
-
-
-            // for (var feature in featureCollection) {
-            //     // Add the circle for this city to the map.
-            //     var circle = new google.maps.Circle({
-            //         strokeColor: '#FF0000',
-            //         strokeOpacity: 0.8,
-            //         strokeWeight: 2,
-            //         fillColor: '#FF0000',
-            //         fillOpacity: 0.35,
-            //         map: map,
-            //         center: citymap[city].center,
-            //         radius: Math.sqrt(citymap[city].population) * 100
-            //     });
-            // }
-
-
-
-            // var circle = new google.maps.Circle({
-            //     strokeColor: '#FF0000',
-            //     strokeOpacity: 0.8,
-            //     strokeWeight: 2,
-            //     fillColor: '#FF0000',
-            //     fillOpacity: 0.35,
-            //     map: map,
-            //     center: {lat: 51.54071769999999, lng: 14.7974343},
-            //     radius: 250
-            // });
 
         }
     </script>
@@ -104,7 +58,7 @@
         <div class="col-md-8">
             <h1>Main page</h1>
 
-            <div id="map_canvas" style="height: 100%; width: 100%"></div>
+            <div id="map_canvas" style="height: 800px; width: 100%"></div>
 
 
             <th:block sec:authorize="isAuthenticated()">

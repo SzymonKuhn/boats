@@ -61,7 +61,6 @@ public class MeasurePointController {
     public String getDetails (Model model, @PathVariable (name = "id") Long id) {
         MeasurePoint measurePoint = measurePointService.getById(id);
         model.addAttribute("point", measurePoint);
-        model.addAttribute("pointJson", new Gson().toJson(measurePoint));
         return "measure-point-details";
     }
 

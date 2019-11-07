@@ -7,20 +7,45 @@
 
 
 
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
 
 
         function initMap() {
+
+            /*<![CDATA[*/
+            var point =/*[[${point}]]*/ null;
+            var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
+            /*]]>*/
+
+
+
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
-                center: {lat: 51.54071769999999, lng: 14.7974343},
+                center: coordinates,
                 zoom: 15,
                 mapTypeId: 'terrain'
             });
 
+            var circle = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: coordinates,
+                radius: 200
+            });
+
+            // var marker = new google.maps.Marker({
+            //     position: coordinates,
+            //     map: map,
+            //     title: 'Hello World!'
+            // });
 
 
-            var json = map.data.loadGeoJson('http://localhost:8080/feature/151140030');
-            console.log()
+
+
+
         }
     </script>
     <script type="text/javascript"
@@ -31,13 +56,10 @@
 <body onload="initMap()">
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
-<script th:inline="javascript">
-    /*<![CDATA[*/
-    var point =/*[[${point}]]*/ null;
-    console.log(point);
-    /*]]>*/
+<!--<script th:inline="javascript">-->
+    <!---->
 
-</script>
+<!--</script>-->
 
 
 <div class="container-fluid">
@@ -72,8 +94,8 @@
                 </tbody>
             </table>
 
-            <div class="row" style="height: 500px">
-                <div id="map_canvas" style="height: 100%; width: 100%"></div>
+            <div class="row" style="height: 600px">
+                <div id="map_canvas" style="height: 100%; width: 600px"></div>
             </div>
 
 
