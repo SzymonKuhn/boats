@@ -48,20 +48,12 @@
                         <button class="btn btn-outline-primary btn-sm btn-block">Edit photo</button>
                     </a>
 
-                    <a th:href="@{'/minimumValue/add/' + ${boat.id}}">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Add min value</button>
-                    </a>
-
                     <a th:href="@{'/boat/edit/' + ${boat.id}}">
                         <button class="btn btn-outline-primary btn-sm btn-block">Edit boat</button>
                     </a>
 
                     <a th:href="@{'/boat/delete/' + ${boat.id}}">
                         <button class="btn btn-outline-primary btn-sm btn-block">Delete boat</button>
-                    </a>
-
-                    <a th:href="@{'/minimumValue/actualStates/' + ${boat.id}}">
-                        <button class="btn btn-outline-primary btn-sm btn-block">Actual states</button>
                     </a>
 
                 </div>
@@ -80,6 +72,7 @@
                         <th scope="col">Minimum state</th>
                         <th scope="col">Warning state</th>
                         <th scope="col">Edit</th>
+                        <th scope="col">Details</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -92,10 +85,18 @@
                         <td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}">
                             <button class="btn btn-outline-primary">Edit</button>
                         </a></td>
+                        <td><a th:href="@{'/measurePoint/details/' + ${minValue.measurePoint.id}}">
+                            <button class="btn btn-outline-primary">Details</button>
+                        </a></td>
 
                     </tr>
                     </tbody>
                 </table>
+                <div class="row">
+                    <a th:href="@{'/minimumValue/add/' + ${boat.id}}">
+                        <button class="btn btn-outline-primary btn-block">Add min value</button>
+                    </a>
+                </div>
             </div>
 
 

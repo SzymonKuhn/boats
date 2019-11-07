@@ -16,6 +16,7 @@ import java.util.Set;
 @Repository
 public interface MeasurePointStateRepository extends JpaRepository <MeasurePointState, Long> {
     boolean existsByIdStationAndMeasureDateTime (Long idStation, LocalDateTime localDateTime);
+    List<MeasurePointState> findAllByMeasurePointOrderByMeasureDateTimeDesc (MeasurePoint measurePoint);
 
     @Query (value = "select id, measure_point_id, water_state, id_station, max(measure_date_time) as measure_date_time from measure_point_state group by measure_point_id", nativeQuery = true)
     List<MeasurePointState> findLatestStates();

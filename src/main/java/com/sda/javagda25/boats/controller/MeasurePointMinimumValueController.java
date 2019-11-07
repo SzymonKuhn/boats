@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/minimumValue/")
@@ -43,9 +44,17 @@ public class MeasurePointMinimumValueController {
 
     @PostMapping("/add")
     public String add(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
-        if (measurePointMinimumValue.getMinimumValue() > measurePointMinimumValue.getWarningValue()) {
-            model.addAttribute("errorMessage", "Warning value shouldn't be less then minimum value");
+        List<MeasurePointMinimumValue> measurePointsAlreadyDefinedForBoat = measurePointMinimumValueService.getByBoat(measurePointMinimumValue.getBoat().getId());
+        List<Long> idsOfMeasurePointsAlreadyDefinedForBoat = measurePointsAlreadyDefinedForBoat.stream()
+                .map(p -> p.getMeasurePoint().getId())
+                .collect(Collectors.toList());
+        if (idsOfMeasurePointsAlreadyDefinedForBoat.contains(measurePointMinimumValue.getMeasurePoint().getId())) {
+            model.addAttribute("errorMessage", "Boat already has defined minimum values for that measure point");
+            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
             model.addAttribute("minValue", measurePointMinimumValue);
+            return "minimumValue-add";
+        }
+        if (warningValueIsLessThenMinimumValue(measurePointMinimumValue, model)){
             return "minimumValue-add";
         }
         measurePointMinimumValueService.save(measurePointMinimumValue);
@@ -58,6 +67,17 @@ public class MeasurePointMinimumValueController {
         return "minimumValue-edit";
     }
 
+    @PostMapping ("/edit")
+    public String edit (MeasurePointMinimumValue measurePointMinimumValue, Model model) {
+        if (warningValueIsLessThenMinimumValue(measurePointMinimumValue, model)) {
+            return "minimumValue-add";
+        }
+        measurePointMinimumValueService.save(measurePointMinimumValue);
+        return "redirect:/boat/details/" + measurePointMinimumValue.getBoat().getId();
+    }
+
+
+
     @GetMapping("/actualStates/{boatId}")
     public String actualStatesForMinValues(Model model, @PathVariable(name = "boatId") Long boatId) {
         Boat boat = boatService.getById(boatId);
@@ -66,7 +86,7 @@ public class MeasurePointMinimumValueController {
         for (MeasurePointMinimumValue measurePointMinimumValue : minValuesOfMeasurePointsForBoat) {
             MeasurePointState actualMeasurePointState = measurePointStateService.getActualMeasurePointStateByPointId(measurePointMinimumValue.getMeasurePoint().getId());
             ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto.Builder()
-                    .withBoat(measurePointMinimumValue.getBoat())
+                    .withBoatId(measurePointMinimumValue.getBoat().getId())
                     .withMeasurePoint(measurePointMinimumValue.getMeasurePoint())
                     .withMinimumValue(measurePointMinimumValue.getMinimumValue())
                     .withWarningValue(measurePointMinimumValue.getWarningValue())
@@ -101,5 +121,15 @@ public class MeasurePointMinimumValueController {
         model.addAttribute("minValue", minValue);
         model.addAttribute("measurePoints", measurePoints);
         return "minimumValue-add";
+    }
+
+    private boolean warningValueIsLessThenMinimumValue(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
+        if (measurePointMinimumValue.getMinimumValue() > measurePointMinimumValue.getWarningValue()) {
+            model.addAttribute("errorMessage", "Warning value shouldn't be less then minimum value");
+            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
+            model.addAttribute("minValue", measurePointMinimumValue);
+            return true;
+        }
+        return false;
     }
 }

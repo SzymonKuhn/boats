@@ -6,8 +6,52 @@
 
     <meta charset="UTF-8">
     <title>Login from</title>
+
+    <script type="text/javascript" th:inline="javascript">
+        function initMap() {
+            /*<![CDATA[*/
+            var points =/*[[${actualAndMinValues}]]*/ null;
+            console.log(points);
+            /*]]>*/
+
+            var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                center: {lat: 52.4344672, lng: 19.9635712},
+                zoom: 6,
+                mapTypeId: 'terrain'
+            });
+
+            for (i = 0; i < points.length; i++) {
+                var point = points[i];
+                console.log(point);
+                var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
+                var color;
+                if (point.danger) {
+                    color = '#ff0000'
+                } else if (point.warning) {
+                    color = '#ffe000'
+                } else {
+                    color = '#00b413'
+                }
+
+                var circle = new google.maps.Circle({
+                    strokeColor: '#1d1d1d',
+                    strokeOpacity: 1,
+                    strokeWeight: 1,
+                    fillColor: color,
+                    fillOpacity: 0.65,
+                    map: map,
+                    center: coordinates,
+                    radius: 2000
+                });
+            }
+
+        }
+    </script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A&callback=initMap">
+    </script>
 </head>
-<body>
+<body onload="initMap()">
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
 <div class="container-fluid">
@@ -79,6 +123,8 @@
                         <div class="row bottom-line">
 
                             <h4>Measure points states for default boat</span> </h4>
+
+                            <div id="map_canvas" style="height: 600px; width: 100%"></div>
 
                             <table class="table">
                                 <thead>

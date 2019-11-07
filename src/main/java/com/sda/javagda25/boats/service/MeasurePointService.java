@@ -76,7 +76,7 @@ public class MeasurePointService {
             Long id = Long.parseLong(input);
             return measurePointRepository.findAllByIdIsLike(id);
         } catch (NumberFormatException nfe) {
-            nfe.printStackTrace();
+            nfe.getMessage();
         }
         return Collections.emptyList();
     }

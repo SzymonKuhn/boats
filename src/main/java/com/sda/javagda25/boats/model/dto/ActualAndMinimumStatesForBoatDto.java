@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ActualAndMinimumStatesForBoatDto {
 
-    private Boat boat;
+    private Long boatId;
     private MeasurePoint measurePoint;
     private Integer minimumValue;
     private Integer warningValue;
@@ -24,10 +24,12 @@ public class ActualAndMinimumStatesForBoatDto {
     private Integer waterState;
     private boolean isDanger;
     private boolean isWarning;
+    private String lng;
+    private String lat;
 
 
     public static class Builder {
-        private Boat boat;
+        private Long boatId;
         private MeasurePoint measurePoint;
         private Integer minimumValue;
         private Integer warningValue;
@@ -35,9 +37,11 @@ public class ActualAndMinimumStatesForBoatDto {
         private Integer waterState;
         private boolean isDanger;
         private boolean isWarning;
+        private String lng;
+        private String lat;
 
-        public Builder withBoat(Boat boat) {
-            this.boat = boat;
+        public Builder withBoatId(Long boatId) {
+            this.boatId = boatId;
             return this;
         }
 
@@ -64,9 +68,20 @@ public class ActualAndMinimumStatesForBoatDto {
             this.waterState = waterState;
             return this;
         }
+        public Builder withLng (String lng) {
+            this.lng = lng;
+            return this;
+        }
+        public Builder withLat (String lat) {
+            this.lat = lat;
+            return this;
+        }
+
+
 
         public ActualAndMinimumStatesForBoatDto build () {
-            return new ActualAndMinimumStatesForBoatDto(boat, measurePoint, minimumValue, warningValue, measureDateTime, waterState, waterState < minimumValue, waterState < warningValue);
+            return new ActualAndMinimumStatesForBoatDto(boatId, measurePoint, minimumValue, warningValue, measureDateTime,
+                    waterState, waterState < minimumValue, waterState < warningValue, lng, lat);
         }
 
     }

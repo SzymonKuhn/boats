@@ -18,6 +18,26 @@
         </div>
 
         <div class="col-md-8">
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div th:if="${errorMessage != null}">
+                        <div class="alert alert-primary padding" role="alert" th:text="${errorMessage}"></div>
+                    </div>
+                </div>
+                <div class="col-md-6 justify-content-end">
+                    <nav class="navbar navbar-light">
+                        <form class="form-inline my-2 my-lg-0" th:action="@{/measurePoint/searchMeasurePoints}"
+                              th:method="post">
+                            <input class="form-control mr-sm-2" name="input" type="search"
+                                   placeholder="Search">
+                            <button class="btn btn-outline-primary" type="submit">Search</button>
+                        </form>
+                    </nav>
+                </div>
+            </div>
+
+
             <h1>Measure points</h1>
 
             <table class="table table-striped">

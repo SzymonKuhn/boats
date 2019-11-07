@@ -2,6 +2,7 @@ package com.sda.javagda25.boats.controller;
 
 import com.google.gson.Gson;
 import com.sda.javagda25.boats.model.MeasurePoint;
+import com.sda.javagda25.boats.model.MeasurePointState;
 import com.sda.javagda25.boats.service.MeasurePointService;
 import com.sda.javagda25.boats.service.MeasurePointStateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/measurePoint/")
@@ -60,8 +62,24 @@ public class MeasurePointController {
     @GetMapping ("/details/{id}")
     public String getDetails (Model model, @PathVariable (name = "id") Long id) {
         MeasurePoint measurePoint = measurePointService.getById(id);
+        List<MeasurePointState> states = measurePointStateService.findMeasurePointStatesByPointId(measurePoint).stream()
+                .limit(10)
+                .collect(Collectors.toList());
+        model.addAttribute("states", states);
         model.addAttribute("point", measurePoint);
         return "measure-point-details";
+    }
+
+    @PostMapping ("/searchMeasurePoints")
+    public String search (String input, Model model) {
+        List<MeasurePoint> measurePoints = measurePointService.search(input);
+        if (measurePoints.isEmpty()) {
+            model.addAttribute("errorMessage", "No records found.");
+            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
+            return "measure-point-list";
+        }
+        model.addAttribute("measurePoints", measurePoints);
+        return "measure-point-list";
     }
 
 

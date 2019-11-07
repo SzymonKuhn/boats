@@ -70,4 +70,8 @@ public class MeasurePointStateService {
         }
     }
 
+    public List<MeasurePointState> findMeasurePointStatesByPointId (MeasurePoint measurePoint) {
+        return measurePointStateRepository.findAllByMeasurePointOrderByMeasureDateTimeDesc(measurePoint);
+    }
+
 }

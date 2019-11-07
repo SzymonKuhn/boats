@@ -27,7 +27,7 @@
                     </h3>
                 </div>
 
-                <form class="form-group" th:action="@{/minimumValue/add}" th:object="${minValue}" th:method="post">
+                <form class="form-group" th:action="@{/minimumValue/edit}" th:object="${minValue}" th:method="post">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>

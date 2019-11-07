@@ -1,9 +1,6 @@
 package com.sda.javagda25.boats.controller;
 
-import com.sda.javagda25.boats.model.Account;
-import com.sda.javagda25.boats.model.Boat;
-import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
-import com.sda.javagda25.boats.model.MeasurePointState;
+import com.sda.javagda25.boats.model.*;
 import com.sda.javagda25.boats.model.dto.ActualAndMinimumStatesForBoatDto;
 import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,14 +28,16 @@ public class AccountController {
     private BoatService boatService;
     private MeasurePointMinimumValueService measurePointMinimumValueService;
     private MeasurePointStateService measurePointStateService;
+    private MeasurePointService measurePointService;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService, MeasurePointMinimumValueService measurePointMinimumValueService, MeasurePointStateService measurePointStateService) {
+    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService, MeasurePointMinimumValueService measurePointMinimumValueService, MeasurePointStateService measurePointStateService, MeasurePointService measurePointService) {
         this.accountService = accountService;
         this.accountRoleService = accountRoleService;
         this.boatService = boatService;
         this.measurePointMinimumValueService = measurePointMinimumValueService;
         this.measurePointStateService = measurePointStateService;
+        this.measurePointService = measurePointService;
     }
 
 
@@ -100,13 +99,16 @@ public class AccountController {
             actualAndMinimumStates = new ArrayList<>();
             for (MeasurePointMinimumValue measurePointMinimumValue : minValuesOfMeasurePointsForBoat) {
                 MeasurePointState actualMeasurePointState = measurePointStateService.getActualMeasurePointStateByPointId(measurePointMinimumValue.getMeasurePoint().getId());
+                MeasurePoint measurePoint = measurePointService.getById(actualMeasurePointState.getIdStation());
                 ActualAndMinimumStatesForBoatDto actualAndMinimumStatesForBoatDto = new ActualAndMinimumStatesForBoatDto.Builder()
-                        .withBoat(measurePointMinimumValue.getBoat())
+                        .withBoatId(measurePointMinimumValue.getBoat().getId())
                         .withMeasurePoint(measurePointMinimumValue.getMeasurePoint())
                         .withMinimumValue(measurePointMinimumValue.getMinimumValue())
                         .withWarningValue(measurePointMinimumValue.getWarningValue())
                         .withMeasureDateTime(actualMeasurePointState.getMeasureDateTime())
                         .withWaterState(actualMeasurePointState.getWaterState())
+                        .withLat(measurePoint.getLat())
+                        .withLng(measurePoint.getLng())
                         .build();
                 actualAndMinimumStates.add(actualAndMinimumStatesForBoatDto);
             }
