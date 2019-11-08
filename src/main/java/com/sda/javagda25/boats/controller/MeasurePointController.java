@@ -2,6 +2,7 @@ package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.*;
 import com.sda.javagda25.boats.model.dto.BoatWithMinimumValueAndActualStateDto;
+import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
 import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,7 +38,8 @@ public class MeasurePointController {
 
     @GetMapping ("/list")
     public String listAll (Model model) {
-        model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
+        List<MeasurePointWithTendencyDto> measurePointsWithTendency = measurePointService.getMeasurePointsWithTendency();
+        model.addAttribute("measurePoints", measurePointsWithTendency);
         return "measure-point-list";
     }
 

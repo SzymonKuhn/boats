@@ -1,5 +1,7 @@
 package com.sda.javagda25.boats.service;
 
+import com.sda.javagda25.boats.model.MeasurePointState;
+import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
 import com.sda.javagda25.boats.model.jsonDto.AddressToLngLat;
 import com.sda.javagda25.boats.model.jsonDto.Location;
 import com.sda.javagda25.boats.model.MeasurePoint;
@@ -15,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class MeasurePointService {
@@ -71,6 +74,39 @@ public class MeasurePointService {
         return measurePoints;
     }
 
+    public List<MeasurePointWithTendencyDto> getMeasurePointsWithTendency() {
+        List<MeasurePointWithTendencyDto> measurePointWithTendencyList = new ArrayList<>();
+        List<MeasurePoint> measurePointsWithCoordinates = measurePointRepository.findAll().stream()
+                .filter(p -> p.getLng() != null && p.getLat() != null)
+                .collect(Collectors.toList());
+
+        for (MeasurePoint measurePoint : measurePointsWithCoordinates) {
+            MeasurePointWithTendencyDto measurePointWithTendencyDto = new MeasurePointWithTendencyDto();
+            measurePointWithTendencyDto.setId(measurePoint.getId());
+            measurePointWithTendencyDto.setLat(measurePoint.getLat());
+            measurePointWithTendencyDto.setLng(measurePoint.getLng());
+            measurePointWithTendencyDto.setPointName(measurePoint.getPointName());
+            measurePointWithTendencyDto.setRiverName(measurePoint.getRiverName());
+
+            List<MeasurePointState> states = measurePointStateRepository.findAllByMeasurePointOrderByMeasureDateTimeDesc(measurePoint);
+            if (states.size() > 1){
+                if (states.get(0).getWaterState() > states.get(1).getWaterState()) {
+                    measurePointWithTendencyDto.setUpTendency(true);
+                    measurePointWithTendencyDto.setDownTendency(false);
+                } else if (states.get(0).getWaterState() < states.get(1).getWaterState()) {
+                    measurePointWithTendencyDto.setUpTendency(false);
+                    measurePointWithTendencyDto.setDownTendency(true);
+                } else {
+                    measurePointWithTendencyDto.setUpTendency(false);
+                    measurePointWithTendencyDto.setDownTendency(false);
+                }
+                measurePointWithTendencyList.add(measurePointWithTendencyDto);
+            }
+        }
+        return measurePointWithTendencyList;
+    }
+
+
     private List<MeasurePoint> tryFindMeasurePointByStringId(String input) { //todo how to find object by part of id?
         try {
             Long id = Long.parseLong(input);
@@ -92,5 +128,6 @@ public class MeasurePointService {
         }
         return measurePoint;
     }
+
 
 }

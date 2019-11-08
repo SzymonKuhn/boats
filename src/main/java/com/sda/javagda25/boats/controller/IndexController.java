@@ -1,7 +1,9 @@
 package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.MeasurePoint;
+import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
+import com.sda.javagda25.boats.service.MeasurePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,14 +16,18 @@ import java.util.stream.Collectors;
 @Controller
 public class IndexController {
     @Autowired
-    MeasurePointRepository measurePointRepository;
+    private MeasurePointRepository measurePointRepository;
+    @Autowired
+    private MeasurePointService measurePointService;
 
     @GetMapping ("/index")
     public String getIndex (Principal principal, Model model) {
-        List<MeasurePoint> measurePointsWithCoordinates = measurePointRepository.findAll().stream()
-                .filter(p -> p.getLng() != null && p.getLat() != null)
-                .collect(Collectors.toList());
-        model.addAttribute("points", measurePointsWithCoordinates);
+
+
+        List<MeasurePointWithTendencyDto> measurePointsWithTendency = measurePointService.getMeasurePointsWithTendency();
+
+
+        model.addAttribute("points", measurePointsWithTendency);
         if (principal!=null) {
             model.addAttribute("username", principal.getName());
         }

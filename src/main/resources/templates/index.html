@@ -23,17 +23,61 @@
             for (i = 0; i < points.length; i++) {
                 var point = points[i];
                 console.log(point);
+                var up = point.upTendency;
+                var down = point.downTendency;
                 var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
-                var circle = new google.maps.Circle({
-                    strokeColor: '#ff0000',
-                    strokeOpacity: 0.8,
-                    strokeWeight: 2,
-                    fillColor: '#ff0000',
-                    fillOpacity: 0.35,
-                    map: map,
-                    center: coordinates,
-                    radius: 500
-                });
+                // var circle = new google.maps.Circle({
+                //     strokeColor: '#ff0000',
+                //     strokeOpacity: 0.8,
+                //     strokeWeight: 2,
+                //     fillColor: '#ff0000',
+                //     fillOpacity: 0.35,
+                //     map: map,
+                //     center: coordinates,
+                //     radius: 500
+                // });
+                if (up) {
+                    var marker = new google.maps.Marker({
+                        position: coordinates,
+                        icon: {
+                            path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW,
+                            scale: 3,
+                            fillColor: '#00b413',
+                            fillOpacity: 0.55,
+                            strokeColor: '#00b413'
+                        },
+                        draggable: false,
+                        map: map
+                    });
+                } else if (down) {
+                    var marker = new google.maps.Marker({
+                        position: coordinates,
+                        icon: {
+                            path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                            scale: 3,
+                            fillColor: '#ff0000',
+                            fillOpacity: 0.55,
+                            strokeColor: '#ff0000'
+                        },
+                        draggable: false,
+                        map: map
+                    });
+                } else {
+                    var marker = new google.maps.Marker({
+                        position: coordinates,
+                        icon: {
+                            path: google.maps.SymbolPath.CIRCLE,
+                            scale: 4,
+                            fillColor: '#0008ff',
+                            fillOpacity: 0.55,
+                            strokeColor: '#0008ff'
+                        },
+                        draggable: false,
+                        map: map
+                    });
+                }
+
+
             }
 
         }
@@ -56,16 +100,17 @@
         </div>
 
         <div class="col-md-8">
-            <h1>Main page</h1>
+            <th:block sec:authorize="!isAuthenticated()">
+                <h1>Hello, please log in.</h1>
+            </th:block>
+
+            <th:block sec:authorize="isAuthenticated()">
+                <h1>Hello, <span th:text="${username}"></span></h1>
+            </th:block>
 
             <div id="map_canvas" style="height: 800px; width: 100%"></div>
 
 
-            <th:block sec:authorize="isAuthenticated()">
-
-                <h1><span th:text="${username}"></span></h1>
-
-            </th:block>
         </div>
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
