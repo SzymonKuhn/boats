@@ -89,7 +89,7 @@
 
             <div class="row" style="height: 600px">
                 <div class="col-md-6">
-                    <div id="map_canvas" style="height: 100%; width: 600px"></div>
+                    <div id="map_canvas" style="height: 90%; width: 90%"></div>
                 </div>
                 <div class="col-md-6">
                     <h3>Latest water states</h3>
@@ -107,15 +107,61 @@
                         </tr>
                         </tbody>
                     </table>
-
                 </div>
             </div>
 
+            <div class="row">
+                <th:block th:if="${boats != null && !boats.isEmpty()}">
+                    <div class="row row-boat-list border" th:each="boatWithMinValues : ${boats}">
 
-            <!--<img src="../static/images/arrowGreen.png" height="70" width="70" th:src="@{/images/arrowGreen.png}"/>-->
+                        <div class="col col-md-3">
+                            <div class="row">
+                                <img th:if="${boatWithMinValues.boat.photo == null || boatWithMinValues.boat.photo.length < 1}"
+                                     src="../static/images/defaultboatimg.jpg" th:src="@{/images/defaultboatimg.jpg}"
+                                     class="img-fluid img-max-height rounded-lg padding border"/>
+                                <img th:if="${boatWithMinValues.boat.photo != null && boatWithMinValues.boat.photo.length > 1}"
+                                     th:src="@{'data:image/png;base64,' + ${boatWithMinValues.boat.getBase64StringPhoto()}}"
+                                     class="img-fluid img-max-height rounded-lg padding border"/>
+                            </div>
+                        </div>
 
+                        <div class="col-md-6">
+                            <div class="row padding">
+                                <h4>Model: <span th:text="${boatWithMinValues.boat.model}"></span></h4>
+                            </div>
+                            <div class="row padding">
+                                <h5>Warning value for this boat:<span
+                                        th:text="${boatWithMinValues.warningValue}"> </span></h5>
+                                <h5>Minimum walue for this boat: <span
+                                        th:text="${boatWithMinValues.minimumValue}"> </span></h5>
+                            </div>
+                        </div>
+
+                        <div class="col col-md-2 align-items-center">
+                            <div class="row ">
+                                <div class="col">
+                                    <img th:if="${actualState > boatWithMinValues.warningValue}"
+                                         src="../static/images/greenlight.png" th:src="@{/images/greenlight.png}"
+                                         style="height: 160px; width: auto"/>
+                                    <img th:if="${actualState <= boatWithMinValues.warningValue && actualState > boatWithMinValues.minimumValue}"
+                                         src="../static/images/yellowlight.png" th:src="@{/images/yellowlight.png}"
+                                         style="height: 160px; width: auto"/>
+                                    <img th:if="${actualState <= boatWithMinValues.minimumValue}"
+                                         src="../static/images/redlight.png" th:src="@{/images/redlight.png}"
+                                         style="height: 160px; width: auto"/>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </th:block>
+                <th:block th:if="${boats == null || boats.isEmpty()}">
+                    <h3>You have not defined minimum values for that measure point for any of your boats</h3>
+                </th:block>
+
+            </div>
         </div>
-
 
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>

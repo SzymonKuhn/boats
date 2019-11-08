@@ -89,7 +89,6 @@ public class BoatController {
         Boat boat = boatService.getById(boatId);
         List<MeasurePointMinimumValue> minValues = measurePointMinimumValueService.getByBoat(boatId);
         model.addAttribute("boat", boat);
-        model.addAttribute("Base64", Base64.getEncoder());
         model.addAttribute("minValues", minValues);
         return "boat-details";
     }
@@ -104,8 +103,13 @@ public class BoatController {
     @GetMapping ("/delete/{id}")
     public String delete (@PathVariable (name = "id") Long boatId, Principal principal) {
         Boat boat = boatService.getById(boatId);
-        if (boat.getAccount().getUsername().equals(principal.getName())) {
+        Account account = accountService.getByUsername(principal.getName());
+        if (boat.getAccount().getUsername().equals(account.getUsername())) {
             boatService.delete(boatId);
+            if (account.getDefaultBoat().getId() == boatId) {
+                account.setDefaultBoat(null);
+                accountService.save(account);
+            }
         }
         return "redirect:/account/details";
     }

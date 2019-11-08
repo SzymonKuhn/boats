@@ -1,5 +1,6 @@
 package com.sda.javagda25.boats.service;
 
+import com.sda.javagda25.boats.model.Boat;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
 import com.sda.javagda25.boats.model.dto.MeasurePointDto;
@@ -29,10 +30,9 @@ public class MeasurePointMinimumValueService {
         return listMinimumValues;
     }
 
-    public List<MeasurePointMinimumValue> getByBoatAndMeasurePoint (Long boatId, Long measurePointId) {
-        List<MeasurePointMinimumValue> listMinimumValues = new ArrayList<>();
-        listMinimumValues.addAll(measurePointMinimumValueRepository.findAllByBoatAndMeasurePoint(boatId, measurePointId));
-        return listMinimumValues;
+    public Optional<MeasurePointMinimumValue> getByBoatAndMeasurePoint (Boat boat, MeasurePoint measurePoint) {
+        Optional<MeasurePointMinimumValue> optional = measurePointMinimumValueRepository.findByBoatAndAndMeasurePoint(boat, measurePoint);
+        return optional;
     }
 
     public void save (MeasurePointMinimumValue measurePointMinimumValue) {

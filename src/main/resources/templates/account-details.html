@@ -65,9 +65,16 @@
         <div class="col-md-8">
             <div class="row">
                 <div class="col-md-3">
-                    <img th:if="${account.photo != null}"
-                         th:src="@{'data:image/png;base64,' + ${(account.getBase64StringPhoto())}}"
-                         class="img-fluid rounded-circle" alt="Responsive image"><br>
+                    <img th:if="${account.photo == null || account.photo.length < 1}"
+                         src="../static/images/defaultUserImg.jpg" th:src="@{/images/defaultUserImg.jpg}"
+                         class="img-fluid rounded-lg padding border"/>
+                    <img th:if="${account.photo != null && account.photo.length > 1}"
+                         th:src="@{'data:image/png;base64,' + ${account.getBase64StringPhoto()}}"
+                         class="img-fluid rounded-lg padding border"/>
+                    <!--<img th:if="${account.photo != null}"-->
+                    <!--th:src="@{'data:image/png;base64,' + ${(account.getBase64StringPhoto())}}"-->
+                    <!--class="img-fluid rounded-circle" alt="Responsive image"><br>-->
+
                     <h5><span th:text="${account.firstName} + ' ' + ${account.lastName}"></span></h5><br>
                     <h5><span th:text="${account.phoneNumber}"></span></h5><br>
                     <h5><span th:text="${account.email}"></span></h5><br>
@@ -97,35 +104,44 @@
                         <div class="row justify-content-center">
                             <h3> Your default boat:</h3>
                         </div>
-                        <div class="row">
+                        <div class="row row-boat-list border">
                             <div class="col col-md-3">
                                 <div class="row">
-                                    <img th:if="${account.defaultBoat.photo != null}"
-                                         th:src="@{'data:image/png;base64,' + ${(account.defaultBoat.getBase64StringPhoto())}}"
-                                         class="img-fluid rounded-pill padding" alt="Responsive image"><br>
+                                    <img th:if="${account.defaultBoat.photo == null || account.defaultBoat.photo.length < 1}"
+                                         src="../static/images/defaultboatimg.jpg"
+                                         th:src="@{/images/defaultboatimg.jpg}"
+                                         class="img-fluid rounded-lg padding border"/>
+                                    <img th:if="${account.defaultBoat.photo != null && account.defaultBoat.photo.length > 1}"
+                                         th:src="@{'data:image/png;base64,' + ${account.defaultBoat.getBase64StringPhoto()}}"
+                                         class="img-fluid rounded-lg padding border"/>
                                 </div>
                             </div>
 
                             <div class="col-md-7">
-                                <div class="row">
-                                    <h4 class="padding">Model: <span th:text="${account.defaultBoat.model}"></span></h4>
+                                <div class="row padding">
+                                    <h4>Model: <span th:text="${account.defaultBoat.model}"></span></h4>
                                 </div>
                                 <!--<div class="row">-->
-                                    <!--<p class="font-weight-bold">Immersion: <span-->
-                                            <!--th:text="${account.defaultBoat.immersion}"></span></p>-->
+                                <!--<p class="font-weight-bold">Immersion: <span-->
+                                <!--th:text="${account.defaultBoat.immersion}"></span></p>-->
                                 <!--</div>-->
-                                <div class="row">
+                                <div class="row padding">
                                     <p><span th:text="${account.defaultBoat.comment}"> </span></p>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row bottom-line">
+                        <div class="row padding justify-content-center">
+                            <h3>Map of points states for your default boat</h3>
+                        </div>
+                        <div class="row padding justify-content-center">
+                            <div id="map_canvas" style="height: 500px; width: 90%"></div>
+                        </div>
+                        <div class="row padding justify-content-center">
+                            <h3>Measure points states for your default boat</h3>
+                        </div>
 
-                            <h4>Measure points states for default boat</span> </h4>
-
-                            <div id="map_canvas" style="height: 600px; width: 100%"></div>
-
+                        <div class="row">
                             <table class="table">
                                 <thead>
                                 <tr>
@@ -139,7 +155,8 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="pointState : ${actualAndMinValues}" th:class="${pointState.danger} ? 'table-danger' : (${pointState.warning} ? 'table-warning' : 'table-success')">
+                                <tr th:each="pointState : ${actualAndMinValues}"
+                                    th:class="${pointState.danger} ? 'table-danger' : (${pointState.warning} ? 'table-warning' : 'table-success')">
                                     <td th:text="${pointState.measurePoint.id}"></td>
                                     <td th:text="${pointState.measurePoint.pointName}"></td>
                                     <td th:text="${pointState.measurePoint.riverName}"></td>
@@ -150,8 +167,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
-
                         </div>
 
 

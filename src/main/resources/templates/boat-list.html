@@ -25,24 +25,27 @@
                 <h1>Your boats</h1>
             </div>
 
-            <div class="row border-secondary" th:each="boat : ${boats}">
+            <div class="row row-boat-list border" th:each="boat : ${boats}">
 
                 <div class="col col-md-3">
                     <div class="row">
-                        <img th:if="${boat.photo != null}"
-                             th:src="@{'data:image/png;base64,' + ${(boat.getBase64StringPhoto())}}"
-                             class="img-fluid rounded-pill padding" alt="Responsive image"><br>
+                        <img th:if="${boat.photo == null || boat.photo.length < 1}"
+                             src="../static/images/defaultboatimg.jpg" th:src="@{/images/defaultboatimg.jpg}"
+                             class="img-fluid img-max-height rounded-lg padding border"/>
+                        <img th:if="${boat.photo != null && boat.photo.length > 1}"
+                             th:src="@{'data:image/png;base64,' + ${boat.getBase64StringPhoto()}}"
+                             class="img-fluid img-max-height rounded-lg padding border"/>
                     </div>
                 </div>
 
                 <div class="col-md-7">
-                    <div class="row">
-                        <h4 class="padding">Model: <span th:text="${boat.model}"></span></h4>
+                    <div class="row padding">
+                        <h4>Model: <span th:text="${boat.model}"></span></h4>
                     </div>
                     <!--<div class="row">-->
                         <!--<p class="font-weight-bold">Immersion: <span th:text="${boat.immersion}"></span></p>-->
                     <!--</div>-->
-                    <div class="row">
+                    <div class="row padding">
                         <p><span th:text="${boat.comment}"> </span></p>
                     </div>
                 </div>
@@ -68,7 +71,7 @@
 
             </div>
 
-            <div class="row justify-content-end">
+            <div class="row padding">
                 <a th:href="@{/boat/add}">
                     <button class="btn btn-outline-primary">Add boat</button>
                 </a>

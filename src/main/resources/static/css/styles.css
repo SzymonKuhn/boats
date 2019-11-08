@@ -27,6 +27,19 @@
 }
 
 .padding {
-    padding: 15px;
+    padding: 20px;
+    margin: 10px;
 }
+
+.row-boat-list {
+    margin: 15px;
+    padding: 15px;
+    /*height: 200px;*/
+}
+
+.img-max-height {
+    /*max-height: auto;*/
+}
+
+
 
