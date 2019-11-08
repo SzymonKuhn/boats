@@ -23,20 +23,30 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col">Id</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">Name</th>
                     <th scope="col">Comment</th>
                     <th scope="col">Longitude</th>
                     <th scope="col">Latitude</th>
+                    <th scope="col">Action</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="point : ${characteristicPoints}">
-                    <td th:text="${point.getId()}"></td>
+                    <td>
+                        <img th:if="${point.thumbnail != null}"
+                             th:src="@{'data:image/png;base64,' + ${(point.getBase64Thumbnail())}}"
+                             class="img-thumbnail" alt="Responsive image"><br>
+                    </td>
                     <td th:text="${point.getName()}"></td>
                     <td th:text="${point.getComment()}"></td>
                     <td th:text="${point.getLng()}"></td>
                     <td th:text="${point.getLat()}"></td>
+                    <td>
+                        <a th:href="@{'/point/details/' + ${point.id}}">
+                            <button class="btn btn-outline-secondary btn-sm btn-block">Details</button>
+                        </a>
+                    </td>
                 </tr>
                 </tbody>
             </table>

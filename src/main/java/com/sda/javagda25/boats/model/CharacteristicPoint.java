@@ -30,13 +30,17 @@ public class CharacteristicPoint {
     @Column (columnDefinition = "LONGBLOB")
     private byte[] photo;
 
+    @Lob
+    @Column (columnDefinition = "LONGBLOB")
+    private byte[] thumbnail;
+
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
     @Cascade(org.hibernate.annotations.CascadeType.DETACH)
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private Account account;
 
-    public String getBase64StringPhoto () {
-        return Base64.getEncoder().encodeToString(photo);
+    public String getBase64Thumbnail() {
+        return Base64.getEncoder().encodeToString(thumbnail);
     }
 }
