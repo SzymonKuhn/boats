@@ -3,6 +3,7 @@ package com.sda.javagda25.boats.service;
 import com.sda.javagda25.boats.repository.AccountRepository;
 import com.sda.javagda25.boats.model.Account;
 import com.sda.javagda25.boats.model.AccountRole;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -16,6 +17,7 @@ public class AuthenticationService implements UserDetailsService {
 
     private AccountRepository accountRepository;
 
+    @Autowired
     public AuthenticationService(AccountRepository accountRepository) {
         this.accountRepository = accountRepository;
     }
