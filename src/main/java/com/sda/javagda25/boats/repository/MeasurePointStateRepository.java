@@ -19,8 +19,7 @@ public interface MeasurePointStateRepository extends JpaRepository<MeasurePointS
 
     List<MeasurePointState> findAllByMeasurePointOrderByMeasureDateTimeDesc(MeasurePoint measurePoint);
 
-    @Query(value = "select id, measure_point_id, water_state, id_station, max(measure_date_time) as measure_date_time from measure_point_state group by measure_point_id", nativeQuery = true)
-        //todo check if works fine and fix bud if exists
+    @Query(value = "select id, measure_point_id, water_state, id_station, measure_date_time from measure_point_state where measure_date_time = (select max(measure_date_time) from measure_point_state where id = id)", nativeQuery = true)
     List<MeasurePointState> findLatestStates();
 
     @Query(value = "select  id, measure_point_id, water_state, id_station, measure_date_time from measure_point_state where measure_point_id = :measurePointId order by measure_date_time desc limit 1", nativeQuery = true)
