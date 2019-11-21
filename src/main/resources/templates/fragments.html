@@ -82,13 +82,13 @@
 </th:block>
 
 <th:block th:fragment="jsScripts">
-    <script th:src="@{/webjars/jquery/3.4.1/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/1.14.3/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.min.js}"></script>
+    <script th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
+    <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
 </th:block>
 
 
-<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
-<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+<!--<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>-->
+<!--<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>-->
 </body>
 </html>

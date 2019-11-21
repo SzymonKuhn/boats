@@ -20,7 +20,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Controller
-@RequestMapping ("/account/")
+@RequestMapping("/account/")
 public class AccountController {
 
     private AccountService accountService;
@@ -41,20 +41,20 @@ public class AccountController {
     }
 
 
-    @GetMapping ("/register")
-    public String registerAccount (Model model, Account account) {
+    @GetMapping("/register")
+    public String registerAccount(Model model, Account account) {
         model.addAttribute("account", account);
         return "account-registration-form";
     }
 
-    @PostMapping ("/register")
-    public String registerAccount (@Valid Account account, BindingResult result, String passwordConfirm, ModelMap modelMap, Model model) {
+    @PostMapping("/register")
+    public String registerAccount(@Valid Account account, BindingResult result, String passwordConfirm, ModelMap modelMap, Model model) {
         account.setAccountRoles(new HashSet<>(accountRoleService.getBasicUserRoles())); //todo adding default roles
         if (result.hasErrors()) {
-            return registrationError (account, model, result.getFieldError().getDefaultMessage());
+            return registrationError(account, model, result.getFieldError().getDefaultMessage());
         }
 
-        if(!account.getPassword().equals(passwordConfirm)) {
+        if (!account.getPassword().equals(passwordConfirm)) {
             return registrationError(account, model, "Password doesn't match");
         }
 
@@ -71,25 +71,25 @@ public class AccountController {
     }
 
 
-    @GetMapping ("/list")
+    @GetMapping("/list")
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public String getAll (Model model) {
+    public String getAll(Model model) {
         model.addAttribute("accounts", accountService.findAll());
         model.addAttribute("allRoles", accountRoleService.findAll());
         return "account-list";
     }
 
-    @GetMapping ("/roles/{id}")
+    @GetMapping("/roles/{id}")
     @PreAuthorize(value = "hasRole('ADMIN')")
-    public String accountRoles (Model model,
-                                @PathVariable (name = "id") Long id) {
+    public String accountRoles(Model model,
+                               @PathVariable(name = "id") Long id) {
         Account account = accountService.getById(id);
         model.addAttribute("account", account);
         return "account-roles";
     }
 
-    @GetMapping ("/details")
-    public String details (Model model, Principal principal) {
+    @GetMapping("/details")
+    public String details(Model model, Principal principal) {
         Account account = accountService.getByUsername(principal.getName());
         List<ActualAndMinimumStatesForBoatDto> actualAndMinimumStates = null;
 
@@ -119,14 +119,14 @@ public class AccountController {
         return "account-details";
     }
 
-    @GetMapping ("/details/edit")
-    public String detailsEdit (Model model, Principal principal) {
+    @GetMapping("/details/edit")
+    public String detailsEdit(Model model, Principal principal) {
         model.addAttribute("account", accountService.getByUsername(principal.getName()));
         return "account-details-form";
     }
 
-    @PostMapping ("/details/edit")
-    public String detailsEdit (Account account, Principal principal) {
+    @PostMapping("/details/edit")
+    public String detailsEdit(Account account, Principal principal) {
         if (!account.getUsername().equals(principal.getName())) {
             return "redirect:/index";
         }
@@ -135,13 +135,13 @@ public class AccountController {
     }
 
 
-    @GetMapping ("/addPhoto")
-    public String addPhoto () {
+    @GetMapping("/addPhoto")
+    public String addPhoto() {
         return "account-photo-form";
     }
 
-    @PostMapping ("/addPhoto")
-    public String addPhoto (Model model, Principal principal, @RequestParam ("photo") MultipartFile photo) {
+    @PostMapping("/addPhoto")
+    public String addPhoto(Model model, Principal principal, @RequestParam("photo") MultipartFile photo) {
         Account account = accountService.getByUsername(principal.getName());
         if (photo != null) {
             try {

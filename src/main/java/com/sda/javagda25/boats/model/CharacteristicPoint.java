@@ -10,7 +10,7 @@ import java.util.Base64;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CharacteristicPoint {
+public class CharacteristicPoint implements Point{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

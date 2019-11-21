@@ -11,7 +11,6 @@
         function initMap() {
             /*<![CDATA[*/
             var points =/*[[${actualAndMinValues}]]*/ null;
-            console.log(points);
             /*]]>*/
 
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -22,7 +21,6 @@
 
             for (i = 0; i < points.length; i++) {
                 var point = points[i];
-                console.log(point);
                 var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
                 var color;
                 if (point.danger) {

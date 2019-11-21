@@ -11,7 +11,6 @@
         function initMap() {
             /*<![CDATA[*/
             var points =/*[[${points}]]*/ null;
-            console.log(points);
             /*]]>*/
 
             var map = new google.maps.Map(document.getElementById('map_canvas'), {
@@ -26,16 +25,7 @@
                 var up = point.upTendency;
                 var down = point.downTendency;
                 var coordinates = {lat: parseFloat(point.lat), lng: parseFloat(point.lng)};
-                // var circle = new google.maps.Circle({
-                //     strokeColor: '#ff0000',
-                //     strokeOpacity: 0.8,
-                //     strokeWeight: 2,
-                //     fillColor: '#ff0000',
-                //     fillOpacity: 0.35,
-                //     map: map,
-                //     center: coordinates,
-                //     radius: 500
-                // });
+
                 if (up) {
                     var marker = new google.maps.Marker({
                         position: coordinates,

@@ -12,7 +12,7 @@ import javax.persistence.Id;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MeasurePoint {
+public class MeasurePoint implements Point {
     @Id
     private Long id;
 
@@ -23,7 +23,7 @@ public class MeasurePoint {
     private String lng;
     private String lat;
 
-    public MeasurePoint (MeasurePointDto measurePointDto) {
+    public MeasurePoint(MeasurePointDto measurePointDto) {
         this.id = measurePointDto.getId_stacji();
         this.riverName = measurePointDto.getRzeka();
         this.pointName = measurePointDto.getStacja();

@@ -66,9 +66,34 @@
                             <button class="btn btn-outline-primary btn-sm btn-block">Edit boat</button>
                         </a>
 
-                        <a th:href="@{'/boat/delete/' + ${boat.id}}">
+                        <!--<a th:href="@{'/boat/delete/' + ${boat.id}}">-->
+                        <a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${boat.id}">
                             <button class="btn btn-outline-primary btn-sm btn-block">Delete boat</button>
                         </a>
+
+                        <!--Modal-->
+                        <div class="modal fade" th:id="modal-warning+${boat.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Confirm delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete <span th:text="${boat.model}"></span>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                        <a th:href="@{'/boat/delete/' + ${boat.id}}"><button type="button" class="btn btn-primary">Yes</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
 
                     </div>
                 </div>
@@ -88,6 +113,7 @@
                         <th scope="col">Warning state</th>
                         <th scope="col">Edit</th>
                         <th scope="col">Details</th>
+                        <th scope="col">Delete</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -103,6 +129,31 @@
                         <td><a th:href="@{'/measurePoint/details/' + ${minValue.measurePoint.id}}">
                             <button class="btn btn-outline-primary">Details</button>
                         </a></td>
+                        <td><a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${minValue.id}">
+                            <button type="button" class="btn btn-outline-primary">Delete</button>
+                        </a></td>
+
+                        <!--Modal-->
+                        <div class="modal fade" th:id="modal-warning+${minValue.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Confirm delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete minimum values for <span th:text="${minValue.boat.model}"></span> in <span th:text="${minValue.measurePoint.pointName}"></span>?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                                        <a th:href="@{'/minimumValue/delete/' + ${minValue.id}}"><button type="button" class="btn btn-primary">Yes</button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
 
                     </tr>
                     </tbody>

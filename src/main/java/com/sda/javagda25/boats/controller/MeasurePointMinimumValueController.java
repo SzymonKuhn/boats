@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -65,6 +66,13 @@ public class MeasurePointMinimumValueController {
     public String edit(@PathVariable(name = "id") Long id, Model model) {
         model.addAttribute("minValue", measurePointMinimumValueService.getById(id));
         return "minimumValue-edit";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long id, HttpServletRequest request) {
+        measurePointMinimumValueService.delete(id);
+        String referer = request.getHeader("referer");
+        return "redirect:" + referer;
     }
 
     @PostMapping ("/edit")
