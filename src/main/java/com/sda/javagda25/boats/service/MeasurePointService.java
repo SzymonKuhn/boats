@@ -8,14 +8,18 @@ import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
 import com.sda.javagda25.boats.repository.MeasurePointStateRepository;
+import javafx.concurrent.ScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,15 +45,36 @@ public class MeasurePointService {
         for (MeasurePointDto measurePointDto : measurePointDtos) {
             if (!measurePointRepository.existsById(measurePointDto.getId_stacji())) {
                 MeasurePoint measurePoint = new MeasurePoint(measurePointDto);
-                measurePoint = addGeolocation(measurePoint);
+//                measurePoint = addGeolocation(measurePoint);
                 measurePointRepository.save(measurePoint);
-            } else if (measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null ||
-                    measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null) {
-                MeasurePoint measurePoint = measurePointRepository.findById(measurePointDto.getId_stacji()).get();
-                measurePoint = addGeolocation(measurePoint);
-                measurePointRepository.save(measurePoint);
+//            } else if (measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null ||
+//                    measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLng() == null) {
+//                MeasurePoint measurePoint = measurePointRepository.findById(measurePointDto.getId_stacji()).get();
+//                measurePoint = addGeolocation(measurePoint);
+//                measurePointRepository.save(measurePoint);
             }
         }
+
+//        adding geolocations for measure points based on csv file
+        try {
+            File file = ResourceUtils.getFile("classpath:hydro-locations/hydro-locations.csv");
+            Scanner  scanner = new Scanner(file);
+            while (scanner.hasNext()) {
+                String[] arrayGeolocation = scanner.nextLine().split(",");
+                Long id = Long.parseLong(arrayGeolocation[0]);
+                if (measurePointRepository.existsById(id)) {
+                    MeasurePoint measurePoint = measurePointRepository.getOne(id);
+                    String lat = arrayGeolocation[6].substring(0,2) + "." + arrayGeolocation[6].substring(2);
+                    String lng = arrayGeolocation[5].substring(0,2) + "." + arrayGeolocation[5].substring(2);
+                    measurePoint.setLat(lat);
+                    measurePoint.setLng(lng);
+                    measurePointRepository.save(measurePoint);
+                }
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public List<MeasurePoint> findAllMeasurePoints() {

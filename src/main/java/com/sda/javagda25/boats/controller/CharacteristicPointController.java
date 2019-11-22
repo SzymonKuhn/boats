@@ -80,6 +80,12 @@ public class CharacteristicPointController {
         return "characteristic-point-list";
     }
 
+    @GetMapping("/public")
+    public String listPublic (Model model) {
+        model.addAttribute("characteristicPoints", characteristicPointService.getAllPublicPoints());
+        return "characteristic-point-list";
+    }
+
     private ByteArrayOutputStream createThumbnail(MultipartFile originalFile, Integer width) throws IOException{
         ByteArrayOutputStream thumbOutput = new ByteArrayOutputStream();
         BufferedImage thumbImg = null;

@@ -23,4 +23,8 @@ public class CharacteristicPointService {
     public void save(CharacteristicPoint characteristicPoint) {
         characteristicPointRepository.save(characteristicPoint);
     }
+
+    public List<CharacteristicPoint> getAllPublicPoints () {
+        return characteristicPointRepository.findAllPublicPoints();
+    }
 }
