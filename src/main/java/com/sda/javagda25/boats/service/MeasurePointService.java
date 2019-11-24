@@ -131,6 +131,10 @@ public class MeasurePointService {
         return measurePointWithTendencyList;
     }
 
+    public boolean existById(Long id) {
+        return measurePointRepository.existsById(id);
+    }
+
 
     private List<MeasurePoint> tryFindMeasurePointByStringId(String input) { //todo how to find object by part of id?
         try {

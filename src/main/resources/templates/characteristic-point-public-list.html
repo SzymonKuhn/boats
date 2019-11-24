@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+    <meta charset="UTF-8">
+    <title>Public characteristic points</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+
+<div class="container-fluid">
+
+    <div class="row flex-xl-nowrap">
+
+        <div class="col-md-2">
+            <!--<p>sidebar left</p>-->
+        </div>
+
+        <div class="col-md-8">
+            <h1>Public characteristic points</h1>
+
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">Photo</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Comment</th>
+                    <th scope="col">Longitude</th>
+                    <th scope="col">Latitude</th>
+                    <th scope="col">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="point : ${characteristicPoints}">
+                    <td>
+                        <img th:if="${point.thumbnail != null}"
+                             th:src="@{'data:image/png;base64,' + ${(point.getBase64Thumbnail())}}"
+                             class="img-thumbnail" alt="Responsive image"><br>
+                    </td>
+                    <td th:text="${point.getName()}"></td>
+                    <td th:text="${point.getComment()}"></td>
+                    <td th:text="${point.getLng()}"></td>
+                    <td th:text="${point.getLat()}"></td>
+                    <td>
+                        <a th:href="@{'/point/details/' + ${point.id}}">
+                            <button class="btn btn-outline-secondary btn-sm btn-block">Details</button>
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-md-2">
+            <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+        </div>
+    </div>
+
+</div>
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+
+</body>
+</html>

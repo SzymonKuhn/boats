@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+
+    <meta charset="UTF-8">
+    <title>Route add form</title>
+</head>
+<body>
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+
+<div class="container-fluid">
+
+    <div class="container-fluid">
+
+        <div class="row flex-xl-nowrap">
+
+            <div class="col-md-2">
+                <!--<p>sidebar left</p>-->
+            </div>
+
+            <div class="col-md-8">
+                <div class="row padding justify-content-center">
+                    <h1>Route add form</h1>
+                </div>
+
+                <form class="form-group" th:action="@{/route/add}" th:object="${route}" method="post"
+                      enctype="multipart/form-data">
+                    <div th:if="${errorMessage != null}" class="row col-md-12">
+                        <div class="col-md-12" th:text="${errorMessage}"></div>
+                    </div>
+
+                    <input th:type="hidden" th:value="${route.id}" th:field="${route.id}">
+                    <input th:type="hidden" th:value="${route.photo}"
+                           th:field="${route.photo}">
+                    <input th:type="hidden" th:value="${route.account}"
+                           th:field="${route.account}">
+
+
+                    <div class="row">
+                        <div class="col-md-6">
+
+                            <div class="row padding">
+                                <label for="name">Name</label>
+                                <input class="form-control" id="name" type="text" th:field="${route.name}"
+                                       th:value="${route.name}" placeholder="Name">
+                            </div>
+
+                            <div class="row padding">
+                                <div class="col-12 ml-2">
+                                    <input class="form-check-input" type="checkbox" id="isPublic"
+                                           th:field="${route.public}"
+                                           th:value="${route.public}">
+                                    <label class="form-check-label" for="isPublic">
+                                        is public
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="row padding">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">Add photo</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" name="file" class="custom-file-input" id="inputGroupFile">
+                                        <label class="custom-file-label" for="inputGroupFile">Choose file</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="row padding">
+                                <label for="comment">Comment</label>
+                                <textarea class="form-control" rows="15" id="comment"
+                                          th:field="${route.comment}"
+                                          th:value="${route.comment}" placeholder="Comment"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="row padding">
+                        <div class="col-md-6 justify-content-center">
+                            <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
+                        </div>
+
+
+                        <div class="col-md-6 justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-block">Save route</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+            </div>
+            <div class="col-md-2">
+                <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>

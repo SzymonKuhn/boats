@@ -83,7 +83,7 @@ public class CharacteristicPointController {
     @GetMapping("/public")
     public String listPublic (Model model) {
         model.addAttribute("characteristicPoints", characteristicPointService.getAllPublicPoints());
-        return "characteristic-point-list";
+        return "characteristic-point-public-list";
     }
 
     private ByteArrayOutputStream createThumbnail(MultipartFile originalFile, Integer width) throws IOException{

@@ -24,6 +24,7 @@
                     <a class="nav-item nav-link" th:href="@{/index}">Home</a>
                     <a class="nav-item nav-link" th:href="@{/measurePoint/list}">Measure points</a>
                     <a class="nav-item nav-link" th:href="@{/point/public}">All public points</a>
+                    <a class="nav-item nav-link" th:href="@{/route/public}">All public routes</a>
                     <!--<a class="nav-item nav-link" th:href="@{/measurePoint/states/list}">Measure points states</a>-->
                     <!--<a class="nav-item nav-link" th:href="@{/measurePoint/states/latest}">Actual states</a>-->
                 </div>
@@ -46,7 +47,7 @@
         <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/point/list}">
             <button type="button" class="btn btn-outline-primary btn-block">Points</button>
         </a>
-        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/}">
+        <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/route/list}">
             <button type="button" class="btn btn-outline-primary btn-block">Routes</button>
         </a>
         <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/login}">
