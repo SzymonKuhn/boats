@@ -92,6 +92,21 @@
                     </div>
                 </div>
 
+                <div class="row justify-content-end">
+                    <div class="col-md-10">
+                    </div>
+                    <div class="col-md-1">
+                        <a th:href="@{'/route/edit/' + ${route.id}}">
+                            <button class="btn btn-outline-primary" th:hidden="${!editable}">Edit</button>
+                        </a>
+                    </div>
+                    <div class="col-md-1">
+                        <a th:href="@{'/route/delete/' + ${route.id}}">
+                            <button class="btn btn-outline-primary" th:hidden="${!editable}">Delete</button>
+                        </a>
+                    </div>
+
+                </div>
                 <!--todo add button edit based on attribute "editable"-->
 
             </div>

@@ -85,6 +85,17 @@ public class RouteController {
         return "route-edit";
     }
 
+    @GetMapping("/delete/{id}")
+    public String delete(Model model, @PathVariable(name = "id") Long id, Principal principal) {
+        Account account = accountService.getByUsername(principal.getName());
+        Route route = routeService.getById(id);
+        if (!route.getAccount().equals(account)) {
+            return "redirect:/account/details";
+        }
+        routeService.delete(route);
+        return "redirect:/route/list";
+    }
+
     @GetMapping("/details/{id}")
     public String editRoute (Model model, @PathVariable(name = "id") Long id, Principal principal) {
         Account account = accountService.getByUsername(principal.getName());

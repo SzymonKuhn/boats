@@ -43,4 +43,7 @@ public class RouteService {
         return routeRepository.findAllPublicRoutes();
     }
 
+    public void delete(Route route) {
+        routeRepository.delete(route);
+    }
 }

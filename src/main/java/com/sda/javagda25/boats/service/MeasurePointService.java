@@ -26,8 +26,8 @@ import java.util.stream.Collectors;
 @Service
 public class MeasurePointService {
     private String urlMeasurePoints = "https://danepubliczne.imgw.pl/api/data/hydro";
-    private String urlGeolocation = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-    private String apiKey = "&key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A";
+//    private String urlGeolocation = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+//    private String apiKey = "&key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A";
 
     @Autowired
     private MeasurePointRepository measurePointRepository;
@@ -45,27 +45,21 @@ public class MeasurePointService {
         for (MeasurePointDto measurePointDto : measurePointDtos) {
             if (!measurePointRepository.existsById(measurePointDto.getId_stacji())) {
                 MeasurePoint measurePoint = new MeasurePoint(measurePointDto);
-//                measurePoint = addGeolocation(measurePoint);
                 measurePointRepository.save(measurePoint);
-//            } else if (measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLat() == null ||
-//                    measurePointRepository.findById(measurePointDto.getId_stacji()).get().getLng() == null) {
-//                MeasurePoint measurePoint = measurePointRepository.findById(measurePointDto.getId_stacji()).get();
-//                measurePoint = addGeolocation(measurePoint);
-//                measurePointRepository.save(measurePoint);
             }
         }
 
 //        adding geolocations for measure points based on csv file
         try {
             File file = ResourceUtils.getFile("classpath:hydro-locations/hydro-locations.csv");
-            Scanner  scanner = new Scanner(file);
+            Scanner scanner = new Scanner(file);
             while (scanner.hasNext()) {
                 String[] arrayGeolocation = scanner.nextLine().split(",");
                 Long id = Long.parseLong(arrayGeolocation[0]);
                 if (measurePointRepository.existsById(id)) {
                     MeasurePoint measurePoint = measurePointRepository.getOne(id);
-                    String lat = arrayGeolocation[6].substring(0,2) + "." + arrayGeolocation[6].substring(2);
-                    String lng = arrayGeolocation[5].substring(0,2) + "." + arrayGeolocation[5].substring(2);
+                    String lat = createGeolocation(arrayGeolocation[6]);
+                    String lng = createGeolocation(arrayGeolocation[5]);
                     measurePoint.setLat(lat);
                     measurePoint.setLng(lng);
                     measurePointRepository.save(measurePoint);
@@ -74,13 +68,11 @@ public class MeasurePointService {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
 
     public List<MeasurePoint> findAllMeasurePoints() {
         return measurePointRepository.findAll();
     }
-
 
     public MeasurePoint getById(Long id) {
         Optional<MeasurePoint> optional = measurePointRepository.findById(id);
@@ -114,7 +106,7 @@ public class MeasurePointService {
             measurePointWithTendencyDto.setRiverName(measurePoint.getRiverName());
 
             List<MeasurePointState> states = measurePointStateRepository.findAllByMeasurePointOrderByMeasureDateTimeDesc(measurePoint);
-            if (states.size() > 1){
+            if (states.size() > 1) {
                 if (states.get(0).getWaterState() > states.get(1).getWaterState()) {
                     measurePointWithTendencyDto.setUpTendency(true);
                     measurePointWithTendencyDto.setDownTendency(false);
@@ -146,17 +138,12 @@ public class MeasurePointService {
         return Collections.emptyList();
     }
 
-    private MeasurePoint addGeolocation(MeasurePoint measurePoint) {
-        String url = urlGeolocation + measurePoint.getPointName() + apiKey;
-        ResponseEntity<AddressToLngLat> responseEntity = restTemplate.exchange(url, HttpMethod.GET, null, AddressToLngLat.class);
-        AddressToLngLat body = responseEntity.getBody();
-        if (!body.getStatus().equals("ZERO_RESULTS")) {
-            Location location = body.getResults()[0].getGeometry().getLocation();
-            measurePoint.setLat(location.getLat());
-            measurePoint.setLng(location.getLng());
-        }
-        return measurePoint;
+    private String createGeolocation(String input) {
+        Double grades = Double.parseDouble(input.substring(0, 2));
+        Double minutes = Double.parseDouble(input.substring(2, 4));
+        Double secounds = Double.parseDouble(input.substring(4, 6));
+        Double value = (secounds / 3600) + (minutes / 60) + grades;
+        return value.toString();
     }
-
 
 }
