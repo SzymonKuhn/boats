@@ -5,12 +5,11 @@ import com.sda.javagda25.boats.model.dto.BoatWithMinimumValueAndActualStateDto;
 import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
 import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -37,9 +36,13 @@ public class MeasurePointController {
     }
 
     @GetMapping ("/list")
-    public String listAll (Model model) {
-        List<MeasurePointWithTendencyDto> measurePointsWithTendency = measurePointService.getMeasurePointsWithTendency();
-        model.addAttribute("measurePoints", measurePointsWithTendency);
+    public String listAll (Model model,
+                           @RequestParam (name = "page", defaultValue = "0") int page,
+                           @RequestParam(name = "size", defaultValue = "20") int size) {
+        Page<MeasurePoint> measurePointsPage = measurePointService.measurePointPage(PageRequest.of(page, size));
+
+
+        model.addAttribute("measurePoints", measurePointsPage);
         return "measure-point-list";
     }
 

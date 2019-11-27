@@ -11,6 +11,8 @@ import com.sda.javagda25.boats.repository.MeasurePointStateRepository;
 import javafx.concurrent.ScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -74,6 +76,10 @@ public class MeasurePointService {
         return measurePointRepository.findAll();
     }
 
+    public Page<MeasurePoint> measurePointPage(PageRequest pageRequest) {
+        return measurePointRepository.findAll(pageRequest);
+    }
+
     public MeasurePoint getById(Long id) {
         Optional<MeasurePoint> optional = measurePointRepository.findById(id);
         if (optional.isPresent()) {
@@ -126,6 +132,9 @@ public class MeasurePointService {
     public boolean existById(Long id) {
         return measurePointRepository.existsById(id);
     }
+
+
+
 
 
     private List<MeasurePoint> tryFindMeasurePointByStringId(String input) { //todo how to find object by part of id?

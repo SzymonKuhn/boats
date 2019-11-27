@@ -19,12 +19,38 @@
 
         <div class="col-md-8">
 
+
             <div class="row">
-                <div class="col-md-6">
-                    <div th:if="${errorMessage != null}">
-                        <div class="alert alert-primary padding" role="alert" th:text="${errorMessage}"></div>
+                <h1>Measure points</h1>
+            </div>
+
+            <div class="row">
+                <form role="form" id="sorting-and-paagination" th:action="@{/measurePoint/list} " method="get">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-5">
+                            <select class="form-control" th:name="size">
+                                <option th:value="20">20</option>
+                                <option th:value="40">40</option>
+                                <option th:value="80">80</option>
+                                <option th:value="150">150</option>
+                            </select>
+                        </div>
+
+
+                        <div class="form-group col-md-5">
+
+                        </div>
+
+
+                        <div class="form-group col-md-2">
+                            <button type="submit" class="btn btn-primary btn-block">Sort</button>
+                        </div>
                     </div>
-                </div>
+                </form>
+            </div>
+
+            <div class="row">
                 <div class="col-md-6 justify-content-end">
                     <nav class="navbar navbar-light">
                         <form class="form-inline my-2 my-lg-0" th:action="@{/measurePoint/searchMeasurePoints}"
@@ -37,34 +63,79 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div th:if="${errorMessage != null}">
+                    <div class="alert alert-primary padding" role="alert" th:text="${errorMessage}"></div>
+                </div>
+            </div>
 
-            <h1>Measure points</h1>
+            <div class="row">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">Id</th>
+                        <th scope="col">Point</th>
+                        <th scope="col">River</th>
+                        <th scope="col">Longitude</th>
+                        <th scope="col">Latitude</th>
+                        <th scope="col">Details</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="point : ${measurePoints}">
+                        <td th:text="${point.id}"></td>
+                        <td th:text="${point.pointName}"></td>
+                        <td th:text="${point.riverName}"></td>
+                        <td th:text="${point.lng}"></td>
+                        <td th:text="${point.lat}"></td>
+                        <td><a th:href="@{'/measurePoint/details/' + ${point.id}}">
+                            <button class="btn btn-outline-primary">Details</button>
+                        </a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <table class="table table-striped">
-                <thead>
-                <tr>
-                    <th scope="col">Id</th>
-                    <th scope="col">Point</th>
-                    <th scope="col">River</th>
-                    <th scope="col">Longitude</th>
-                    <th scope="col">Latitude</th>
-                    <th scope="col">Details</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="point : ${measurePoints}">
-                    <td th:text="${point.id}"></td>
-                    <td th:text="${point.pointName}"></td>
-                    <td th:text="${point.riverName}"></td>
-                    <td th:text="${point.lng}"></td>
-                    <td th:text="${point.lat}"></td>
-                    <td><a th:href="@{'/measurePoint/details/' + ${point.id}}">
-                        <button class="btn btn-outline-primary">Details</button>
-                    </a></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row">
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
 
+                        <li class="page-item" th:classappend="${measurePoints.getNumber() < 1} ? 'disabled' : ''">
+                            <a class="page-link"
+                               th:href="@{/measurePoint/list(page=${measurePoints.getNumber()-1}, size=${measurePoints.getSize()})}"
+                               tabindex="-1">Previous</a>
+                        </li>
+
+                        <li class="page-item" aria-current="page"
+                            th:each="number : ${#numbers.sequence(measurePoints.getNumber() - 5, measurePoints.getNumber() - 1)}"
+                            th:if="${number >= 0}">
+                            <a class="page-link"
+                               th:href="@{/measurePoint/list(page=${number}, size=${measurePoints.getSize()})}"><span
+                                    th:text="${number + 1}"></span> </a>
+                        </li>
+
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link"
+                               th:href="@{/measurePoint/list(page=${measurePoints.getNumber()}, size=${measurePoints.getSize()})}"><span
+                                    th:text="${measurePoints.getNumber()+1}"></span> </a>
+
+                        <li class="page-item" aria-current="page"
+                            th:each="number : ${#numbers.sequence(measurePoints.getNumber() + 1, measurePoints.getNumber() + 5)}"
+                            th:if="${number < measurePoints.getTotalPages()}">
+                            <a class="page-link"
+                               th:href="@{/measurePoint/list(page=${number}, size=${measurePoints.getSize()})}"><span
+                                    th:text="${number + 1}"></span> </a>
+                        </li>
+
+                        <li class="page-item"
+                            th:classappend="${measurePoints.getNumber() >= measurePoints.getTotalPages() -1} ? 'disabled' : ''">
+                            <a class="page-link"
+                               th:href="@{/measurePoint/list(page=${measurePoints.getNumber()+1}, size=${measurePoints.getSize()})}"
+                               tabindex="-1">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
 
 
         </div>
