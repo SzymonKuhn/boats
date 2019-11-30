@@ -7,6 +7,7 @@ import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -37,20 +38,37 @@ public class MeasurePointController {
 
     @GetMapping ("/list")
     public String listAll (Model model,
+                           @RequestParam (name = "sort", defaultValue = "pointName") String sort,
+                           @RequestParam (name = "search", defaultValue = "") String search,
                            @RequestParam (name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "size", defaultValue = "20") int size) {
-        Page<MeasurePoint> measurePointsPage = measurePointService.measurePointPage(PageRequest.of(page, size));
+        Page<MeasurePoint> measurePointsPage = measurePointService.measurePointPage(search, search, PageRequest.of(page, size, Sort.by(sort)));
 
 
+        model.addAttribute("sort", sort);
+        model.addAttribute("search", search);
         model.addAttribute("measurePoints", measurePointsPage);
         return "measure-point-list";
     }
 
-    @GetMapping ("/states/list")
-    public String listAllStates (Model model) {
-        model.addAttribute("measurePointStates", measurePointStateService.findAllMeasurePointsStates());
-        return "measure-point-states-list";
-    }
+
+//    @PostMapping ("/searchMeasurePoints")
+//    public String search (String input, Model model) {
+//        List<MeasurePoint> measurePoints = measurePointService.search(input);
+//        if (measurePoints.isEmpty()) {
+//            model.addAttribute("errorMessage", "No records found.");
+//            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
+//            return "measure-point-list";
+//        }
+//        model.addAttribute("measurePoints", measurePoints);
+//        return "measure-point-list";
+//    }
+
+//    @GetMapping ("/states/list")
+//    public String listAllStates (Model model) {
+//        model.addAttribute("measurePointStates", measurePointStateService.findAllMeasurePointsStates());
+//        return "measure-point-states-list";
+//    }
 
 
     @GetMapping ("/updateMeasurePoints")
@@ -64,11 +82,11 @@ public class MeasurePointController {
         return "redirect:/measurePoint/states/list";
     }
 
-    @GetMapping ("/states/latest")
-    public String listLatestStates (Model model) {
-        model.addAttribute("measurePointStates", measurePointStateService.findActualMeasurePointsStates());
-        return "measure-point-states-list";
-    }
+//    @GetMapping ("/states/latest")
+//    public String listLatestStates (Model model) {
+//        model.addAttribute("measurePointStates", measurePointStateService.findActualMeasurePointsStates());
+//        return "measure-point-states-list";
+//    }
 
 
     @GetMapping ("/details/{id}")
@@ -101,17 +119,6 @@ public class MeasurePointController {
         return "measure-point-details";
     }
 
-    @PostMapping ("/searchMeasurePoints")
-    public String search (String input, Model model) {
-        List<MeasurePoint> measurePoints = measurePointService.search(input);
-        if (measurePoints.isEmpty()) {
-            model.addAttribute("errorMessage", "No records found.");
-            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
-            return "measure-point-list";
-        }
-        model.addAttribute("measurePoints", measurePoints);
-        return "measure-point-list";
-    }
 
 
 

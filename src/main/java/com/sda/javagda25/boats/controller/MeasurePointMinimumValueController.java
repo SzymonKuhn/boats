@@ -109,27 +109,27 @@ public class MeasurePointMinimumValueController {
     }
 
 
-    @PostMapping("/searchMeasurePoints")
-    public String search(String input, Long boatId, Model model) {
-        MeasurePointMinimumValue minValue = new MeasurePointMinimumValue();
-        minValue.setBoat(boatService.getById(boatId));
-        List<MeasurePoint> measurePoints = new ArrayList<>();
-        String[] inputs = input.split(" ");
-        for (String s : inputs) {
-            measurePoints.addAll(measurePointService.search(s));
-        }
-
-        int records = measurePoints.size();
-        if (records == 0) {
-            model.addAttribute("errorMessage", "No records found.");
-            model.addAttribute("input", input.substring(1, input.length() - 1));
-            measurePoints.addAll(measurePointService.findAllMeasurePoints());
-        }
-
-        model.addAttribute("minValue", minValue);
-        model.addAttribute("measurePoints", measurePoints);
-        return "minimumValue-add";
-    }
+//    @PostMapping("/searchMeasurePoints")
+//    public String search(String input, Long boatId, Model model) {
+//        MeasurePointMinimumValue minValue = new MeasurePointMinimumValue();
+//        minValue.setBoat(boatService.getById(boatId));
+//        List<MeasurePoint> measurePoints = new ArrayList<>();
+//        String[] inputs = input.split(" ");
+//        for (String s : inputs) {
+//            measurePoints.addAll(measurePointService.search(s));
+//        }
+//
+//        int records = measurePoints.size();
+//        if (records == 0) {
+//            model.addAttribute("errorMessage", "No records found.");
+//            model.addAttribute("input", input.substring(1, input.length() - 1));
+//            measurePoints.addAll(measurePointService.findAllMeasurePoints());
+//        }
+//
+//        model.addAttribute("minValue", minValue);
+//        model.addAttribute("measurePoints", measurePoints);
+//        return "minimumValue-add";
+//    }
 
     private boolean warningValueIsLessThenMinimumValue(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
         if (measurePointMinimumValue.getMinimumValue() > measurePointMinimumValue.getWarningValue()) {

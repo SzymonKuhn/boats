@@ -76,8 +76,8 @@ public class MeasurePointService {
         return measurePointRepository.findAll();
     }
 
-    public Page<MeasurePoint> measurePointPage(PageRequest pageRequest) {
-        return measurePointRepository.findAll(pageRequest);
+    public Page<MeasurePoint> measurePointPage(String name, String riverName, PageRequest pageRequest) {
+        return measurePointRepository.findByPointNameOrRiverName(name, riverName, pageRequest);
     }
 
     public MeasurePoint getById(Long id) {
@@ -89,13 +89,13 @@ public class MeasurePointService {
         }
     }
 
-    public List<MeasurePoint> search(String input) {
-        List<MeasurePoint> measurePoints = new ArrayList<>();
-        measurePoints.addAll(tryFindMeasurePointByStringId(input));
-        input = "%" + input + "%";
-        measurePoints.addAll(measurePointRepository.findAllByPointNameIsLikeOrRiverNameIsLike(input, input));
-        return measurePoints;
-    }
+//    public List<MeasurePoint> search(String input) {
+//        List<MeasurePoint> measurePoints = new ArrayList<>();
+//        measurePoints.addAll(tryFindMeasurePointByStringId(input));
+//        input = "%" + input + "%";
+//        measurePoints.addAll(measurePointRepository.findAllByPointNameIsLikeOrRiverNameIsLike(input, input));
+//        return measurePoints;
+//    }
 
     public List<MeasurePointWithTendencyDto> getMeasurePointsWithTendency() {
         List<MeasurePointWithTendencyDto> measurePointWithTendencyList = new ArrayList<>();
@@ -133,25 +133,11 @@ public class MeasurePointService {
         return measurePointRepository.existsById(id);
     }
 
-
-
-
-
-    private List<MeasurePoint> tryFindMeasurePointByStringId(String input) { //todo how to find object by part of id?
-        try {
-            Long id = Long.parseLong(input);
-            return measurePointRepository.findAllByIdIsLike(id);
-        } catch (NumberFormatException nfe) {
-            nfe.getMessage();
-        }
-        return Collections.emptyList();
-    }
-
     private String createGeolocation(String input) {
         Double grades = Double.parseDouble(input.substring(0, 2));
         Double minutes = Double.parseDouble(input.substring(2, 4));
-        Double secounds = Double.parseDouble(input.substring(4, 6));
-        Double value = (secounds / 3600) + (minutes / 60) + grades;
+        Double seconds = Double.parseDouble(input.substring(4, 6));
+        Double value = (seconds / 3600) + (minutes / 60) + grades;
         return value.toString();
     }
 
