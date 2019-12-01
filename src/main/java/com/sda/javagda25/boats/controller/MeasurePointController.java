@@ -43,8 +43,6 @@ public class MeasurePointController {
                            @RequestParam (name = "page", defaultValue = "0") int page,
                            @RequestParam(name = "size", defaultValue = "20") int size) {
         Page<MeasurePoint> measurePointsPage = measurePointService.measurePointPage(search, search, PageRequest.of(page, size, Sort.by(sort)));
-
-
         model.addAttribute("sort", sort);
         model.addAttribute("search", search);
         model.addAttribute("measurePoints", measurePointsPage);
