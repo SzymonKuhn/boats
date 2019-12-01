@@ -2,7 +2,6 @@ package com.sda.javagda25.boats.service;
 
 import com.sda.javagda25.boats.model.Account;
 import com.sda.javagda25.boats.model.CharacteristicPoint;
-import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.repository.CharacteristicPointRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,7 +28,7 @@ public class CharacteristicPointService {
         characteristicPointRepository.save(characteristicPoint);
     }
 
-    public List<CharacteristicPoint> getAllPublicPoints () {
+    public List<CharacteristicPoint> getAllPublicPoints() {
         return characteristicPointRepository.findAllPublicPoints();
     }
 
@@ -42,7 +41,11 @@ public class CharacteristicPointService {
         }
     }
 
-    public Page<CharacteristicPoint> characteristicPointPage(String search, PageRequest pageRequest) {
-        return characteristicPointRepository.findByName(search, pageRequest);
+    public Page<CharacteristicPoint> publicCharacteristicPointPage(String search, PageRequest pageRequest) {
+        return characteristicPointRepository.findPublicPointsByName(search, pageRequest);
+    }
+
+    public Page<CharacteristicPoint> userAndPublicCharacteristicPointPage(String search, PageRequest pageRequest, Account account) {
+        return characteristicPointRepository.findAllUserPointsOrPublicPoints(account, search, pageRequest);
     }
 }

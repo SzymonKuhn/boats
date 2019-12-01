@@ -38,8 +38,6 @@
                              src="../static/images/defaultrouteimg.jpg" th:src="@{/images/defaultrouteimg.jpg}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
 
-                        <!--todo default image not diplayed-->
-
                         <img th:if="${route.photo != null && route.photo.length > 1}"
                              th:src="@{'data:image/png;base64,' + ${route.getBase64StringPhoto()}}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
@@ -105,9 +103,7 @@
                             <button class="btn btn-outline-primary" th:hidden="${!editable}">Delete</button>
                         </a>
                     </div>
-
                 </div>
-                <!--todo add button edit based on attribute "editable"-->
 
             </div>
             <div class="col-md-2">

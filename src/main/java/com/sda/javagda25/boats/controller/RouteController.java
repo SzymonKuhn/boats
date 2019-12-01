@@ -158,7 +158,7 @@ public class RouteController {
             }
         }
 
-        Page<CharacteristicPoint> characteristicPointPage = characteristicPointService.characteristicPointPage(search, PageRequest.of(page, size, Sort.by(sort)));
+        Page<CharacteristicPoint> characteristicPointPage = characteristicPointService.userAndPublicCharacteristicPointPage(search, PageRequest.of(page, size, Sort.by(sort)), account);
         model.addAttribute("sort", sort);
         model.addAttribute("search", search);
         model.addAttribute("characteristicPoints", characteristicPointPage);
@@ -188,7 +188,7 @@ public class RouteController {
             }
         }
 
-        Page<CharacteristicPoint> characteristicPointPage = characteristicPointService.characteristicPointPage(search, PageRequest.of(page, size, Sort.by(sort)));
+        Page<CharacteristicPoint> characteristicPointPage = characteristicPointService.userAndPublicCharacteristicPointPage(search, PageRequest.of(page, size, Sort.by(sort)), account);
         model.addAttribute("sort", sort);
         model.addAttribute("search", search);
         model.addAttribute("characteristicPoints", characteristicPointPage);

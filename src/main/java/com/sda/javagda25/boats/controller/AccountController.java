@@ -49,7 +49,7 @@ public class AccountController {
 
     @PostMapping("/register")
     public String registerAccount(@Valid Account account, BindingResult result, String passwordConfirm, ModelMap modelMap, Model model) {
-        account.setAccountRoles(new HashSet<>(accountRoleService.getBasicUserRoles())); //todo adding default roles
+        account.setAccountRoles(new HashSet<>(accountRoleService.getBasicUserRoles()));
         if (result.hasErrors()) {
             return registrationError(account, model, result.getFieldError().getDefaultMessage());
         }

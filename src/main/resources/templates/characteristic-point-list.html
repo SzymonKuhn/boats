@@ -28,6 +28,7 @@
                     <th scope="col">Comment</th>
                     <th scope="col">Longitude</th>
                     <th scope="col">Latitude</th>
+                    <th scope="col">Author</th>
                     <th scope="col">Action</th>
                 </tr>
                 </thead>
@@ -42,6 +43,7 @@
                     <td th:text="${point.getComment()}"></td>
                     <td th:text="${point.getLng()}"></td>
                     <td th:text="${point.getLat()}"></td>
+                    <td th:text="${point.getAccount().getUsername()}"></td>
                     <td>
                         <a th:href="@{'/point/details/' + ${point.id}}">
                             <button class="btn btn-outline-secondary btn-sm btn-block">Details</button>
