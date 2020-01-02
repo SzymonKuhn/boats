@@ -43,4 +43,8 @@ public class CharacteristicPoint implements Point {
     public String getBase64Thumbnail() {
         return Base64.getEncoder().encodeToString(thumbnail);
     }
+
+    public String getBase64Photo() {
+        return Base64.getEncoder().encodeToString(photo);
+    }
 }

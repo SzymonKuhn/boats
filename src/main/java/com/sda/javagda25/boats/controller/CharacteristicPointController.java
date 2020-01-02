@@ -9,13 +9,11 @@ import org.imgscalr.Scalr;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -65,7 +63,7 @@ public class CharacteristicPointController {
     public String add(Model model) {
         model.addAttribute("characteristicPoint", new CharacteristicPoint());
         model.addAttribute("pointCategories", PointCategory.values());
-        return "point-add";
+        return "characteristic-point-add";
     }
 
     @GetMapping("/list")
@@ -73,6 +71,18 @@ public class CharacteristicPointController {
         Account account = accountService.getByUsername(principal.getName());
         model.addAttribute("characteristicPoints", characteristicPointService.findAllByAccountIsLike(account));
         return "characteristic-point-list";
+    }
+
+    @GetMapping("/details/{id}")
+    public String details(@PathVariable(name = "id") Long id, Model model, Principal principal, HttpServletRequest request) {
+        Account account = accountService.getByUsername(principal.getName());
+        CharacteristicPoint characteristicPoint = characteristicPointService.getById(id);
+        boolean editable = characteristicPoint.getAccount().equals(account);
+        model.addAttribute("point", characteristicPoint);
+        model.addAttribute("lat", characteristicPoint.getLat());
+        model.addAttribute("lng", characteristicPoint.getLng());
+        model.addAttribute("editable", editable);
+        return "characteristic-point-details";
     }
 
     @GetMapping("/public")

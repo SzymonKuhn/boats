@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
+    <meta charset="UTF-8">
+    <title>Point details</title>
+
+
+    <script type="text/javascript" th:inline="javascript">
+        function initMap() {
+
+            /*<![CDATA[*/
+            var lat =/*[[${lat}]]*/ null;
+            var lng =/*[[${lng}]]*/ null;
+            var coordinates = {lat: parseFloat(lat), lng: parseFloat(lng)};
+            /*]]>*/
+
+
+            var map = new google.maps.Map(document.getElementById('map_canvas'), {
+                center: coordinates,
+                zoom: 15,
+                mapTypeId: 'terrain'
+            });
+
+            var circle = new google.maps.Circle({
+                strokeColor: '#FF0000',
+                strokeOpacity: 0.8,
+                strokeWeight: 2,
+                fillColor: '#FF0000',
+                fillOpacity: 0.35,
+                map: map,
+                center: coordinates,
+                radius: 10
+            });
+        }
+    </script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A&callback=initMap">
+    </script>
+
+
+</head>
+<body onload="initMap()">
+<th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row flex-xl-nowrap">
+            <div class="col-md-2">
+                <!--<p>sidebar left</p>-->
+            </div>
+            <div class="col-md-8">
+                <div class="row padding justify-content-center">
+                    <h1>Point details</h1>
+                </div>
+                <div class="row">
+
+
+                    <h1>Measure point details</h1>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Point</th>
+                            <th scope="col">Category</th>
+                            <th scope="col">Longitude</th>
+                            <th scope="col">Latitude</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td th:text="${point.id}"></td>
+                            <td th:text="${point.name}"></td>
+                            <td th:text="${point.pointCategory.name()}"></td>
+                            <td th:text="${point.lng}"></td>
+                            <td th:text="${point.lat}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+
+                <div class="row" style="height: 600px">
+                    <div class="col-md-6">
+                        <div id="map_canvas" style="height: 90%; width: 90%"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <h3>Comment</h3>
+                        </div>
+                        <div class="row">
+                            <p><span th:text="${point.comment}"></span></p>
+                        </div>
+                        <div class="row">
+                            <img th:if="${point.photo == null || point.photo.length < 1}"
+                                 src="../static/images/defaultboatimg.jpg" th:src="@{/images/defaultboatimg.jpg}"
+                                 class="img-fluid img-max-height rounded-lg padding border"/>
+                            <img th:if="${point.photo != null && point.photo.length > 1}"
+                                 th:src="@{'data:image/png;base64,' + ${point.getBase64Photo()}}"
+                                 class="img-fluid img-max-height rounded-lg padding border"/>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
+<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
+</body>
+</html>
