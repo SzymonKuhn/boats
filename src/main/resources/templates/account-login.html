@@ -3,17 +3,13 @@
 <head>
 
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
-
     <meta charset="UTF-8">
     <title>Login from</title>
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
-
 <div class="container-fluid">
-
-
     <div class="row flex-xl-nowrap">
 
         <div class="col-md-2">
@@ -21,32 +17,25 @@
         </div>
 
         <div class="col-md-8">
-
-
             <form class="form-group" th:action="@{/login}" method="post">
                 <div class="col-md-4">
                     <div class="row padding">
                         <label for="username">Username</label>
                         <input class="form-control" id="username" type="text" th:name="username" placeholder="Username">
-
-
                         <label for="password">Password</label>
                         <input class="form-control" id="password" type="password" th:name="password"
                                placeholder="Password">
                     </div>
-
                     <div class="row padding">
                         <div class="col-md-6 justify-content-center">
                             <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
                         </div>
-
                         <div class="col-md-6 justify-content-center">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </div>
                     </div>
                 </div>
             </form>
-
         </div>
 
         <div class="col-md-2">
@@ -54,10 +43,7 @@
         </div>
     </div>
 
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

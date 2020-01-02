@@ -1,32 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
-
     <meta charset="UTF-8">
     <title>Edit minimum value</title>
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
 <div class="container-fluid">
-
     <div class="container-fluid">
-
         <div class="row flex-xl-nowrap">
-
             <div class="col-md-2">
                 <!--<p>sidebar left</p>-->
             </div>
-
             <div class="col-md-8">
                 <div class="row bottom-line justify-content-center">
                     <h3>Edit minimum value for
                         <scope th:text="${minValue.boat.model + ' at ' + minValue.measurePoint.pointName + ' / ' + minValue.measurePoint.riverName}"></scope>
                     </h3>
                 </div>
-
                 <form class="form-group" th:action="@{/minimumValue/edit}" th:object="${minValue}" th:method="post">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
@@ -35,8 +27,6 @@
                     <input th:type="hidden" th:value="${minValue.boat}" th:field="${minValue.boat}">
                     <input th:type="hidden" th:value="${minValue.id}" th:field="${minValue.id}">
                     <input th:type="hidden" th:value="${minValue.measurePoint}" th:field="${minValue.measurePoint}">
-
-
                     <div class="row padding">
                         <div class="col-md-6">
                             <label for="min-state">Minimum state</label>
@@ -50,32 +40,22 @@
                                    th:value="${minValue.warningValue}" placeholder="warning state">
                         </div>
                     </div>
-
                     <div class="row padding">
                         <div class="col-md-6 justify-content-center">
                             <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
                         </div>
-
-
                         <div class="col-md-6 justify-content-center">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </div>
                     </div>
-
-
                 </form>
             </div>
             <div class="col-md-2">
                 <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
             </div>
         </div>
-
     </div>
-
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

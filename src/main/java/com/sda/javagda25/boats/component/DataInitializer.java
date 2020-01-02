@@ -44,7 +44,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         }
     }
 
-    private void addAccount(String username, String password, String ... roles) {
+    private void addAccount(String username, String password, String... roles) {
         if (!accountRepository.existsByUsername(username)) {
             Account account = new Account();
             account.setUsername(username);
@@ -54,7 +54,7 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         }
     }
 
-    private Set<AccountRole> findRoles (String[] roles) {
+    private Set<AccountRole> findRoles(String[] roles) {
         Set<AccountRole> roleSet = new HashSet<>();
         for (String role : roles) {
             if (accountRoleRepository.existsByName(role)) {
@@ -63,8 +63,4 @@ public class DataInitializer implements ApplicationListener<ContextRefreshedEven
         }
         return roleSet;
     }
-
-
-
-
 }

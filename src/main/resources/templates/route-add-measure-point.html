@@ -7,29 +7,20 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
-
         <div class="col-md-8">
-
-
             <div class="row padding">
                 <h1>Add measure points to <span th:text="${route.name}"></span></h1>
             </div>
-
             <div class="row padding">
                 <a th:href="'/route/addCharacteristicPoint/' + ${route.id}">
                     <button class="btn btn-primary btn-block">Next</button>
                 </a>
             </div>
-
             <div class="row">
                 <table class="table table-striped">
                     <thead>
@@ -37,8 +28,6 @@
                         <th scope="col">Id</th>
                         <th scope="col">Point</th>
                         <th scope="col">River</th>
-                        <!--<th scope="col">Longitude</th>-->
-                        <!--<th scope="col">Latitude</th>-->
                         <th scope="col">Remove</th>
                     </tr>
                     </thead>
@@ -47,8 +36,6 @@
                         <td th:text="${point.id}"></td>
                         <td th:text="${point.pointName}"></td>
                         <td th:text="${point.riverName}"></td>
-                        <!--<td th:text="${point.lng}"></td>-->
-                        <!--<td th:text="${point.lat}"></td>-->
                         <td>
                             <a th:href="@{'/route/deleteMeasurePoint/' + ${route.id} (pointId=${point.id}, page=${measurePoints.getNumber()}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}">
                                 <button class="btn btn-outline-primary">Remove</button>
@@ -57,13 +44,10 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="row padding">
                 <div class="col-md-8">
-
                     <form role="form" id="sorting-and-paagination"
                           th:action="@{'/route/addMeasurePoint/' + ${route.id}}" method="get">
-
                         <div class="form-row">
                             <div class="col-md-1">
                                 <label for="size" class="col-form-label">Size</label>
@@ -82,9 +66,7 @@
                             <div class="col">
                                 <select id="sort" class="form-control" th:name="sort">
                                     <option th:value="pointName">Name ascending</option>
-                                    <!--<option th:value="pointName,desc">Name descending</option>-->
                                     <option th:value="riverName">River name ascending</option>
-                                    <!--<option th:value="riverName,desc">River name descending</option>-->
                                     <option th:value="id">Id</option>
                                 </select>
                             </div>
@@ -101,16 +83,12 @@
                         </div>
                     </form>
                 </div>
-
             </div>
-
-
             <div class="row padding">
                 <div th:if="${errorMessage != null}">
                     <div class="alert alert-primary padding" role="alert" th:text="${errorMessage}"></div>
                 </div>
             </div>
-
             <div class="row">
                 <table class="table table-striped">
                     <thead>
@@ -118,8 +96,6 @@
                         <th scope="col">Id</th>
                         <th scope="col">Point</th>
                         <th scope="col">River</th>
-                        <!--<th scope="col">Longitude</th>-->
-                        <!--<th scope="col">Latitude</th>-->
                         <th scope="col">Add</th>
                     </tr>
                     </thead>
@@ -128,8 +104,6 @@
                         <td th:text="${point.id}"></td>
                         <td th:text="${point.pointName}"></td>
                         <td th:text="${point.riverName}"></td>
-                        <!--<td th:text="${point.lng}"></td>-->
-                        <!--<td th:text="${point.lat}"></td>-->
                         <td>
                             <a th:href="@{'/route/addMeasurePoint/' + ${route.id} (pointId=${point.id}, page=${measurePoints.getNumber()}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}">
                                 <button class="btn btn-outline-primary"
@@ -140,17 +114,14 @@
                     </tbody>
                 </table>
             </div>
-
             <div class="row padding">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-
                         <li class="page-item" th:classappend="${measurePoints.getNumber() < 1} ? 'disabled' : ''">
                             <a class="page-link"
                                th:href="@{'/route/addMeasurePoint/' + ${route.id} (page=${measurePoints.getNumber()-1}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"
                                tabindex="-1">Previous</a>
                         </li>
-
                         <li class="page-item" aria-current="page"
                             th:each="number : ${#numbers.sequence(measurePoints.getNumber() - 5, measurePoints.getNumber() - 1)}"
                             th:if="${number >= 0}">
@@ -158,12 +129,10 @@
                                th:href="@{'/route/addMeasurePoint/' + ${route.id} (page=${number}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${number + 1}"></span> </a>
                         </li>
-
                         <li class="page-item active" aria-current="page">
                             <a class="page-link"
                                th:href="@{'/route/addMeasurePoint/' + ${route.id} (page=${measurePoints.getNumber()}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${measurePoints.getNumber()+1}"></span> </a>
-
                         <li class="page-item" aria-current="page"
                             th:each="number : ${#numbers.sequence(measurePoints.getNumber() + 1, measurePoints.getNumber() + 5)}"
                             th:if="${number < measurePoints.getTotalPages()}">
@@ -171,7 +140,6 @@
                                th:href="@{'/route/addMeasurePoint/' + ${route.id} (page=${number}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${number + 1}"></span> </a>
                         </li>
-
                         <li class="page-item"
                             th:classappend="${measurePoints.getNumber() >= measurePoints.getTotalPages() -1} ? 'disabled' : ''">
                             <a class="page-link"
@@ -181,18 +149,13 @@
                     </ul>
                 </nav>
             </div>
-
-
         </div>
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
 </div>
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
-
 </body>
 </html>

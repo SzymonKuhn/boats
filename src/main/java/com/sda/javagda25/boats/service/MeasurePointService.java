@@ -2,13 +2,10 @@ package com.sda.javagda25.boats.service;
 
 import com.sda.javagda25.boats.model.MeasurePointState;
 import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
-import com.sda.javagda25.boats.model.jsonDto.AddressToLngLat;
-import com.sda.javagda25.boats.model.jsonDto.Location;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointRepository;
 import com.sda.javagda25.boats.repository.MeasurePointStateRepository;
-import javafx.concurrent.ScheduledService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.data.domain.Page;
@@ -28,8 +25,6 @@ import java.util.stream.Collectors;
 @Service
 public class MeasurePointService {
     private String urlMeasurePoints = "https://danepubliczne.imgw.pl/api/data/hydro";
-//    private String urlGeolocation = "https://maps.googleapis.com/maps/api/geocode/json?address=";
-//    private String apiKey = "&key=AIzaSyDIlhefXdQwH7Eq9YFBHoIXDInMITZ264A";
 
     @Autowired
     private MeasurePointRepository measurePointRepository;
@@ -88,14 +83,6 @@ public class MeasurePointService {
             throw new EntityNotFoundException();
         }
     }
-
-//    public List<MeasurePoint> search(String input) {
-//        List<MeasurePoint> measurePoints = new ArrayList<>();
-//        measurePoints.addAll(tryFindMeasurePointByStringId(input));
-//        input = "%" + input + "%";
-//        measurePoints.addAll(measurePointRepository.findAllByPointNameIsLikeOrRiverNameIsLike(input, input));
-//        return measurePoints;
-//    }
 
     public List<MeasurePointWithTendencyDto> getMeasurePointsWithTendency() {
         List<MeasurePointWithTendencyDto> measurePointWithTendencyList = new ArrayList<>();

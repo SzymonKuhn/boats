@@ -1,7 +1,6 @@
 package com.sda.javagda25.boats.service;
 
 import com.sda.javagda25.boats.repository.AccountRepository;
-import com.sda.javagda25.boats.repository.AccountRoleRepository;
 import com.sda.javagda25.boats.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -14,14 +13,12 @@ import java.util.Optional;
 @Service
 public class AccountService {
     private AccountRepository accountRepository;
-    private AccountRoleRepository accountRoleRepository;
     private AccountRoleService accountRoleService;
     private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public AccountService(AccountRepository accountRepository, AccountRoleRepository accountRoleRepository, AccountRoleService accountRoleService, PasswordEncoder passwordEncoder) {
+    public AccountService(AccountRepository accountRepository, AccountRoleService accountRoleService, PasswordEncoder passwordEncoder) {
         this.accountRepository = accountRepository;
-        this.accountRoleRepository = accountRoleRepository;
         this.accountRoleService = accountRoleService;
         this.passwordEncoder = passwordEncoder;
     }

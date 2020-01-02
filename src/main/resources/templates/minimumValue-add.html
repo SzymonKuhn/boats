@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
-
     <meta charset="UTF-8">
     <title>Add minimum value</title>
 </head>
@@ -11,15 +9,11 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
 <div class="container-fluid">
-
     <div class="container-fluid">
-
         <div class="row flex-xl-nowrap">
-
             <div class="col-md-2">
                 <!--<p>sidebar left</p>-->
             </div>
-
             <div class="col-md-8">
                 <h1 class="bottom-line">Add minimum value</h1>
                 <div class="row">
@@ -40,64 +34,48 @@
                         </nav>
                     </div>
                 </div>
-
-
-                    <form class="form-group" th:action="@{/minimumValue/add}" th:object="${minValue}" th:method="post">
-
-
-                        <input th:type="hidden" th:value="${minValue.boat}" th:field="${minValue.boat}">
-                        <input th:type="hidden" th:value="${minValue.id}" th:field="${minValue.id}">
-
-                        <div class="row padding">
-                            <div class="col-md-12">
-                                <label for="measurePoint">Choose measure point</label>
-                                <select id="measurePoint" class="custom-select mr-sm-2" th:field="${minValue.measurePoint}">
-                                    <option th:each="measurePoint : ${measurePoints}"
-                                            th:text="${measurePoint.id + ' - ' + measurePoint.pointName + ' / ' + measurePoint.riverName}"
-                                            th:value="${measurePoint.id}"></option>
-                                </select>
-                            </div>
+                <form class="form-group" th:action="@{/minimumValue/add}" th:object="${minValue}" th:method="post">
+                    <input th:type="hidden" th:value="${minValue.boat}" th:field="${minValue.boat}">
+                    <input th:type="hidden" th:value="${minValue.id}" th:field="${minValue.id}">
+                    <div class="row padding">
+                        <div class="col-md-12">
+                            <label for="measurePoint">Choose measure point</label>
+                            <select id="measurePoint" class="custom-select mr-sm-2" th:field="${minValue.measurePoint}">
+                                <option th:each="measurePoint : ${measurePoints}"
+                                        th:text="${measurePoint.id + ' - ' + measurePoint.pointName + ' / ' + measurePoint.riverName}"
+                                        th:value="${measurePoint.id}"></option>
+                            </select>
                         </div>
-
-                <div class="row padding">
-                    <div class="col-md-6">
-                        <label for="min-state">Minimum state</label>
-                        <input class="form-control" id="min-state" type="number" th:field="${minValue.minimumValue}"
-                               th:value="${minValue.minimumValue}" placeholder="minimum state">
                     </div>
-                    <div class="col-md-6">
-                        <label for="warn-state">Warning state</label>
-                        <input class="form-control" id="warn-state" type="number"
-                               th:field="${minValue.warningValue}"
-                               th:value="${minValue.warningValue}" placeholder="warning state">
+                    <div class="row padding">
+                        <div class="col-md-6">
+                            <label for="min-state">Minimum state</label>
+                            <input class="form-control" id="min-state" type="number" th:field="${minValue.minimumValue}"
+                                   th:value="${minValue.minimumValue}" placeholder="minimum state">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="warn-state">Warning state</label>
+                            <input class="form-control" id="warn-state" type="number"
+                                   th:field="${minValue.warningValue}"
+                                   th:value="${minValue.warningValue}" placeholder="warning state">
+                        </div>
                     </div>
-                </div>
-
-                <div class="row padding">
-                    <div class="col-md-6 justify-content-center">
-                        <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
+                    <div class="row padding">
+                        <div class="col-md-6 justify-content-center">
+                            <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
+                        </div>
+                        <div class="col-md-6 justify-content-center">
+                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                        </div>
                     </div>
-
-
-                    <div class="col-md-6 justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
-                    </div>
-                </div>
-
-
                 </form>
             </div>
             <div class="col-md-2">
                 <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
             </div>
         </div>
-
     </div>
-
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

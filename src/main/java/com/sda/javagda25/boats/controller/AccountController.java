@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -25,16 +24,16 @@ public class AccountController {
 
     private AccountService accountService;
     private AccountRoleService accountRoleService;
-    private BoatService boatService;
     private MeasurePointMinimumValueService measurePointMinimumValueService;
     private MeasurePointStateService measurePointStateService;
     private MeasurePointService measurePointService;
 
     @Autowired
-    public AccountController(AccountService accountService, AccountRoleService accountRoleService, BoatService boatService, MeasurePointMinimumValueService measurePointMinimumValueService, MeasurePointStateService measurePointStateService, MeasurePointService measurePointService) {
+    public AccountController(AccountService accountService, AccountRoleService accountRoleService,
+                             MeasurePointMinimumValueService measurePointMinimumValueService,
+                             MeasurePointStateService measurePointStateService, MeasurePointService measurePointService) {
         this.accountService = accountService;
         this.accountRoleService = accountRoleService;
-        this.boatService = boatService;
         this.measurePointMinimumValueService = measurePointMinimumValueService;
         this.measurePointStateService = measurePointStateService;
         this.measurePointService = measurePointService;
@@ -48,7 +47,7 @@ public class AccountController {
     }
 
     @PostMapping("/register")
-    public String registerAccount(@Valid Account account, BindingResult result, String passwordConfirm, ModelMap modelMap, Model model) {
+    public String registerAccount(@Valid Account account, BindingResult result, String passwordConfirm, Model model) {
         account.setAccountRoles(new HashSet<>(accountRoleService.getBasicUserRoles()));
         if (result.hasErrors()) {
             return registrationError(account, model, result.getFieldError().getDefaultMessage());

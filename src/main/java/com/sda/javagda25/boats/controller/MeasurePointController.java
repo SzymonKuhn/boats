@@ -2,7 +2,6 @@ package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.*;
 import com.sda.javagda25.boats.model.dto.BoatWithMinimumValueAndActualStateDto;
-import com.sda.javagda25.boats.model.dto.MeasurePointWithTendencyDto;
 import com.sda.javagda25.boats.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,7 +27,11 @@ public class MeasurePointController {
     private BoatService boatService;
 
     @Autowired
-    public MeasurePointController(MeasurePointService measurePointService, MeasurePointStateService measurePointStateService, AccountService accountService, MeasurePointMinimumValueService measurePointMinimumValueService, BoatService boatService) {
+    public MeasurePointController(MeasurePointService measurePointService,
+                                  MeasurePointStateService measurePointStateService,
+                                  AccountService accountService,
+                                  MeasurePointMinimumValueService measurePointMinimumValueService,
+                                  BoatService boatService) {
         this.measurePointService = measurePointService;
         this.measurePointStateService = measurePointStateService;
         this.accountService = accountService;
@@ -36,12 +39,12 @@ public class MeasurePointController {
         this.boatService = boatService;
     }
 
-    @GetMapping ("/list")
-    public String listAll (Model model,
-                           @RequestParam (name = "sort", defaultValue = "pointName") String sort,
-                           @RequestParam (name = "search", defaultValue = "") String search,
-                           @RequestParam (name = "page", defaultValue = "0") int page,
-                           @RequestParam(name = "size", defaultValue = "20") int size) {
+    @GetMapping("/list")
+    public String listAll(Model model,
+                          @RequestParam(name = "sort", defaultValue = "pointName") String sort,
+                          @RequestParam(name = "search", defaultValue = "") String search,
+                          @RequestParam(name = "page", defaultValue = "0") int page,
+                          @RequestParam(name = "size", defaultValue = "20") int size) {
         Page<MeasurePoint> measurePointsPage = measurePointService.measurePointPage(search, search, PageRequest.of(page, size, Sort.by(sort)));
         model.addAttribute("sort", sort);
         model.addAttribute("search", search);
@@ -49,46 +52,20 @@ public class MeasurePointController {
         return "measure-point-list";
     }
 
-
-//    @PostMapping ("/searchMeasurePoints")
-//    public String search (String input, Model model) {
-//        List<MeasurePoint> measurePoints = measurePointService.search(input);
-//        if (measurePoints.isEmpty()) {
-//            model.addAttribute("errorMessage", "No records found.");
-//            model.addAttribute("measurePoints", measurePointService.findAllMeasurePoints());
-//            return "measure-point-list";
-//        }
-//        model.addAttribute("measurePoints", measurePoints);
-//        return "measure-point-list";
-//    }
-
-//    @GetMapping ("/states/list")
-//    public String listAllStates (Model model) {
-//        model.addAttribute("measurePointStates", measurePointStateService.findAllMeasurePointsStates());
-//        return "measure-point-states-list";
-//    }
-
-
-    @GetMapping ("/updateMeasurePoints")
-    public String updateMeasurePoints () {
+    @GetMapping("/updateMeasurePoints")
+    public String updateMeasurePoints() {
         measurePointService.updateMeasurePoints();
         return "redirect:/measurePoint/list";
     }
-    @GetMapping ("/updateMeasurePointStates")
-    public String updateMeasurePointStates () {
+
+    @GetMapping("/updateMeasurePointStates")
+    public String updateMeasurePointStates() {
         measurePointStateService.updateMeasurePointsStates();
         return "redirect:/measurePoint/states/list";
     }
 
-//    @GetMapping ("/states/latest")
-//    public String listLatestStates (Model model) {
-//        model.addAttribute("measurePointStates", measurePointStateService.findActualMeasurePointsStates());
-//        return "measure-point-states-list";
-//    }
-
-
-    @GetMapping ("/details/{id}")
-    public String getDetails (Model model, @PathVariable (name = "id") Long id, Principal principal) {
+    @GetMapping("/details/{id}")
+    public String getDetails(Model model, @PathVariable(name = "id") Long id, Principal principal) {
         MeasurePoint measurePoint = measurePointService.getById(id);
         List<MeasurePointState> states = measurePointStateService.findMeasurePointStatesByPointId(measurePoint).stream()
                 .limit(10)
@@ -116,8 +93,4 @@ public class MeasurePointController {
         model.addAttribute("boats", boatsWithMinValues);
         return "measure-point-details";
     }
-
-
-
-
 }

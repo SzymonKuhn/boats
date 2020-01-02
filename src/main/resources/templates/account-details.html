@@ -90,13 +90,10 @@
                         </div>
                     </div>
 
-
-                    <!--user details-->
                 </div>
 
                 <div class="col-md-9">
                     <!--user boats and others-->
-
                     <th:block th:if="${account.defaultBoat != null}">
 
                         <div class="row justify-content-center">
@@ -119,10 +116,6 @@
                                 <div class="row padding">
                                     <h4>Model: <span th:text="${account.defaultBoat.model}"></span></h4>
                                 </div>
-                                <!--<div class="row">-->
-                                <!--<p class="font-weight-bold">Immersion: <span-->
-                                <!--th:text="${account.defaultBoat.immersion}"></span></p>-->
-                                <!--</div>-->
                                 <div class="row padding">
                                     <p><span th:text="${account.defaultBoat.comment}"> </span></p>
                                 </div>
@@ -166,18 +159,10 @@
                                 </tbody>
                             </table>
                         </div>
-
-
                     </th:block>
-
-
                 </div>
-
             </div>
-
-
         </div>
-
 
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
@@ -185,8 +170,6 @@
     </div>
 
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

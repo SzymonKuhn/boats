@@ -66,10 +66,7 @@
                         map: map
                     });
                 }
-
-
             }
-
         }
     </script>
     <script type="text/javascript"
@@ -80,11 +77,8 @@
 
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
@@ -93,20 +87,15 @@
             <th:block sec:authorize="!isAuthenticated()">
                 <h1>Hello, please log in.</h1>
             </th:block>
-
             <th:block sec:authorize="isAuthenticated()">
                 <h1>Hello, <span th:text="${username}"></span></h1>
             </th:block>
-
             <div id="map_canvas" style="height: 800px; width: 100%"></div>
-
-
         </div>
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
 </div>
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>

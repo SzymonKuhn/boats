@@ -7,28 +7,18 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
-
         <div class="col-md-8">
-
-
             <div class="row">
                 <h1>Measure points</h1>
             </div>
-
             <div class="row padding">
                 <div class="col-md-8">
-
                     <form role="form" id="sorting-and-paagination" th:action="@{/measurePoint/list} " method="get">
-
                         <div class="form-row">
                             <div class="col-md-1">
                                 <label for="size" class="col-form-label">Size</label>
@@ -66,16 +56,12 @@
                         </div>
                     </form>
                 </div>
-
             </div>
-
-
             <div class="row padding">
                 <div th:if="${errorMessage != null}">
                     <div class="alert alert-primary padding" role="alert" th:text="${errorMessage}"></div>
                 </div>
             </div>
-
             <div class="row padding">
                 <table class="table table-striped">
                     <thead>
@@ -106,13 +92,11 @@
             <div class="row padding">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
-
                         <li class="page-item" th:classappend="${measurePoints.getNumber() < 1} ? 'disabled' : ''">
                             <a class="page-link"
                                th:href="@{/measurePoint/list(page=${measurePoints.getNumber()-1}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"
                                tabindex="-1">Previous</a>
                         </li>
-
                         <li class="page-item" aria-current="page"
                             th:each="number : ${#numbers.sequence(measurePoints.getNumber() - 5, measurePoints.getNumber() - 1)}"
                             th:if="${number >= 0}">
@@ -120,12 +104,10 @@
                                th:href="@{/measurePoint/list(page=${number}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${number + 1}"></span> </a>
                         </li>
-
                         <li class="page-item active" aria-current="page">
                             <a class="page-link"
                                th:href="@{/measurePoint/list(page=${measurePoints.getNumber()}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${measurePoints.getNumber()+1}"></span> </a>
-
                         <li class="page-item" aria-current="page"
                             th:each="number : ${#numbers.sequence(measurePoints.getNumber() + 1, measurePoints.getNumber() + 5)}"
                             th:if="${number < measurePoints.getTotalPages()}">
@@ -133,7 +115,6 @@
                                th:href="@{/measurePoint/list(page=${number}, size=${measurePoints.getSize()}, sort=${sort}, search=${search})}"><span
                                     th:text="${number + 1}"></span> </a>
                         </li>
-
                         <li class="page-item"
                             th:classappend="${measurePoints.getNumber() >= measurePoints.getTotalPages() -1} ? 'disabled' : ''">
                             <a class="page-link"
@@ -143,18 +124,13 @@
                     </ul>
                 </nav>
             </div>
-
-
         </div>
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
 </div>
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
-
 </body>
 </html>

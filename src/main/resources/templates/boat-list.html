@@ -9,24 +9,17 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
 
         <div class="col-md-8">
-
             <div class="row bottom-line justify-content-center">
                 <h1>Your boats</h1>
             </div>
-
             <div class="row row-boat-list border" th:each="boat : ${boats}">
-
                 <div class="col col-md-3">
                     <div class="row">
                         <img th:if="${boat.photo == null || boat.photo.length < 1}"
@@ -37,20 +30,14 @@
                              class="img-fluid img-max-height rounded-lg padding border"/>
                     </div>
                 </div>
-
                 <div class="col-md-7">
                     <div class="row padding">
                         <h4>Model: <span th:text="${boat.model}"></span></h4>
                     </div>
-                    <!--<div class="row">-->
-                        <!--<p class="font-weight-bold">Immersion: <span th:text="${boat.immersion}"></span></p>-->
-                    <!--</div>-->
                     <div class="row padding">
                         <p><span th:text="${boat.comment}"> </span></p>
                     </div>
                 </div>
-
-
                 <div class="col-md-2">
                     <a th:href="@{'/boat/details/' + ${boat.id}}">
                         <button class="btn btn-outline-secondary btn-sm btn-block">Details</button>
@@ -60,68 +47,22 @@
                             <button class="btn btn-outline-secondary btn-sm btn-block">Set as default</button>
                         </a>
                     </th:block>
-                    <!--</div>-->
-
-                    <!--<div class="row">-->
                     <a th:href="@{'/minimumValue/actualStates/' + ${boat.id}}">
                         <button class="btn btn-outline-secondary btn-sm btn-block">Actual states</button>
                     </a>
-                    <!--</div>-->
                 </div>
-
             </div>
-
             <div class="row padding">
                 <a th:href="@{/boat/add}">
                     <button class="btn btn-outline-primary">Add boat</button>
                 </a>
             </div>
-
-            <!--<div class="row col-md-12">-->
-            <!--<h1>Minimum values on measure points for boat</h1>-->
-
-            <!--<table class="table table-striped">-->
-            <!--<thead>-->
-            <!--<tr>-->
-            <!--<th scope="col">Id point</th>-->
-            <!--<th scope="col">Point name</th>-->
-            <!--<th scope="col">River name</th>-->
-            <!--<th scope="col">Minimum state</th>-->
-            <!--<th scope="col">Warning state</th>-->
-            <!--<th scope="col">Edit</th>-->
-            <!--</tr>-->
-            <!--</thead>-->
-            <!--<tbody>-->
-            <!--<tr th:each="minValue : ${minValues}">-->
-            <!--<td th:text="${minValue.measurePoint.id}"></td>-->
-            <!--<td th:text="${minValue.measurePoint.pointName}"></td>-->
-            <!--<td th:text="${minValue.measurePoint.riverName}"></td>-->
-            <!--<td th:text="${minValue.minimumValue}"></td>-->
-            <!--<td th:text="${minValue.warningValue}"></td>-->
-            <!--<td><a th:href="@{'/minimumValue/edit/' + ${minValue.id}}">-->
-            <!--<button class="btn btn-outline-primary">Edit</button>-->
-            <!--</a></td>-->
-
-            <!--</tr>-->
-            <!--</tbody>-->
-            <!--</table>-->
-            <!--</div>-->
-
-
         </div>
-
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
-
     </div>
-
-
 </div>
-
-</div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

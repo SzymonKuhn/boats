@@ -34,7 +34,9 @@ public class RouteController {
     private CharacteristicPointService characteristicPointService;
 
     @Autowired
-    public RouteController(RouteService routeService, AccountService accountService, MeasurePointService measurePointService, CharacteristicPointService characteristicPointService) {
+    public RouteController(RouteService routeService, AccountService accountService,
+                           MeasurePointService measurePointService,
+                           CharacteristicPointService characteristicPointService) {
         this.routeService = routeService;
         this.accountService = accountService;
         this.measurePointService = measurePointService;
@@ -42,7 +44,7 @@ public class RouteController {
     }
 
     @PostMapping("/add")
-    public String add(Route route, Principal principal, @RequestParam(value = "file", required = false) MultipartFile file, Model model) {
+    public String add(Route route, Principal principal, @RequestParam(value = "file", required = false) MultipartFile file) {
 
         Account account = accountService.getByUsername(principal.getName());
 
@@ -64,7 +66,7 @@ public class RouteController {
             }
         }
 
-        if (route.getId()!=null) {
+        if (route.getId() != null) {
             Route existingRoute = routeService.getById(route.getId());
             route.setMeasurePoints(existingRoute.getMeasurePoints());
             route.setCharacteristicPoints(existingRoute.getCharacteristicPoints());
@@ -91,7 +93,7 @@ public class RouteController {
 
         if (pointId != null) {
             MeasurePoint measurePoint = measurePointService.getById(pointId);
-            if (!route.getMeasurePoints().contains(measurePoint)){
+            if (!route.getMeasurePoints().contains(measurePoint)) {
                 route.getMeasurePoints().add(measurePoint);
                 routeService.save(route);
             }
@@ -108,12 +110,12 @@ public class RouteController {
 
     @GetMapping("/deleteMeasurePoint/{id}")
     public String deleteMeasurePoint(Model model, Principal principal,
-                                  @PathVariable(name = "id") Long id,
-                                  @RequestParam(name = "pointId", required = false) Long pointId,
-                                  @RequestParam(name = "sort", defaultValue = "pointName") String sort,
-                                  @RequestParam(name = "search", defaultValue = "") String search,
-                                  @RequestParam(name = "page", defaultValue = "0") int page,
-                                  @RequestParam(name = "size", defaultValue = "20") int size) {
+                                     @PathVariable(name = "id") Long id,
+                                     @RequestParam(name = "pointId", required = false) Long pointId,
+                                     @RequestParam(name = "sort", defaultValue = "pointName") String sort,
+                                     @RequestParam(name = "search", defaultValue = "") String search,
+                                     @RequestParam(name = "page", defaultValue = "0") int page,
+                                     @RequestParam(name = "size", defaultValue = "20") int size) {
         Route route = routeService.getById(id);
         Account account = accountService.getByUsername(principal.getName());
         if (!route.getAccount().equals(account)) {
@@ -122,7 +124,7 @@ public class RouteController {
 
         if (pointId != null) {
             MeasurePoint measurePoint = measurePointService.getById(pointId);
-            if (route.getMeasurePoints().contains(measurePoint)){
+            if (route.getMeasurePoints().contains(measurePoint)) {
                 route.getMeasurePoints().remove(measurePoint);
                 routeService.save(route);
             }
@@ -138,12 +140,12 @@ public class RouteController {
 
     @GetMapping("/addCharacteristicPoint/{id}")
     public String addCharacteristicPoint(Model model, Principal principal,
-                                  @PathVariable(name = "id") Long id,
-                                  @RequestParam(name = "pointId", required = false) Long pointId,
-                                  @RequestParam(name = "sort", defaultValue = "name") String sort,
-                                  @RequestParam(name = "search", defaultValue = "") String search,
-                                  @RequestParam(name = "page", defaultValue = "0") int page,
-                                  @RequestParam(name = "size", defaultValue = "20") int size) {
+                                         @PathVariable(name = "id") Long id,
+                                         @RequestParam(name = "pointId", required = false) Long pointId,
+                                         @RequestParam(name = "sort", defaultValue = "name") String sort,
+                                         @RequestParam(name = "search", defaultValue = "") String search,
+                                         @RequestParam(name = "page", defaultValue = "0") int page,
+                                         @RequestParam(name = "size", defaultValue = "20") int size) {
         Route route = routeService.getById(id);
         Account account = accountService.getByUsername(principal.getName());
         if (!route.getAccount().equals(account)) {
@@ -152,7 +154,7 @@ public class RouteController {
 
         if (pointId != null) {
             CharacteristicPoint characteristicPoint = characteristicPointService.getById(pointId);
-            if (!route.getCharacteristicPoints().contains(characteristicPoint)){
+            if (!route.getCharacteristicPoints().contains(characteristicPoint)) {
                 route.getCharacteristicPoints().add(characteristicPoint);
                 routeService.save(route);
             }
@@ -168,12 +170,12 @@ public class RouteController {
 
     @GetMapping("/deleteCharacteristicPoint/{id}")
     public String deleteCharacteristicPoint(Model model, Principal principal,
-                                     @PathVariable(name = "id") Long id,
-                                     @RequestParam(name = "pointId", required = false) Long pointId,
-                                     @RequestParam(name = "sort", defaultValue = "name") String sort,
-                                     @RequestParam(name = "search", defaultValue = "") String search,
-                                     @RequestParam(name = "page", defaultValue = "0") int page,
-                                     @RequestParam(name = "size", defaultValue = "20") int size) {
+                                            @PathVariable(name = "id") Long id,
+                                            @RequestParam(name = "pointId", required = false) Long pointId,
+                                            @RequestParam(name = "sort", defaultValue = "name") String sort,
+                                            @RequestParam(name = "search", defaultValue = "") String search,
+                                            @RequestParam(name = "page", defaultValue = "0") int page,
+                                            @RequestParam(name = "size", defaultValue = "20") int size) {
         Route route = routeService.getById(id);
         Account account = accountService.getByUsername(principal.getName());
         if (!route.getAccount().equals(account)) {
@@ -182,7 +184,7 @@ public class RouteController {
 
         if (pointId != null) {
             CharacteristicPoint characteristicPoint = characteristicPointService.getById(pointId);
-            if (route.getCharacteristicPoints().contains(characteristicPoint)){
+            if (route.getCharacteristicPoints().contains(characteristicPoint)) {
                 route.getCharacteristicPoints().remove(characteristicPoint);
                 routeService.save(route);
             }
@@ -195,9 +197,6 @@ public class RouteController {
         model.addAttribute("route", route);
         return "route-add-characteristic-point";
     }
-
-
-
 
     @GetMapping("/add")
     public String add(Model model) {
@@ -260,5 +259,4 @@ public class RouteController {
         ImageIO.write(thumbImg, originalFile.getContentType().split("/")[1], thumbOutput);
         return thumbOutput;
     }
-
 }

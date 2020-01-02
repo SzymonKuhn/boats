@@ -9,43 +9,27 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
 
         <div class="col-md-8">
             <div class="row row-boat-list border">
-
                 <div class="col-md-12">
                     <div class="row justify-content-center">
                         <h2><span th:text="${boat.model}"></span></h2>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col col-md-3">
-
-
-                        <!--<th:block >-->
                         <img th:if="${boat.photo == null || boat.photo.length < 1}"
                              src="../static/images/defaultboatimg.jpg" th:src="@{/images/defaultboatimg.jpg}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
                         <img th:if="${boat.photo != null && boat.photo.length > 1}"
                              th:src="@{'data:image/png;base64,' + ${boat.getBase64StringPhoto()}}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
-                        <!--</th:block>-->
-                        <!--<img th:if="${boat.photo==null}" src="../static/images/arrowGreen.png" height="70" width="70" th:src="@{/images/arrowGreen.png}"/>-->
-
-                        <!--<img th:if="${boat.photo != null}"-->
-                        <!--th:src="@{'data:image/png;base64,' + ${Base64.encodeToString(boat.photo)}}"-->
-                        <!--class="img-fluid rounded-lg padding" alt="Responsive image">-->
-
                     </div>
 
                     <div class="col-md-7">
@@ -66,13 +50,13 @@
                             <button class="btn btn-outline-primary btn-sm btn-block">Edit boat</button>
                         </a>
 
-                        <!--<a th:href="@{'/boat/delete/' + ${boat.id}}">-->
-                        <a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${boat.id}">
+                        <a data-toggle="modal" data-target="#modal-warning"
+                           th:attr="data-target='#modal-warning'+${boat.id}">
                             <button class="btn btn-outline-primary btn-sm btn-block">Delete boat</button>
                         </a>
 
-                        <!--Modal-->
-                        <div class="modal fade" th:id="modal-warning+${boat.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" th:id="modal-warning+${boat.id}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -86,23 +70,19 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                        <a th:href="@{'/boat/delete/' + ${boat.id}}"><button type="button" class="btn btn-primary">Yes</button></a>
+                                        <a th:href="@{'/boat/delete/' + ${boat.id}}">
+                                            <button type="button" class="btn btn-primary">Yes</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
-
-
                     </div>
                 </div>
             </div>
 
-
             <div class="row col-md-12">
                 <h3 class="bottom-line">Minimum values defined for boat</h3>
-
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -129,12 +109,13 @@
                         <td><a th:href="@{'/measurePoint/details/' + ${minValue.measurePoint.id}}">
                             <button class="btn btn-outline-primary">Details</button>
                         </a></td>
-                        <td><a data-toggle="modal" data-target="#modal-warning" th:attr="data-target='#modal-warning'+${minValue.id}">
+                        <td><a data-toggle="modal" data-target="#modal-warning"
+                               th:attr="data-target='#modal-warning'+${minValue.id}">
                             <button type="button" class="btn btn-outline-primary">Delete</button>
                         </a></td>
 
-                        <!--Modal-->
-                        <div class="modal fade" th:id="modal-warning+${minValue.id}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal fade" th:id="modal-warning+${minValue.id}" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
@@ -144,17 +125,19 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        Do you want to delete minimum values for <span th:text="${minValue.boat.model}"></span> in <span th:text="${minValue.measurePoint.pointName}"></span>?
+                                        Do you want to delete minimum values for <span
+                                            th:text="${minValue.boat.model}"></span> in <span
+                                            th:text="${minValue.measurePoint.pointName}"></span>?
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-                                        <a th:href="@{'/minimumValue/delete/' + ${minValue.id}}"><button type="button" class="btn btn-primary">Yes</button></a>
+                                        <a th:href="@{'/minimumValue/delete/' + ${minValue.id}}">
+                                            <button type="button" class="btn btn-primary">Yes</button>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-
                     </tr>
                     </tbody>
                 </table>
@@ -165,19 +148,11 @@
                 </div>
             </div>
         </div>
-
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
-
     </div>
-
-
 </div>
-
-</div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

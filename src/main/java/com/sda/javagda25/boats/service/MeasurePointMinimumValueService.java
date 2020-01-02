@@ -3,16 +3,9 @@ package com.sda.javagda25.boats.service;
 import com.sda.javagda25.boats.model.Boat;
 import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
-import com.sda.javagda25.boats.model.dto.MeasurePointDto;
 import com.sda.javagda25.boats.repository.MeasurePointMinimumValueRepository;
-import com.sda.javagda25.boats.repository.MeasurePointRepository;
-import com.sda.javagda25.boats.repository.MeasurePointStateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -24,22 +17,22 @@ public class MeasurePointMinimumValueService {
     @Autowired
     private MeasurePointMinimumValueRepository measurePointMinimumValueRepository;
 
-    public List<MeasurePointMinimumValue> getByBoat (Long boatId) {
+    public List<MeasurePointMinimumValue> getByBoat(Long boatId) {
         List<MeasurePointMinimumValue> listMinimumValues = new ArrayList<>();
         listMinimumValues.addAll(measurePointMinimumValueRepository.findAllByBoat_Id(boatId));
         return listMinimumValues;
     }
 
-    public Optional<MeasurePointMinimumValue> getByBoatAndMeasurePoint (Boat boat, MeasurePoint measurePoint) {
+    public Optional<MeasurePointMinimumValue> getByBoatAndMeasurePoint(Boat boat, MeasurePoint measurePoint) {
         Optional<MeasurePointMinimumValue> optional = measurePointMinimumValueRepository.findByBoatAndAndMeasurePoint(boat, measurePoint);
         return optional;
     }
 
-    public void save (MeasurePointMinimumValue measurePointMinimumValue) {
+    public void save(MeasurePointMinimumValue measurePointMinimumValue) {
         measurePointMinimumValueRepository.save(measurePointMinimumValue);
     }
 
-    public void delete (Long minimumValueId) {
+    public void delete(Long minimumValueId) {
         Optional<MeasurePointMinimumValue> optional = measurePointMinimumValueRepository.findById(minimumValueId);
         if (optional.isPresent()) {
             measurePointMinimumValueRepository.delete(optional.get());

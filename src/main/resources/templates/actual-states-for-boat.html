@@ -7,22 +7,16 @@
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
 
         <div class="col-md-8">
-
             <div class="bottom-line justify-content-center">
                 <h1>Measure points states for <span th:text="${boat.model}"></span></h1>
             </div>
-
             <table class="table">
                 <thead>
                 <tr>
@@ -48,17 +42,13 @@
                 </tr>
                 </tbody>
             </table>
-
         </div>
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
 </div>
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
-
 </body>
 </html>

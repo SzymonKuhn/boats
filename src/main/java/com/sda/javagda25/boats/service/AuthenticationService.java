@@ -22,7 +22,7 @@ public class AuthenticationService implements UserDetailsService {
         this.accountRepository = accountRepository;
     }
 
-    public UserDetails loadUserByUsername (String username) {
+    public UserDetails loadUserByUsername(String username) {
         Optional<Account> optional = accountRepository.findByUsername(username);
         if (optional.isPresent()) {
             Account account = optional.get();

@@ -28,10 +28,10 @@ public class MeasurePointState {
     @Cascade(value = org.hibernate.annotations.CascadeType.DETACH)
     private MeasurePoint measurePoint;
 
-    public MeasurePointState (MeasurePointDto measurePointDto) {
+    public MeasurePointState(MeasurePointDto measurePointDto) {
         this.waterState = measurePointDto.getStan_wody();
-        if(measurePointDto.getStan_wody_data_pomiaru() != null ) {
-            this.measureDateTime =  LocalDateTime.parse(measurePointDto.getStan_wody_data_pomiaru(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        if (measurePointDto.getStan_wody_data_pomiaru() != null) {
+            this.measureDateTime = LocalDateTime.parse(measurePointDto.getStan_wody_data_pomiaru(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
         } else {
             this.measureDateTime = LocalDateTime.now();
         }

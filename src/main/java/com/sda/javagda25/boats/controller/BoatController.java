@@ -11,16 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.Base64;
 import java.util.List;
 
 @Controller
-@RequestMapping ("/boat/")
+@RequestMapping("/boat/")
 public class BoatController {
     private BoatService boatService;
     private AccountService accountService;
@@ -34,18 +32,18 @@ public class BoatController {
     }
 
     @GetMapping("/add")
-    public String add (Model model, Boat boat) {
+    public String add(Model model, Boat boat) {
         model.addAttribute("boat", boat);
         return "boat-add";
     }
 
-    @PostMapping ("/add")
-    public String add (Boat boat, Principal principal) {
+    @PostMapping("/add")
+    public String add(Boat boat, Principal principal) {
         Account account = accountService.getByUsername(principal.getName());
         if (boat == null) {
             return "redirect:/account/details";
         }
-        if (boat.getAccount() == null ){
+        if (boat.getAccount() == null) {
             boat.setAccount(account);
         }
 
@@ -59,14 +57,14 @@ public class BoatController {
     }
 
 
-    @GetMapping ("/addPhoto/{boatId}")
-    public String addPhoto (Model model, BoatPhotoAddDto boatPhotoAddDto) {
+    @GetMapping("/addPhoto/{boatId}")
+    public String addPhoto(Model model, BoatPhotoAddDto boatPhotoAddDto) {
         model.addAttribute("boatPhotoAddDto", boatPhotoAddDto);
         return "boat-photo-form";
     }
 
-    @PostMapping ("/addPhoto")
-    public String addPhoto (Model model, Principal principal, BoatPhotoAddDto boatPhotoAddDto) {
+    @PostMapping("/addPhoto")
+    public String addPhoto(Model model, Principal principal, BoatPhotoAddDto boatPhotoAddDto) {
         Account account = accountService.getByUsername(principal.getName());
         Boat boat = boatService.getById(boatPhotoAddDto.getBoatId());
         if (!boat.getAccount().equals(account)) {
@@ -84,8 +82,8 @@ public class BoatController {
         return "redirect:/account/details";
     }
 
-    @GetMapping ("/details/{id}")
-    public String details (Model model, @PathVariable (name = "id") Long boatId) {
+    @GetMapping("/details/{id}")
+    public String details(Model model, @PathVariable(name = "id") Long boatId) {
         Boat boat = boatService.getById(boatId);
         List<MeasurePointMinimumValue> minValues = measurePointMinimumValueService.getByBoat(boatId);
         model.addAttribute("boat", boat);
@@ -93,15 +91,15 @@ public class BoatController {
         return "boat-details";
     }
 
-    @GetMapping ("/edit/{id}")
-    public String edit (Model model, @PathVariable (name = "id") Long boatId) {
+    @GetMapping("/edit/{id}")
+    public String edit(Model model, @PathVariable(name = "id") Long boatId) {
         Boat boat = boatService.getById(boatId);
         model.addAttribute("boat", boat);
         return "boat-add";
     }
 
-    @GetMapping ("/delete/{id}")
-    public String delete (@PathVariable (name = "id") Long boatId, Principal principal) {
+    @GetMapping("/delete/{id}")
+    public String delete(@PathVariable(name = "id") Long boatId, Principal principal) {
         Boat boat = boatService.getById(boatId);
         Account account = accountService.getByUsername(principal.getName());
         if (boat.getAccount().getUsername().equals(account.getUsername())) {
@@ -114,7 +112,7 @@ public class BoatController {
         return "redirect:/account/details";
     }
 
-    @GetMapping ("/list")
+    @GetMapping("/list")
     public String listAccountBoats(Model model, Principal principal) {
         List<Boat> boats = boatService.findAllByUsername(principal.getName());
         Account user = accountService.getByUsername(principal.getName());
@@ -127,8 +125,8 @@ public class BoatController {
         return "boat-list";
     }
 
-    @GetMapping ("/setDefault/{id}")
-    public String setDefault (Principal principal, @PathVariable (name = "id") Long boatId) {
+    @GetMapping("/setDefault/{id}")
+    public String setDefault(Principal principal, @PathVariable(name = "id") Long boatId) {
         Account account = accountService.getByUsername(principal.getName());
         account.setDefaultBoat(boatService.getById(boatId));
         accountService.save(account);

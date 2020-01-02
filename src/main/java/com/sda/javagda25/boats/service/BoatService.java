@@ -38,7 +38,7 @@ public class BoatService {
         return boatSaved.getId();
     }
 
-    public void delete (Long boatId) {
+    public void delete(Long boatId) {
         Optional<Boat> optionalBoat = boatRepository.findById(boatId);
         if (optionalBoat.isPresent()) {
             boatRepository.delete(optionalBoat.get());

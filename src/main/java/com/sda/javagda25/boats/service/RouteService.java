@@ -1,7 +1,6 @@
 package com.sda.javagda25.boats.service;
 
 import com.sda.javagda25.boats.model.Account;
-import com.sda.javagda25.boats.model.CharacteristicPoint;
 import com.sda.javagda25.boats.model.Route;
 import com.sda.javagda25.boats.repository.RouteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +16,12 @@ public class RouteService {
     private RouteRepository routeRepository;
 
 
-    public Long save (Route route) {
+    public Long save(Route route) {
         Route savedRoute = routeRepository.save(route);
         return savedRoute.getId();
     }
 
-    public Route getById (Long id) {
+    public Route getById(Long id) {
         Optional<Route> optional = routeRepository.findById(id);
         if (optional.isPresent()) {
             return optional.get();
@@ -31,7 +30,7 @@ public class RouteService {
         }
     }
 
-    public List<Route> getAll () {
+    public List<Route> getAll() {
         return routeRepository.findAll();
     }
 

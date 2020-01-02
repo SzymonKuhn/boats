@@ -31,14 +31,6 @@
                 center: coordinates,
                 radius: 10
             });
-
-            // var marker = new google.maps.Marker({
-            //     position: coordinates,
-            //     map: map,
-            //     title: 'Hello World!'
-            // });
-
-
         }
     </script>
     <script type="text/javascript"
@@ -48,24 +40,14 @@
 </head>
 <body onload="initMap()">
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
-<!--<script th:inline="javascript">-->
-<!---->
-
-<!--</script>-->
-
-
 <div class="container-fluid">
-
     <div class="row flex-xl-nowrap">
-
         <div class="col-md-2">
             <!--<p>sidebar left</p>-->
         </div>
 
         <div class="col-md-8">
             <h1>Measure point details</h1>
-
             <table class="table table-striped">
                 <thead>
                 <tr>
@@ -124,7 +106,6 @@
                                      class="img-fluid img-max-height rounded-lg padding border"/>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="row padding">
                                 <h4>Model: <span th:text="${boatWithMinValues.boat.model}"></span></h4>
@@ -152,26 +133,19 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </th:block>
                 <th:block th:if="${boats == null || boats.isEmpty()}">
                     <h3>You have not defined minimum values for that measure point for any of your boats</h3>
                 </th:block>
-
             </div>
         </div>
-
         <div class="col-md-2">
             <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
         </div>
     </div>
-
 </div>
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
-
 </body>
 </html>

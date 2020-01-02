@@ -10,7 +10,7 @@ import java.util.Base64;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CharacteristicPoint implements Point{
+public class CharacteristicPoint implements Point {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,11 @@ public class CharacteristicPoint implements Point{
     private PointCategory pointCategory;
 
     @Lob
-    @Column (columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] photo;
 
     @Lob
-    @Column (columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] thumbnail;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)

@@ -11,11 +11,8 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
 <div class="container-fluid">
-
     <div class="container-fluid">
-
         <div class="row flex-xl-nowrap">
-
             <div class="col-md-2">
                 <!--<p>sidebar left</p>-->
             </div>
@@ -24,17 +21,13 @@
                 <div class="row padding justify-content-center">
                     <h1>Boat form</h1>
                 </div>
-
                 <form class="form-group" th:action="@{/boat/add}" th:object="${boat}" method="post">
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>
-
                     <input th:type="hidden" th:value="${boat.id}" th:field="${boat.id}">
                     <input th:type="hidden" th:value="${boat.photo}" th:field="${boat.photo}">
                     <input th:type="hidden" th:value="${boat.account}" th:field="${boat.account}">
-
-
                     <div class="row">
                         <div class="col-md-6">
                             <div class="row padding">
@@ -42,16 +35,12 @@
                                 <input class="form-control" id="model" type="text" th:field="${boat.model}"
                                        th:value="${boat.model}" placeholder="Model">
                             </div>
-
-
                             <div class="row padding">
                                 <label for="immersion">Immersion</label>
                                 <input class="form-control" id="immersion" type="number" th:field="${boat.immersion}"
                                        th:value="${boat.immersion}" placeholder="Immersion">
                             </div>
                         </div>
-
-
                         <div class="col-md-6">
                             <div class="row padding">
                                 <label for="comment">Comment</label>
@@ -60,32 +49,22 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="row padding">
                         <div class="col-md-6 justify-content-center">
                             <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
                         </div>
-
-
                         <div class="col-md-6 justify-content-center">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </div>
                     </div>
-
-
                 </form>
             </div>
             <div class="col-md-2">
                 <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
             </div>
         </div>
-
     </div>
-
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

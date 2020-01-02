@@ -1,7 +1,6 @@
 package com.sda.javagda25.boats.controller;
 
 import com.sda.javagda25.boats.model.Boat;
-import com.sda.javagda25.boats.model.MeasurePoint;
 import com.sda.javagda25.boats.model.MeasurePointMinimumValue;
 import com.sda.javagda25.boats.model.MeasurePointState;
 import com.sda.javagda25.boats.model.dto.ActualAndMinimumStatesForBoatDto;
@@ -55,7 +54,7 @@ public class MeasurePointMinimumValueController {
             model.addAttribute("minValue", measurePointMinimumValue);
             return "minimumValue-add";
         }
-        if (warningValueIsLessThenMinimumValue(measurePointMinimumValue, model)){
+        if (warningValueIsLessThenMinimumValue(measurePointMinimumValue, model)) {
             return "minimumValue-add";
         }
         measurePointMinimumValueService.save(measurePointMinimumValue);
@@ -75,16 +74,14 @@ public class MeasurePointMinimumValueController {
         return "redirect:" + referer;
     }
 
-    @PostMapping ("/edit")
-    public String edit (MeasurePointMinimumValue measurePointMinimumValue, Model model) {
+    @PostMapping("/edit")
+    public String edit(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
         if (warningValueIsLessThenMinimumValue(measurePointMinimumValue, model)) {
             return "minimumValue-add";
         }
         measurePointMinimumValueService.save(measurePointMinimumValue);
         return "redirect:/boat/details/" + measurePointMinimumValue.getBoat().getId();
     }
-
-
 
     @GetMapping("/actualStates/{boatId}")
     public String actualStatesForMinValues(Model model, @PathVariable(name = "boatId") Long boatId) {
@@ -107,29 +104,6 @@ public class MeasurePointMinimumValueController {
         model.addAttribute("boat", boat);
         return "actual-states-for-boat";
     }
-
-
-//    @PostMapping("/searchMeasurePoints")
-//    public String search(String input, Long boatId, Model model) {
-//        MeasurePointMinimumValue minValue = new MeasurePointMinimumValue();
-//        minValue.setBoat(boatService.getById(boatId));
-//        List<MeasurePoint> measurePoints = new ArrayList<>();
-//        String[] inputs = input.split(" ");
-//        for (String s : inputs) {
-//            measurePoints.addAll(measurePointService.search(s));
-//        }
-//
-//        int records = measurePoints.size();
-//        if (records == 0) {
-//            model.addAttribute("errorMessage", "No records found.");
-//            model.addAttribute("input", input.substring(1, input.length() - 1));
-//            measurePoints.addAll(measurePointService.findAllMeasurePoints());
-//        }
-//
-//        model.addAttribute("minValue", minValue);
-//        model.addAttribute("measurePoints", measurePoints);
-//        return "minimumValue-add";
-//    }
 
     private boolean warningValueIsLessThenMinimumValue(MeasurePointMinimumValue measurePointMinimumValue, Model model) {
         if (measurePointMinimumValue.getMinimumValue() > measurePointMinimumValue.getWarningValue()) {

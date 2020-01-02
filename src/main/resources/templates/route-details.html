@@ -1,55 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <th:block th:replace="fragments :: head-fragment" th:remove=""></th:block>
-
     <meta charset="UTF-8">
     <title>Route details</title>
 </head>
 <body>
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
-
 <div class="container-fluid">
-
     <div class="container-fluid">
-
         <div class="row flex-xl-nowrap">
-
             <div class="col-md-2">
                 <!--<p>sidebar left</p>-->
             </div>
-
             <div class="col-md-8">
                 <div class="row padding justify-content-center">
                     <h1>Route details</h1>
                 </div>
-
-
                 <div class="row justify-content-center">
                     <h2><span th:text="${route.name}"></span></h2>
                 </div>
-
-
                 <div class="row">
                     <div class="col col-md-3">
-
                         <img th:if="${route.photo == null || route.photo.length < 1}"
                              src="../static/images/defaultrouteimg.jpg" th:src="@{/images/defaultrouteimg.jpg}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
-
                         <img th:if="${route.photo != null && route.photo.length > 1}"
                              th:src="@{'data:image/png;base64,' + ${route.getBase64StringPhoto()}}"
                              class="img-fluid img-max-height rounded-lg padding border"/>
                     </div>
-
                     <div class="col-md-7">
                         <div class="row">
                             <p class="padding"><span th:text="${route.comment}"> </span></p>
                         </div>
                     </div>
                 </div>
-
                 <div class="row padding">
                     <div class="col-md-6">
                         <table>
@@ -69,7 +54,6 @@
                             </tbody>
                         </table>
                     </div>
-
                     <div class="col-md-6">
                         <table>
                             <thead>
@@ -89,7 +73,6 @@
                         </table>
                     </div>
                 </div>
-
                 <div class="row justify-content-end">
                     <div class="col-md-10">
                     </div>
@@ -104,19 +87,13 @@
                         </a>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-2">
                 <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
             </div>
         </div>
-
     </div>
-
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

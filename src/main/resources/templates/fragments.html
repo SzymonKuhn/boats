@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-
     <th:block th:fragment="head-fragment">
         <link rel="stylesheet" th:href="@{/webjars/bootstrap/4.3.1/css/bootstrap.css}"/>
         <link rel="stylesheet" th:href="@{/css/styles.css}"/>
-        <link rel=""
     </th:block>
-
-
     <meta charset="UTF-8">
     <title>Fragments</title>
-
 </head>
 <body>
 
 <th:block th:fragment="navigator">
     <div class="site-header sticky-top py-1">
-
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
@@ -25,18 +19,14 @@
                     <a class="nav-item nav-link" th:href="@{/measurePoint/list}">Measure points</a>
                     <a class="nav-item nav-link" th:href="@{/point/public}">All public points</a>
                     <a class="nav-item nav-link" th:href="@{/route/public}">All public routes</a>
-                    <!--<a class="nav-item nav-link" th:href="@{/measurePoint/states/list}">Measure points states</a>-->
-                    <!--<a class="nav-item nav-link" th:href="@{/measurePoint/states/latest}">Actual states</a>-->
                 </div>
             </div>
         </nav>
-
     </div>
 </th:block>
 
 
 <th:block th:fragment="right-sidebar">
-
     <nav class="nav flex-column">
         <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/account/details}">
             <button type="button" class="btn btn-outline-primary btn-block">Details</button>
@@ -56,30 +46,25 @@
         <a class="nav-link" sec:authorize="!isAuthenticated()" th:href="@{/account/register}">
             <button type="button" class="btn btn-outline-primary btn-block">Register</button>
         </a>
-
         <a class="nav-link" sec:authorize="isAuthenticated()" th:href="@{/logout}">
             <button type="button" class="btn btn-outline-primary btn-block">Logout</button>
         </a>
         <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/account/list}">
             <button type="button" class="btn btn-outline-primary btn-block">Accounts</button>
         </a>
-        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/measurePoint/updateMeasurePoints}">
+        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')"
+           th:href="@{/measurePoint/updateMeasurePoints}">
             <button type="button" class="btn btn-outline-primary btn-block">Update measure points</button>
         </a>
-
-        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')" th:href="@{/measurePoint/updateMeasurePointStates}">
+        <a class="nav-link" sec:authorize="isAuthenticated() && hasRole('ADMIN')"
+           th:href="@{/measurePoint/updateMeasurePointStates}">
             <button type="button" class="btn btn-outline-primary btn-block">Update measure points states</button>
         </a>
-
     </nav>
-
-
 </th:block>
 
 <th:block th:fragment="footer">
     <!--<footer class="container">-->
-        <!--<p class="float-right"><a href="#">Back to top</a></p>-->
-        <!--<p>&copy; 2017-2019 SDA &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>-->
     <!--</footer>-->
 </th:block>
 
@@ -88,9 +73,5 @@
     <script th:src="@{/webjars/popper.js/1.14.3/popper.js}"></script>
     <script th:src="@{/webjars/bootstrap/4.3.1/js/bootstrap.js}"></script>
 </th:block>
-
-
-<!--<th:block th:replace="fragments :: footer" th:remove="tag"></th:block>-->
-<!--<th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>-->
 </body>
 </html>

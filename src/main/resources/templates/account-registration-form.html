@@ -11,25 +11,18 @@
 <th:block th:replace="fragments :: navigator" th:remove="tag"></th:block>
 
 <div class="container-fluid">
-
     <div class="container-fluid">
-
         <div class="row flex-xl-nowrap">
-
             <div class="col-md-2">
                 <!--<p>sidebar left</p>-->
             </div>
 
             <div class="col-md-8">
                 <h1>Registration form</h1>
-
                 <form class="form-group" th:action="@{/account/register}" th:object="${account}" th:method="post">
-
                     <div th:if="${errorMessage != null}" class="row col-md-12">
                         <div class="col-md-12" th:text="${errorMessage}"></div>
                     </div>
-
-
                     <div class="row">
                         <div class="col-md-4">
                             <label for="username">Username</label>
@@ -37,7 +30,6 @@
                                    placeholder="Username">
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-4">
                             <label for="password">Password</label>
@@ -45,7 +37,6 @@
                                    placeholder="Password">
                         </div>
                     </div>
-
                     <div class="row  bottom-line">
                         <div class="col-md-4">
                             <label for="password-confirm">Repeat password</label>
@@ -53,41 +44,22 @@
                                    placeholder="Password">
                         </div>
                     </div>
-
                     <div class="row padding">
                         <div class="col-md-2 justify-content-center padding">
                             <button type="reset" class="btn btn-outline-primary btn-block">Reset</button>
                         </div>
-
-
                         <div class="col-md-2 justify-content-center padding">
                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                         </div>
                     </div>
-
-
                 </form>
             </div>
             <div class="col-md-2">
                 <th:block th:replace="fragments :: right-sidebar" th:remove="tag"></th:block>
             </div>
         </div>
-
     </div>
-
-
-
-
-
-
-
-
-
-
-
 </div>
-
-
 <th:block th:replace="fragments :: footer" th:remove="tag"></th:block>
 <th:block th:replace="fragments :: jsScripts" th:remove="tag"></th:block>
 </body>

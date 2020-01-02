@@ -33,7 +33,7 @@ public class Route {
     private byte[] photo;
 
     @Lob
-    @Column (columnDefinition = "LONGBLOB")
+    @Column(columnDefinition = "LONGBLOB")
     private byte[] thumbnail;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.DETACH)
@@ -46,7 +46,7 @@ public class Route {
         return Base64.getEncoder().encodeToString(thumbnail);
     }
 
-    public String getBase64StringPhoto () {
+    public String getBase64StringPhoto() {
         return Base64.getEncoder().encodeToString(photo);
     }
 }
